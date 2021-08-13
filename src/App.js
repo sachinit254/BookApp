@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { createTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import Home from "./Pages/Home";
+import Header from "./components/Header";
+import LogIn from "./components/LogIn";
+import Register from "./components/Register";
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#01c851",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#007F00",
+      contrastText: "#ffffff  ",
+    },
+  },
+  typography: {
+    fontFamily: ["Montserrat", "sans-serif", "Lato"].join(","),
+    body1: {
+      fontFamily: "Lato",
+    },
+    body2: {
+      fontFamily: "Lato",
+    },
+  },
+});
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </>
   );
 }
 
