@@ -119,7 +119,7 @@ const SignIn = () => {
                 <Link
                   color="secondary"
                   component={RouterLink}
-                  to="/register"
+                  to="/signup"
                   variant="body2"
                 >
                   {"Don't have an account? Sign Up"}

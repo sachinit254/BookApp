@@ -14,8 +14,8 @@ const navLinks = [
   { label: "Home", path: "/" },
   { label: "Store", path: "/store" },
   { label: "About", path: "/about" },
-  { label: "Login", path: "/login" },
-  { label: "Logout", path: "/logout" },
+  { label: "SignIn", path: "/signin" },
+  { label: "SignOut", path: "/signout" },
 ];
 const useStyles = makeStyles((theme) => ({
   root: {

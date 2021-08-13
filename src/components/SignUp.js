@@ -176,7 +176,7 @@ const SignUp = () => {
               color="secondary"
               variant="body2"
               component={RouterLink}
-              to="/login"
+              to="/signin"
             >
               Already have an account? Sign in
             </Link>
