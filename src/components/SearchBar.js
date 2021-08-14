@@ -13,25 +13,19 @@ import { Search } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
-      width: "80%",
-      marginTop: 20,
-      marginLeft: "auto",
-      marginRight: "auto",
       borderRadius: 10,
       padding: 10,
       display: "flex",
       justifyContent: "center",
     },
     textfield: {
-      width: "60%",
+      marginRight: "10px",
+      width: "50%",
       "& label": {
         color: "black",
       },
       "& Input": {
         color: "black",
-      },
-      "& Input ::-webkit-search-cancel-button": {
-        backgroundColor: "black",
       },
       "& label.Mui-focused": {
         color: "black",
@@ -51,6 +45,10 @@ const useStyles = makeStyles((theme) => {
         },
       },
     },
+    button : {
+       textTransform : "capitalize",
+       fontSize: '20px',
+    },
   };
 });
 const SearchBar = () => {
@@ -65,16 +63,8 @@ const SearchBar = () => {
           label="Search.."
           type="search"
           variant="outlined"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton>
-                  <Search style={{ color: "black" }} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
         />
+        <Button className={classes.button} variant="contained" color="primary">Search</Button>
       </Box>
     </>
   );

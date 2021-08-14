@@ -101,9 +101,14 @@ export default function ButtonAppBar() {
             </Hidden>
             <Hidden smDown>
               <Box p={2}>
-                {navLinks.map(({ label,path }) => {
+                {navLinks.map(({ label, path }) => {
                   return (
-                    <Link className={classes.link}  component= {RouterLink} to={path} variant="body1" >
+                    <Link
+                      className={classes.link}
+                      component={RouterLink}
+                      to={path}
+                      variant="body1"
+                    >
                       {label}
                     </Link>
                   );
@@ -126,14 +131,15 @@ export default function ButtonAppBar() {
                 <CloseIcon />
               </IconButton>
             </Box>
-            {navLinks.map(({ label, href }) => {
+            {navLinks.map(({ label, path }) => {
               return (
                 <ListItem className={classes.listitem}>
                   <Link
                     variant="body1"
-                    href={href}
                     className={classes.listitemLink}
                     color="secondary"
+                    component={RouterLink}
+                    to={path}
                   >
                     {label}
                   </Link>
