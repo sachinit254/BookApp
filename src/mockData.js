@@ -1,10 +1,10 @@
-export const data = [
+export const bookData = [
   {
     id: 1,
     title: "The Four Winds",
     Author: "Kristin Hannah",
     by: "vikas",
-    from: "Borvali",
+    location: "Borvali",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9781250178602_p0_v9%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -13,7 +13,7 @@ export const data = [
     title: "Things We Lost to the Water",
     Author: "Eric Nguyen",
     by: "Dheeraj",
-    from: "Malad",
+    location: "Malad",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9780593317952_p0_v6%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -22,7 +22,7 @@ export const data = [
     title: "The Lost Apothecary",
     Author: "Sarah Penner",
     by: "hritik",
-    from: "haryana",
+    location: "haryana",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9780778311010_p0_v26%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -31,7 +31,7 @@ export const data = [
     title: "Project Hail Mary",
     Author: "Andy Weir",
     by: "abhishek",
-    from: "Kolkata",
+    location: "Kolkata",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9780593135204_p0_v1%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -40,7 +40,7 @@ export const data = [
     title: "Madhouse at the End of the Earth",
     Author: "Julian Sancton",
     by: "Vikrant",
-    from: "gujarat",
+    location: "gujarat",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9781984824332_p0_v2%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -49,7 +49,7 @@ export const data = [
     title: "Dusk, Night, Dawn: On Revival and Courage",
     Author: "Anne Lamott",
     by: "subham",
-    from: "goregaon",
+    location: "goregaon",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9780593189696_p0_v1%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -58,7 +58,7 @@ export const data = [
     title: "Crying in H Mart",
     Author: "Michelle Zauner",
     by: "suraj",
-    from: "kandivali",
+    location: "kandivali",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9780525657743_p0_v9%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -67,7 +67,7 @@ export const data = [
     title: "Aftershocks: A Memoir",
     Author: "Nadia Owusu",
     by: "sachin",
-    from: "dahisar",
+    location: "dahisar",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9781982111229_p0_v2%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -76,7 +76,7 @@ export const data = [
     title: "FireKeeper's Daughter",
     Author: "Angeline Boulley",
     by: "gautam",
-    from: "ghatkopar",
+    location: "ghatkopar",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9781250766564_p0_v7%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },
@@ -85,7 +85,7 @@ export const data = [
     title: "Amari and the Night Brothers",
     Author: "B.B. Alston",
     by: "subhash",
-    from: "gonda",
+    location: "gonda",
     thumbnail:
       "https://prodimage.images-bn.com/lf?set=key%5Bresolve.pixelRatio%5D,value%5B1%5D&set=key%5Bresolve.width%5D,value%5B300%5D&set=key%5Bresolve.height%5D,value%5B10000%5D&set=key%5Bresolve.imageFit%5D,value%5Bcontainerwidth%5D&set=key%5Bresolve.allowImageUpscaling%5D,value%5B0%5D&product=path%5B/pimages/9780062975164_p0_v3%5D&call=url%5Bfile:common/decodeProduct.chain%5D",
   },

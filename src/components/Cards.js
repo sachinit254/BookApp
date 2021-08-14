@@ -9,14 +9,16 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import React from "react";
-import { data } from "../../src/mockData";
+import React, { useState } from "react";
+import PopUp from "./PopUp";
+import { bookData } from "../../src/mockData";
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: theme.spacing(3),
     maxWidth: 300,
     height: "auto",
     backgroundColor: "#e8f5e9",
+    position: "relative",
   },
   gridItem: {
     display: "grid",
@@ -31,19 +33,34 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     textAlign: "center",
   },
+  button: {
+    textTransform: "capitalize",
+  },
 }));
 
 const Cards = () => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [bookId, setBookId] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setBookId(event.currentTarget.id);
+    console.log(event.currentTarget.id);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+
   return (
     <>
       <CssBaseline />
       <Box m={3}>
         <Grid container spacing={3} justifyContent="center">
-          {data.map(({ id, title, Author, thumbnail, by, from }) => {
+          {bookData.map((book) => {
             return (
               <Grid
-                key={id}
+                key={book.id}
                 item
                 xs={12}
                 sm={5}
@@ -51,29 +68,42 @@ const Cards = () => {
                 lg={3}
                 className={classes.gridItem}
               >
-                <Card className={classes.card} variant="outlined">
+                <Card
+                  className={classes.card}
+                  variant="outlined"
+                  onClick={handleClick}
+                  id={book.id}
+                >
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
                       component="img"
-                      image={thumbnail}
+                      image={book.thumbnail}
                     />
+
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h6">
-                        {title.substring(0, 25)}
+                        {book.title.substring(0, 25)}
                       </Typography>
                       <Typography variant="body2" color="textPrimary">
-                        Author: {Author}
+                        Author: {book.Author}
                       </Typography>
                       <Typography variant="body2" color="textPrimary">
-                        posted by : {by}
+                        posted by : {book.by}
                       </Typography>
                       <Typography variant="body2" color="textPrimary">
-                        posted from : {from}
+                        posted from : {book.location}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                 </Card>
+                <PopUp
+                  open={open}
+                  handleClick={handleClick}
+                  handleClose={handleClose}
+                  anchorEl={anchorEl}
+                  bookId={bookId}
+                />
               </Grid>
             );
           })}
