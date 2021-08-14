@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     maxWidth: 300,
     height: "auto",
+    backgroundColor: "#e8f5e9",
   },
   gridItem: {
     display: "grid",
@@ -50,7 +51,7 @@ const Cards = () => {
                 lg={3}
                 className={classes.gridItem}
               >
-                <Card className={classes.card}>
+                <Card className={classes.card} variant="outlined">
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
@@ -59,7 +60,7 @@ const Cards = () => {
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h6">
-                        {title.substring(0,25)}
+                        {title.substring(0, 25)}
                       </Typography>
                       <Typography variant="body2" color="textPrimary">
                         Author: {Author}

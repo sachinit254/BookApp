@@ -1,10 +1,11 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Home from "./Pages/Home";
+import HomePage from "./Pages/HomePage";
 import Header from "./components/Header";
 import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
+import StorePage from "./Pages/StorePage";
 const theme = createTheme({
   palette: {
     primary: {
@@ -34,9 +35,10 @@ function App() {
         <Router>
           <Header />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/store" element={<StorePage />} />
           </Routes>
         </Router>
       </ThemeProvider>
