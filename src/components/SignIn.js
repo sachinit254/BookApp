@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& input": { color: "green" },
     "& label": {
-      color: "#007F00",
+      color: theme.palette.primary.main,
     },
   },
   paper: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: "#01c851",
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: "100%",
@@ -34,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: "#01c851",
+    backgroundColor: theme.palette.primary.main,
     color: "#ffffff",
     fontWeight: "bold",
     textTransform: "capitalize",
     fontSize: 17,
     "&:hover": {
-      backgroundColor: "#007F00",
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 }));

@@ -6,34 +6,46 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Box, Hidden, Link, ListItem } from "@material-ui/core";
+import { Box, Hidden, Icon, Link, ListItem } from "@material-ui/core";
 import { Drawer } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { CssBaseline } from "@material-ui/core";
+import svgIcon from "../images/112-book-morph-outline.svg";
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "Store", path: "/store" },
   { label: "About", path: "/about" },
   { label: "SignIn", path: "/signin" },
-  { label: "SignOut", path: "/signout" },
+  { label: "Profile", path: "/profile" },
 ];
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    borderBottom: "2px solid #016700",
   },
   menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-    fontSize: 25,
-    marginLeft: 100,
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: 50,
+    marginRight: 0,
+    padding: 0,
+    [theme.breakpoints.up("sm")]: {
+      marginRight: theme.spacing(2),
     },
   },
+  title: {
+    display: "flex",
+    alignItems: "center",
+    marginRight: "auto",
+    fontSize: 25,
+    cursor: "pointer",
+    marginLeft: 20,
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: 100,
+      fontSize: 35,
+    },
+  },
+  bookIcon: {
+    width: "100%",
+  },
   link: {
-    color: theme.palette.primary.contrastText,
     margin: 10,
     fontWeight: "bold",
     fontSize: 17,
@@ -41,10 +53,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     "&:hover": {
       textDecoration: "none",
-      borderBottom: "2px solid #ffffff",
+      borderBottom: "2px solid #016700",
     },
   },
-  appBar: {},
   toolbar: theme.mixins.toolbar,
   drawer: {
     padding: 50,
@@ -80,18 +91,26 @@ export default function ButtonAppBar() {
       <div className={classes.root}>
         <AppBar
           position="static"
-          style={{ background: "linear-gradient(to right, #061700, #52c234)" }}
           elevation={0}
+          style={{ backgroundColor: "white" }}
         >
           <Toolbar>
-            <Typography variant="h6" className={classes.title}>
-              BookStore
+            <Typography variant="h6" className={classes.title} color="primary">
+              <lord-icon
+                className={classes.bookIcon}
+                src="https://cdn.lordicon.com/wxnxiano.json"
+                trigger="hover"
+                colors="primary:#016700,secondary:#016700"
+                stroke="70"
+                scale="70"
+              ></lord-icon>
+              Bookstore
             </Typography>
             <Hidden mdUp>
               <IconButton
                 edge="end"
                 className={classes.menuButton}
-                color="inherit"
+                color="primary"
                 aria-label="menu"
                 anchor="right"
                 onClick={handleDrawerToggle}
@@ -108,6 +127,7 @@ export default function ButtonAppBar() {
                       component={RouterLink}
                       to={path}
                       variant="body1"
+                      color="primary"
                     >
                       {label}
                     </Link>

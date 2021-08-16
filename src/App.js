@@ -9,7 +9,7 @@ import StorePage from "./Pages/StorePage";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#01c851",
+      main: "#016700",
       contrastText: "#ffffff",
     },
     secondary: {

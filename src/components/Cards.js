@@ -45,7 +45,6 @@ const Cards = () => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setBookId(event.currentTarget.id);
-    console.log(event.currentTarget.id);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -82,16 +81,16 @@ const Cards = () => {
                     />
 
                     <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h6">
+                      <Typography gutterBottom color="primary" variant="h6">
                         {book.title.substring(0, 25)}
                       </Typography>
-                      <Typography variant="body2" color="textPrimary">
+                      <Typography variant="body2" color="primary">
                         Author: {book.Author}
                       </Typography>
-                      <Typography variant="body2" color="textPrimary">
+                      <Typography variant="body2" color="primary">
                         posted by : {book.by}
                       </Typography>
-                      <Typography variant="body2" color="textPrimary">
+                      <Typography variant="body2" color="primary">
                         posted from : {book.location}
                       </Typography>
                     </CardContent>

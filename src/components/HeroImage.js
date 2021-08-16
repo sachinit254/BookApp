@@ -1,28 +1,48 @@
-import { Box, CssBaseline, makeStyles, Typography } from "@material-ui/core";
+import { CssBaseline, Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
+import bookSvg from "../images/undraw_book_lover_mkck.svg";
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: `url(
-      "https://images.unsplash.com/photo-1463320726281-696a485928c7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
-    ) no-repeat center`,
-    backgroundSize: "cover",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    // background: `url(
+    //   "https://images.unsplash.com/photo-1463320726281-696a485928c7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+    // ) no-repeat center`,
+    // backgroundSize: "cover",
+    // backgroundColor: "rgba(0,0,0,0.5)",
     width: "100%",
-    height: "80vh",
+    height: "auto",
   },
-  box: {
-    width: "100%",
-    height: "100%",
-    display: "grid",
-    placeItems: "center",
+  grid: {
+    margin: theme.spacing(2),
     textAlign: "center",
-    backgroundColor: "rgba(0,0,0,0.6)",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 0,
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: 50,
+    },
+  },
+
+  img: {
+    objectFit: "contain",
+    width: "90%",
+    height: "100%",
+    padding: "50px",
+    [theme.breakpoints.only("xs")]: {
+      padding: "30px",
+      width: "100%",
+      height: "300px",
+    },
+    [theme.breakpoints.only("sm")]: {
+      width: "60%",
+      height: "80%",
+    },
   },
   typo: {
-    width: "60%",
-    fontSize: 50,
-    [theme.breakpoints.down("sm")]: {
-      width: "80%",
+    width: "90%",
+    margin: "auto",
+    fontSize: 40,
+    [theme.breakpoints.up("sm")]: {
+      fontSize: 50,
     },
   },
 }));
@@ -32,15 +52,20 @@ const HeroImage = () => {
     <>
       <CssBaseline />
       <div className={classes.root}>
-        <Box className={classes.box}>
-          <Typography
-            fontWeight="fontWeightLight"
-            color="primary"
-            className={classes.typo}
-          >
-            Welcome to the paradise of book lovers!
-          </Typography>
-        </Box>
+        <Grid container className={classes.grid}>
+          <Grid item xs={12} md={6}>
+            <img className={classes.img} src={bookSvg} alt="svg" />
+          </Grid>
+          <Grid style={{ marginRight: 0 }} item xs={12} md={6}>
+            <Typography
+              fontWeight="fontWeightLight"
+              color="primary"
+              className={classes.typo}
+            >
+              Welcome to the paradise of book lovers!
+            </Typography>
+          </Grid>
+        </Grid>
       </div>
     </>
   );

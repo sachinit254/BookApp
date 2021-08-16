@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& input": { color: "green" },
     "& label": {
-      color: "#007F00",
+      color: theme.palette.primary.main,
     },
   },
   paper: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: "#01c851",
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: "100%",
@@ -36,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: "#01c851",
+    backgroundColor: theme.palette.primary.main,
     color: "#fff",
     fontWeight: "bold",
     fontSize: 17,
     "&:hover": {
-      backgroundColor: "green",
+      backgroundColor: theme.palette.secondary.main,
     },
   },
   grid: {
@@ -101,7 +101,7 @@ const SignUp = () => {
     {
       xs: 12,
       error: passwordError,
-      id: "passsword",
+      id: "password",
       label: "Password",
       onChange: (e) => setPassword(e.target.value),
     },
@@ -161,6 +161,7 @@ const SignUp = () => {
                       id={input.id}
                       label={input.label}
                       name={input.id}
+                      className={classes.root}
                     />
                   </Grid>
                 );
