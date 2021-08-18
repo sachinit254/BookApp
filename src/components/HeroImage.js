@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
     // backgroundColor: "rgba(0,0,0,0.5)",
     width: "100%",
     height: "auto",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   grid: {
     margin: theme.spacing(2),

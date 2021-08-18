@@ -6,7 +6,7 @@ const StorePage = () => {
   return (
     <>
       <CssBaseline />
-      <SearchBar />
+      <SearchBar/>
       <Cards />
     </>
   );

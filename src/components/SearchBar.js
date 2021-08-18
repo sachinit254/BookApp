@@ -6,11 +6,11 @@ import {
   makeStyles,
   Button,
 } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => {
   return {
     root: {
+      marginTop: theme.spacing(6),
       borderRadius: 10,
       padding: 10,
       display: "flex",

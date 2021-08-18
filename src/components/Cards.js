@@ -15,7 +15,17 @@ import { bookData } from "../../src/mockData";
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: theme.spacing(3),
-    maxWidth: 300,
+    width: 300,
+    display:'flex',
+    justifyContent: "center",
+    alignItems: "center",
+    [theme.breakpoints.only("sm")]: {
+      width: 250,
+    },
+    [theme.breakpoints.only("xs")]: {
+      width: "90%",
+      maxWidth: 300,
+    },
     height: "auto",
     backgroundColor: "#e8f5e9",
     position: "relative",
@@ -26,11 +36,26 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     width: 300,
+    margin: "auto",
+    [theme.breakpoints.only("sm")]: {
+      width: 250,
+    },
+    [theme.breakpoints.only("xs")]: {
+      width: "90%",
+    },
     height: 250,
     objectFit: "contain",
   },
   cardContent: {
     padding: 10,
+    [theme.breakpoints.only("sm")]: {
+      padding: 7,
+      width: 250,
+    },
+    [theme.breakpoints.only("xs")]: {
+      padding: 7,
+      width: "90%",
+    },
     textAlign: "center",
   },
   button: {

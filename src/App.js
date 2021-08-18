@@ -1,5 +1,5 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@material-ui/core";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import HomePage from "./Pages/HomePage";
 import Header from "./components/Header";
@@ -34,12 +34,12 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <Header />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signin" element={<SignInPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/store" element={<StorePage />} />
-          </Routes>
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/signin" exact component={SignInPage} />
+            <Route path="/signup" exact component={SignUpPage} />
+            <Route path="/store" exact component={StorePage} />
+          </Switch>
         </Router>
       </ThemeProvider>
     </>

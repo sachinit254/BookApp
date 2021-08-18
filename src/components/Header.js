@@ -6,11 +6,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Box, Hidden, Icon, Link, ListItem } from "@material-ui/core";
+import { Box, Hidden, Link, ListItem } from "@material-ui/core";
 import { Drawer } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { CssBaseline } from "@material-ui/core";
-import svgIcon from "../images/112-book-morph-outline.svg";
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "Store", path: "/store" },
@@ -160,6 +159,7 @@ export default function ButtonAppBar() {
                     color="secondary"
                     component={RouterLink}
                     to={path}
+                    onClick={handleDrawerToggle}
                   >
                     {label}
                   </Link>
