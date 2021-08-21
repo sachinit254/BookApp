@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -47,19 +47,37 @@ const useStyles = makeStyles((theme) => ({
 
 const SignIn = () => {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-  const submitHandler = (e) => {
+  const [details, setDetails] = useState({ email: "", password: "" });
+  const history = useHistory();
+  let name, value;
+  const handleInputs = (e) => {
+    console.log(e.target.value);
+    name = e.target.name;
+    value = e.target.value;
+    setDetails({ ...details, [name]: value });
+  };
+
+  const postData = async (e) => {
     e.preventDefault();
-    setEmailError(false);
-    setPasswordError(false);
-    if (email === "") {
-      setEmailError(true);
-    }
-    if (password === "") {
-      setPasswordError(true);
+    const { email, password } = details;
+    console.log(details);
+    const res = await fetch("http://localhost:5000/signin", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await res.json();
+    if (res.status === 400 || !data) {
+      window.alert("Invalid credentials");
+    } else {
+      window.alert("Signin successfully");
+      history.push("/");
     }
   };
   return (
@@ -73,39 +91,40 @@ const SignIn = () => {
           <Typography component="h1" variant="h4" color="primary">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate onSubmit={submitHandler}>
+          <form className={classes.form} noValidate method="POST">
             <TextField
               variant="outlined"
               margin="normal"
               required
-              error={emailError}
               fullWidth
               id="email"
               type="email"
               label="Email address"
               name="email"
+              value={details.email}
               autofocus
               className={classes.root}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleInputs}
             />
             <TextField
               variant="outlined"
               margin="normal"
               required
-              error={passwordError}
               fullWidth
               name="password"
+              value={details.password}
               label="password"
               type="password"
               id="password"
               className={classes.root}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleInputs}
             />
             <Button
               type="submit"
               variant="contained"
               className={classes.submit}
               fullWidth
+              onClick={postData}
             >
               Sign in
             </Button>
