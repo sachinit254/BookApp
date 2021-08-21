@@ -8,8 +8,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { CssBaseline } from "@material-ui/core";
-import { Link as RouterLink } from "react-router-dom";
+import { CssBaseline, IconButton, InputAdornment } from "@material-ui/core";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& input": { color: "green" },
@@ -64,19 +66,36 @@ const SignUp = () => {
     password: "",
     confirmpassword: "",
   });
+  const history = useHistory();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowConfPassword] = useState(false);
+  const [passIcon, setPassIcon] = useState(false);
+  const [confPassIcon, setConfPassIcon] = useState(false);
+  const togglePassIcon = () => {
+    setPassIcon(true);
+  };
+  const toggleConfPassIcon = () => {
+    setConfPassIcon(true);
+  };
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleConfirmPassword = () => {
+    setShowConfPassword(!showCPassword);
+  };
 
   let name, value;
   const handleInputs = (e) => {
     console.log(e.target.value);
     name = e.target.name;
     value = e.target.value;
-
     setUser({ ...user, [name]: value });
   };
 
   const postData = async (e) => {
     e.preventDefault();
-    const { firstname, lastname, city, email, password, confirmpassword } = user;
+    const { firstname, lastname, city, email, password, confirmpassword } =
+      user;
     console.log(user);
     const res = await fetch("http://localhost:5000/register", {
       method: "POST",
@@ -98,6 +117,7 @@ const SignUp = () => {
       window.alert("invalid registration");
     } else {
       window.alert("registration Done");
+      history.push("/");
     }
   };
   return (
@@ -172,10 +192,22 @@ const SignUp = () => {
                   required
                   fullWidth
                   label="Password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={user.password}
                   className={classes.root}
                   onChange={handleInputs}
+                  onInput={togglePassIcon}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {passIcon ? (
+                          <IconButton onClick={togglePassword}>
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        ) : null}
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -185,10 +217,22 @@ const SignUp = () => {
                   required
                   fullWidth
                   label="Confirm Password"
-                  type="password"
+                  type={showCPassword ? "text" : "password"}
                   value={user.confirmpassword}
                   className={classes.root}
                   onChange={handleInputs}
+                  onInput={toggleConfPassIcon}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {confPassIcon ? (
+                          <IconButton onClick={toggleConfirmPassword}>
+                            {showCPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        ) : null}
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
             </Grid>

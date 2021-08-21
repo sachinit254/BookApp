@@ -1,7 +1,10 @@
 import React from "react";
+import { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import { Link as RouterLink, useHistory } from "react-router-dom";
@@ -9,8 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { CssBaseline } from "@material-ui/core";
-import { useState } from "react";
+import { CssBaseline, IconButton, InputAdornment } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& input": { color: "green" },
@@ -48,7 +50,15 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = () => {
   const classes = useStyles();
   const [details, setDetails] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
+  const [showIcon, setShowIcon] = useState(false);
+  const toggleIcon = () => {
+    setShowIcon(true);
+  };
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
   let name, value;
   const handleInputs = (e) => {
     console.log(e.target.value);
@@ -114,10 +124,22 @@ const SignIn = () => {
               name="password"
               value={details.password}
               label="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               className={classes.root}
               onChange={handleInputs}
+              onInput={toggleIcon}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {showIcon ? (
+                      <IconButton onClick={togglePassword}>
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    ) : null}
+                  </InputAdornment> 
+                ),
+              }}
             />
             <Button
               type="submit"
