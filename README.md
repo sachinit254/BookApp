@@ -1,8 +1,9 @@
 # BookApp
 
+# Client
 cd client 
 npm start
 
->>server
+# server
 cd server
 npm start
