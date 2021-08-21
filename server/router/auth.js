@@ -10,26 +10,26 @@ router.get("/", (req, res) => {
   res.send("hello world from server router files");
 });
 
-// register ka code
+// Registration
 
 router.post("/register", async (req, res) => {
   const { firstname, lastname, city, email, password, confirmpassword } = req.body;
 
-  // agar yeh sab hai to  nahin hai to kya hoga
+  // checking that every data exists or not
   if (!firstname || !lastname || !city || !email || !password || !confirmpassword) {
-    return res.status(422).json({ error: "plz filled the " });
+    return res.status(422).json({ error: "Fill all the textFields" });
   }
 
-  // agar email database main hai to mat karo register
+  // email authentication if email exists in db don't allow user to register
   try {
     const userExist = await User.findOne({ email: email });
 
     if (userExist) {
       return res.status(422).json({ error: "Email already Exist" });
     } else if (password !== confirmpassword) {
-      return res.status(422).json({ error: "password are not matching" });
+      return res.status(422).json({ error: "password doesn't match" });
     } else {
-      // nahin hai to new data add karo save karo
+      // adding user details
       const user = new User({
         firstname,
         lastname,
@@ -47,19 +47,19 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// login ka code
+// login 
 router.post("/signin", async (req, res) => {
   try {
     let token;
     const { email, password } = req.body;
-    // data dal rahe hai yah nahin
+    // making sure that user fill both the textfields
     if (!email || !password) {
-      return res.status(400).json({ error: "plz filled the data" });
+      return res.status(400).json({ error: "fill the textfields" });
     }
-    // email hai yah nahi
+    // checking if email exists
     const userLogin = await User.findOne({ email: email });
     if (userLogin) {
-      //  password sahi hai yah nahin compare password right or  wrong
+      //  comparing password
       const isMatch = await bcrypt.compare(password, userLogin.password);
 
       token = await userLogin.generateAuthToken();
@@ -72,7 +72,7 @@ router.post("/signin", async (req, res) => {
       if (!isMatch) {
         res.status(400).json({ message: "Invalid Credientials" });
       } else {
-        res.json({ message: "User login successfuly" });
+        res.json({ message: "User login successfully" });
       }
     } else {
       res.status(400).json({ message: "Invalid Credientials" });

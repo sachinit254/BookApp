@@ -56,81 +56,50 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles();
-  const [firstName, setFirstName] = useState("");
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastName, setLastName] = useState("");
-  const [lastNameError, setLastNameError] = useState(false);
-  const [city, setCity] = useState("");
-  const [cityError, setCityError] = useState(false);
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
+  const [user, setUser] = useState({
+    firstname: "",
+    lastname: "",
+    city: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
 
-  const inputs = [
-    {
-      xs: 12,
-      sm: 6,
-      error: firstNameError,
-      id: "firstName",
-      label: "First Name",
-      onChange: (e) => setFirstName(e.target.value),
-    },
-    {
-      xs: 12,
-      sm: 6,
-      error: lastNameError,
-      id: "lastName",
-      label: "Last Name",
-      onChange: (e) => setLastName(e.target.value),
-    },
-    {
-      xs: 12,
-      error: cityError,
-      id: "city",
-      label: "City",
-      onChange: (e) => setCity(e.target.value),
-    },
-    {
-      xs: 12,
-      error: emailError,
-      id: "email",
-      label: "Email address",
-      onChange: (e) => setEmail(e.target.value),
-    },
-    {
-      xs: 12,
-      error: passwordError,
-      id: "password",
-      label: "Password",
-      onChange: (e) => setPassword(e.target.value),
-    },
-  ];
+  let name, value;
+  const handleInputs = (e) => {
+    console.log(e.target.value);
+    name = e.target.name;
+    value = e.target.value;
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    setFirstNameError(false);
-    setLastNameError(false);
-    setCityError(false);
-    setEmailError(false);
-    setPasswordError(false);
-    if (firstName === "") {
-      setFirstNameError(true);
-    }
-    if (lastName === "") {
-      setLastNameError(true);
-    }
-    if (city === "") {
-      setCityError(true);
-    }
-    if (email === "") {
-      setEmailError(true);
-    }
-    if (password === "") {
-      setPasswordError(true);
-    }
+    setUser({ ...user, [name]: value });
   };
 
+  const postData = async (e) => {
+    e.preventDefault();
+    const { firstname, lastname, city, email, password, confirmpassword } = user;
+    console.log(user);
+    const res = await fetch("http://localhost:5000/register", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        firstname,
+        lastname,
+        city,
+        email,
+        password,
+        confirmpassword,
+      }),
+    });
+
+    const data = await res.json();
+    if (data.status === 422 || !data) {
+      window.alert("invalid registration");
+    } else {
+      window.alert("registration Done");
+    }
+  };
   return (
     <>
       <CssBaseline />
@@ -142,36 +111,93 @@ const SignUp = () => {
           <Typography component="h1" variant="h4" color="primary">
             Sign up
           </Typography>
-          <form className={classes.form} noValidate onSubmit={submitHandler}>
+          <form className={classes.form} noValidate method="POST">
             <Grid container className={classes.grid} spacing={2}>
-              {inputs.map((input) => {
-                return (
-                  <Grid
-                    key={input.id}
-                    item
-                    xs={input.xs}
-                    sm={input.sm ? `${input.sm}` : null}
-                  >
-                    <TextField
-                      error={input.error}
-                      onChange={input.onChange}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id={input.id}
-                      label={input.label}
-                      name={input.id}
-                      className={classes.root}
-                    />
-                  </Grid>
-                );
-              })}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="firstname"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="First Name"
+                  type="text"
+                  value={user.firstname}
+                  className={classes.root}
+                  onChange={handleInputs}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="lastname"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Last Name"
+                  type="text"
+                  value={user.lastname}
+                  className={classes.root}
+                  onChange={handleInputs}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="city"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="City"
+                  type="text"
+                  value={user.city}
+                  className={classes.root}
+                  onChange={handleInputs}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="email"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Email address"
+                  type="email"
+                  value={user.email}
+                  className={classes.root}
+                  onChange={handleInputs}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="password"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  value={user.password}
+                  className={classes.root}
+                  onChange={handleInputs}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="confirmpassword"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Confirm Password"
+                  type="password"
+                  value={user.confirmpassword}
+                  className={classes.root}
+                  onChange={handleInputs}
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
               variant="contained"
               className={classes.submit}
               fullWidth
+              onClick={postData}
             >
               Sign up
             </Button>
