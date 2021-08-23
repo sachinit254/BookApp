@@ -120,6 +120,58 @@ const SignUp = () => {
       history.push("/");
     }
   };
+
+  const textfield = [
+    {
+      name: "firstname",
+      value: `${user.firstname}`,
+      label: "First Name",
+      type: "text",
+      sm: 6,
+    },
+    {
+      name: "lastname",
+      value: `${user.lastname}`,
+      label: "Last Name",
+      type: "text",
+      sm: 6,
+    },
+    {
+      name: "city",
+      value: `${user.city}`,
+      label: "City",
+      type: "text",
+    },
+    {
+      name: "email",
+      value: `${user.email}`,
+      label: "Email Address",
+      type: "email",
+    },
+    {
+      name: "password",
+      value: `${user.password}`,
+      label: "Password",
+      unmask: true,
+      showIcon: passIcon,
+      showPass: showPassword,
+      toggleIcon: togglePassIcon,
+      togglePass: togglePassword,
+      type: "password",
+    },
+    {
+      name: "confirmpassword",
+      value: `${user.confirmpassword}`,
+      label: "Confirm Password",
+      unmask: true,
+      showIcon: confPassIcon,
+      showPass: showCPassword,
+      toggleIcon: toggleConfPassIcon,
+      togglePass: toggleConfirmPassword,
+      type: "password",
+    },
+  ];
+
   return (
     <>
       <CssBaseline />
@@ -133,108 +185,52 @@ const SignUp = () => {
           </Typography>
           <form className={classes.form} noValidate method="POST">
             <Grid container className={classes.grid} spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="firstname"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="First Name"
-                  type="text"
-                  value={user.firstname}
-                  className={classes.root}
-                  onChange={handleInputs}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="lastname"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Last Name"
-                  type="text"
-                  value={user.lastname}
-                  className={classes.root}
-                  onChange={handleInputs}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="city"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="City"
-                  type="text"
-                  value={user.city}
-                  className={classes.root}
-                  onChange={handleInputs}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="email"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Email address"
-                  type="email"
-                  value={user.email}
-                  className={classes.root}
-                  onChange={handleInputs}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="password"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Password"
-                  type={showPassword ? "text" : "password"}
-                  value={user.password}
-                  className={classes.root}
-                  onChange={handleInputs}
-                  onInput={togglePassIcon}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        {passIcon ? (
-                          <IconButton onClick={togglePassword}>
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        ) : null}
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="confirmpassword"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Confirm Password"
-                  type={showCPassword ? "text" : "password"}
-                  value={user.confirmpassword}
-                  className={classes.root}
-                  onChange={handleInputs}
-                  onInput={toggleConfPassIcon}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        {confPassIcon ? (
-                          <IconButton onClick={toggleConfirmPassword}>
-                            {showCPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        ) : null}
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
+              {textfield.map(
+                ({
+                  name,
+                  value,
+                  type,
+                  label,
+                  sm,
+                  unmask,
+                  showIcon,
+                  showPass,
+                  toggleIcon,
+                  togglePass,
+                }) => {
+                  return (
+                    <Grid item xs={12} sm={sm}>
+                      <TextField
+                        name={name}
+                        variant="outlined"
+                        required
+                        fullWidth
+                        label={label}
+                        type={showPass ? "text" : `${type}`}
+                        value={value}
+                        className={classes.root}
+                        onChange={handleInputs}
+                        onInput={toggleIcon}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              {unmask && showIcon ? (
+                                <IconButton onClick={togglePass}>
+                                  {showPass ? (
+                                    <Visibility />
+                                  ) : (
+                                    <VisibilityOff />
+                                  )}
+                                </IconButton>
+                              ) : null}
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </Grid>
+                  );
+                }
+              )}
             </Grid>
             <Button
               type="submit"
