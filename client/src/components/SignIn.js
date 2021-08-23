@@ -71,7 +71,7 @@ const SignIn = () => {
     e.preventDefault();
     const { email, password } = details;
     console.log(details);
-    const res = await fetch("http://localhost:5000/signin", {
+    const res = await fetch("/signin", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
