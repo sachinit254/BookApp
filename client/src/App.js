@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
 import StorePage from "./Pages/StorePage";
+import Profile from "./Pages/Profile";
 const theme = createTheme({
   palette: {
     primary: {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/signin" exact component={SignInPage} />
             <Route path="/signup" exact component={SignUpPage} />
             <Route path="/store" exact component={StorePage} />
+            <Route path="/profile" exact component={Profile} />
           </Switch>
         </Router>
       </ThemeProvider>
