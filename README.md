@@ -1,4 +1,5 @@
 # BookApp
+npm i 
 
 # Client
 cd client 
