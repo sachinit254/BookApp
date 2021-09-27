@@ -1,11 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const authenticate = require('../middleware/authenticate')
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import authenticate from "../middleware/authenticate.js";
+import User from "../model/userModel.js";
+import "../db/mongodbcon";
 
-require("../db/mongodbcon");
-const User = require("../model/userSchema");
+const router = express.Router();
 
 router.get("/", (req, res) => {
   res.send("hello world from server router files");
@@ -14,10 +14,18 @@ router.get("/", (req, res) => {
 // Registration
 
 router.post("/register", async (req, res) => {
-  const { firstname, lastname, city, email, password, confirmpassword } = req.body;
+  const { firstname, lastname, city, email, password, confirmpassword } =
+    req.body;
 
   // checking that every data exists or not
-  if (!firstname || !lastname || !city || !email || !password || !confirmpassword) {
+  if (
+    !firstname ||
+    !lastname ||
+    !city ||
+    !email ||
+    !password ||
+    !confirmpassword
+  ) {
     return res.status(422).json({ error: "Fill all the textFields" });
   }
 
@@ -48,7 +56,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// login 
+// login
 router.post("/signin", async (req, res) => {
   try {
     let token;
@@ -83,13 +91,16 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-
-// add here jwt 
+// add here jwt
 
 // router.get("/about", authenticate,(req, res) => {
 //   res.send(req.rootUser);
 // });
 
+// User Details
 
+router.get("http://localhost:5000/profile", async (req, res) => {
+  res.send(user);
+});
 
-module.exports = router;
+export default router;

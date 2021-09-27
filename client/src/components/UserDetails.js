@@ -20,6 +20,13 @@ const useStyles = makeStyles((theme) => ({
 
 const UserDetails = () => {
   const classes = useStyles();
+  const textfield = [
+    { name: "firstname", label: "First Name", type: "text", sm: 6 },
+    { name: "lastname", label: "Last Name", type: "text", sm: 6 },
+    { name: "city", label: "City", type: "text" },
+    { name: "email", label: "Email Address", type: "email" },
+    { name: "password", label: "Password", type: "password" },
+  ];
   return (
     <div>
       <CssBaseline />
@@ -27,57 +34,20 @@ const UserDetails = () => {
       <Box className={classes.root}>
         <form>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="First Name"
-                name="firstName"
-                required
-                fullWidth
-                type="text"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Last Name"
-                name="lastName"
-                required
-                fullWidth
-                fullWidth
-                type="text"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="City"
-                name="city"
-                required
-                fullWidth
-                type="text"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Email Address"
-                name="email"
-                required
-                fullWidth
-                type="email"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Password"
-                name="password"
-                required
-                fullWidth
-                type="password"
-                variant="outlined"
-              />
-            </Grid>
+            {textfield.map((field, index) => {
+              return (
+                <Grid item xs={12} sm={field.sm}>
+                  <TextField
+                    label={field.label}
+                    name={field.name}
+                    type={field.type}
+                    required
+                    fullWidth
+                    variant="outlined"
+                  />
+                </Grid>
+              );
+            })}
           </Grid>
         </form>
       </Box>
