@@ -113,8 +113,8 @@ const SignUp = () => {
     });
 
     const data = await res.json();
-    if (data.status === 422 || !data) {
-      window.alert("invalid registration");
+    if (res.status === 422 || !data) {
+      window.alert("Invalid credentials");
     } else {
       window.alert("registration Done");
       history.push("/");
