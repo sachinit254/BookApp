@@ -63,7 +63,7 @@ const CreateBook = asyncHandler(async (req, res) => {
 const DeleteBook = asyncHandler(async (req, res) => {
   const book = await Book.findById(req.params.id);
 
-  if (book._id.toString() !== req.params.id.toString()) {
+  if (book.user.toString() !== req.user._id.toString()) {
     res.status(401);
     throw new Error("You can't perform this action");
   }
@@ -85,7 +85,7 @@ const UpdateBook = asyncHandler(async (req, res) => {
 
   const book = await Book.findById(req.params.id);
 
-  if (book._id.toString() !== req.params.id.toString()) {
+  if (book.user.toString() !== req.user._id.toString()) {
     res.status(401);
     throw new Error("You can't perform this action");
   }
