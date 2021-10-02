@@ -1,12 +1,6 @@
 import React from "react";
-import {
-  Box,
-  CssBaseline,
-  TextField,
-  makeStyles,
-  Button,
-} from "@material-ui/core";
-
+import { Box, CssBaseline, TextField, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => {
   return {
     root: {

@@ -1,13 +1,16 @@
+import React, { useEffect } from "react";
 import {
   Box,
+  Button,
   CssBaseline,
   Grid,
-  makeStyles,
   TextField,
   Typography,
 } from "@material-ui/core";
-import React from "react";
-
+import { makeStyles } from "@material-ui/core/styles";
+import { logout } from "../actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "grid",
@@ -15,6 +18,14 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "auto",
     padding: "4rem",
+  },
+  container: {
+    position: "relative",
+  },
+  logoutBtn: {
+    position: "absolute",
+    top: "10px",
+    right: "30px",
   },
 }));
 
@@ -27,10 +38,29 @@ const UserDetails = () => {
     { name: "email", label: "Email Address", type: "email" },
     { name: "password", label: "Password", type: "password" },
   ];
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  useEffect(() => {
+    if (!userInfo) {
+      history.push("/");
+    }
+  }, [history, userInfo]);
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
   return (
-    <div>
+    <div className={classes.container}>
       <CssBaseline />
       <Typography variant="h3">User Details</Typography>
+      <Button
+        className={classes.logoutBtn}
+        variant="outlined"
+        onClick={logoutHandler}
+      >
+        Logout
+      </Button>
       <Box className={classes.root}>
         <form>
           <Grid container spacing={2}>

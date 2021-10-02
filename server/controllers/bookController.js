@@ -37,7 +37,7 @@ const getBookById = asyncHandler(async (req, res) => {
 const CreateBook = asyncHandler(async (req, res) => {
   const { title, author, postedBy, postedFrom, pic } = req.body;
 
-  if (!title || !author || !postedBy || !postedFrom) {
+  if (!title || !author || !postedBy || !postedFrom || !pic) {
     res.status(400);
     throw new Error("Please Fill all the fields");
     return;
@@ -81,7 +81,7 @@ const DeleteBook = asyncHandler(async (req, res) => {
 // @route     PUT /books/:id
 // @access    Private
 const UpdateBook = asyncHandler(async (req, res) => {
-  const { title, author } = req.body;
+  const { title, author, pic } = req.body;
 
   const book = await Book.findById(req.params.id);
 
@@ -93,7 +93,7 @@ const UpdateBook = asyncHandler(async (req, res) => {
   if (book) {
     book.title = title;
     book.author = author;
-    // book.pic = pic;
+    book.pic = pic;
 
     const updatedBook = await book.save();
     res.json(updatedBook);

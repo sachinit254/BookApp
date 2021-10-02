@@ -1,19 +1,15 @@
-import React from 'react'
+import React from "react";
 
-function SimpleDialog = (props) => {
-    const { onClose, selectedValue, open} = props;
-    
-    const handleClose = () => {
-        onClose()
-    }
+function SimpleDialog(props) {
+  const { onClose, selectedValue, open } = props;
+
+  const handleClose = () => {
+    onClose();
+  };
 }
 
 const Dialog = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  return <div></div>;
+};
 
-export default Dialog
+export default Dialog;

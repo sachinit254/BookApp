@@ -1,17 +1,25 @@
-import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+import React, { useEffect, useState } from "react";
+import {
+  Avatar,
+  Button,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  Container,
+  CssBaseline,
+  IconButton,
+  InputAdornment,
+} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { CssBaseline, IconButton, InputAdornment } from "@material-ui/core";
-import { Link as RouterLink, useHistory } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../actions/userActions";
+import ErrorMessage from "./ErrorMessage";
+import Loading from "./Loading";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& input": { color: "green" },
@@ -58,124 +66,40 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles();
-  const [user, setUser] = useState({
-    firstname: "",
-    lastname: "",
-    city: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-  });
-  const history = useHistory();
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [city, setCity] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [showCPassword, setShowConfPassword] = useState(false);
-  const [passIcon, setPassIcon] = useState(false);
-  const [confPassIcon, setConfPassIcon] = useState(false);
-  const togglePassIcon = () => {
-    setPassIcon(true);
-  };
-  const toggleConfPassIcon = () => {
-    setConfPassIcon(true);
-  };
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-  const toggleConfirmPassword = () => {
-    setShowConfPassword(!showCPassword);
-  };
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
-  let name, value;
-  const handleInputs = (e) => {
-    console.log(e.target.value);
-    name = e.target.name;
-    value = e.target.value;
-    setUser({ ...user, [name]: value });
-  };
-
-  const postData = async (e) => {
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const submitHandler = (e) => {
     e.preventDefault();
-    const { firstname, lastname, city, email, password, confirmpassword } =
-      user;
-    console.log(user);
-    const res = await fetch("/register", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        firstname,
-        lastname,
-        city,
-        email,
-        password,
-        confirmpassword,
-      }),
-    });
-
-    const data = await res.json();
-    if (res.status === 422 || !data) {
-      window.alert("Invalid credentials");
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
     } else {
-      window.alert("registration Done");
-      history.push("/");
+      dispatch(register(firstname, lastname, city, email, password));
     }
   };
-
-  const textfield = [
-    {
-      name: "firstname",
-      value: `${user.firstname}`,
-      label: "First Name",
-      type: "text",
-      sm: 6,
-    },
-    {
-      name: "lastname",
-      value: `${user.lastname}`,
-      label: "Last Name",
-      type: "text",
-      sm: 6,
-    },
-    {
-      name: "city",
-      value: `${user.city}`,
-      label: "City",
-      type: "text",
-    },
-    {
-      name: "email",
-      value: `${user.email}`,
-      label: "Email Address",
-      type: "email",
-    },
-    {
-      name: "password",
-      value: `${user.password}`,
-      label: "Password",
-      unmask: true,
-      showIcon: passIcon,
-      showPass: showPassword,
-      toggleIcon: togglePassIcon,
-      togglePass: togglePassword,
-      type: "password",
-    },
-    {
-      name: "confirmpassword",
-      value: `${user.confirmpassword}`,
-      label: "Confirm Password",
-      unmask: true,
-      showIcon: confPassIcon,
-      showPass: showCPassword,
-      toggleIcon: toggleConfPassIcon,
-      togglePass: toggleConfirmPassword,
-      type: "password",
-    },
-  ];
-
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/");
+    }
+  }, [history, userInfo]);
   return (
     <>
       <CssBaseline />
       <Container component="main" maxWidth="xs">
+        {error && <ErrorMessage severity="error">{error}</ErrorMessage>}
+        {message && <ErrorMessage severity="error">{message}</ErrorMessage>}
+        {loading && <Loading />}
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -183,61 +107,112 @@ const SignUp = () => {
           <Typography component="h1" variant="h4" color="primary">
             Sign up
           </Typography>
-          <form className={classes.form} noValidate method="POST">
+          <form className={classes.form} onSubmit={submitHandler}>
             <Grid container className={classes.grid} spacing={2}>
-              {textfield.map(
-                ({
-                  name,
-                  value,
-                  type,
-                  label,
-                  sm,
-                  unmask,
-                  showIcon,
-                  showPass,
-                  toggleIcon,
-                  togglePass,
-                }) => {
-                  return (
-                    <Grid item xs={12} sm={sm}>
-                      <TextField
-                        name={name}
-                        variant="outlined"
-                        required
-                        fullWidth
-                        label={label}
-                        type={showPass ? "text" : `${type}`}
-                        value={value}
-                        className={classes.root}
-                        onChange={handleInputs}
-                        onInput={toggleIcon}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              {unmask && showIcon ? (
-                                <IconButton onClick={togglePass}>
-                                  {showPass ? (
-                                    <Visibility />
-                                  ) : (
-                                    <VisibilityOff />
-                                  )}
-                                </IconButton>
-                              ) : null}
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                  );
-                }
-              )}
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="firstname"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="First Name"
+                  value={firstname}
+                  className={classes.root}
+                  onChange={(e) => setFirstname(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  name="lastname"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Last Name"
+                  value={lastname}
+                  className={classes.root}
+                  onChange={(e) => setLastname(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="city"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="City"
+                  value={city}
+                  className={classes.root}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="email"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Email"
+                  value={email}
+                  className={classes.root}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="password"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Password"
+                  value={password}
+                  className={classes.root}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type={showPassword ? "text" : "password"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="confirmPassword"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Confirm Password"
+                  value={confirmPassword}
+                  className={classes.root}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  type={showPassword ? "text" : "password"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
             </Grid>
             <Button
               type="submit"
               variant="contained"
               className={classes.submit}
               fullWidth
-              onClick={postData}
             >
               Sign up
             </Button>

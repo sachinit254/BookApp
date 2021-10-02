@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Box,
+  Hidden,
+  Link,
+  ListItem,
+  Drawer,
+  CssBaseline,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Box, Hidden, Link, ListItem } from "@material-ui/core";
-import { Drawer } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { CssBaseline } from "@material-ui/core";
-const navLinks = [
-  { label: "Home", path: "/" },
-  { label: "Store", path: "/store" },
-  { label: "About", path: "/about" },
-  { label: "SignIn", path: "/signin" },
-  { label: "Profile", path: "/profile" },
-];
+import { useSelector } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    borderBottom: "2px solid #016700",
+    borderBottom: "1px solid #016700",
   },
   menuButton: {
     marginRight: 0,
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     "&:hover": {
       textDecoration: "none",
-      borderBottom: "2px solid #016700",
+      borderBottom: "1px solid #016700",
     },
   },
   toolbar: theme.mixins.toolbar,
@@ -63,15 +63,39 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
   },
   listitem: {
-    display: "block",
+    display: "flex",
+    flexDirection: "column",
     textAlign: "center",
     color: "black",
   },
   listitemLink: {
     fontWeight: 550,
-    padding: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 5,
     "&:hover": {
-      borderBottom: "2px solid #007F00",
+      borderBottom: "1px solid #007F00",
+      textDecoration: "none",
+    },
+  },
+  headerContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  sidebarContainer: {
+    display: "flex",
+    flexDirection: "column",
+    padding: 0,
+    margin: 0,
+  },
+  sidebarLink: {
+    fontWeight: 550,
+    marginTop: 5,
+    marginBottom: 5,
+    color: "#007f00",
+    padding: 5,
+    "&:hover": {
+      borderBottom: "1px solid #007F00",
       textDecoration: "none",
     },
   },
@@ -83,6 +107,8 @@ export default function ButtonAppBar() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   return (
     <>
@@ -118,21 +144,70 @@ export default function ButtonAppBar() {
               </IconButton>
             </Hidden>
             <Hidden smDown>
-              <Box p={2}>
-                {navLinks.map(({ label, path }) => {
-                  return (
+              <div className={classes.headerContainer} p={2}>
+                <Link
+                  className={classes.link}
+                  component={RouterLink}
+                  to="/"
+                  variant="body1"
+                  color="primary"
+                >
+                  Home
+                </Link>
+                <Link
+                  className={classes.link}
+                  component={RouterLink}
+                  to="/about"
+                  variant="body1"
+                  color="primary"
+                >
+                  About
+                </Link>
+                <Link
+                  className={classes.link}
+                  component={RouterLink}
+                  to="/store"
+                  variant="body1"
+                  color="primary"
+                >
+                  Store
+                </Link>
+
+                {userInfo ? (
+                  <div>
                     <Link
                       className={classes.link}
                       component={RouterLink}
-                      to={path}
+                      to="/profile"
                       variant="body1"
                       color="primary"
                     >
-                      {label}
+                      Profile
                     </Link>
-                  );
-                })}
-              </Box>
+                  </div>
+                ) : (
+                  <div>
+                    <Link
+                      className={classes.link}
+                      component={RouterLink}
+                      to="/login"
+                      variant="body1"
+                      color="primary"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      className={classes.link}
+                      component={RouterLink}
+                      to="/signup"
+                      variant="body1"
+                      color="primary"
+                    >
+                      SignUp
+                    </Link>
+                  </div>
+                )}
+              </div>
             </Hidden>
           </Toolbar>
         </AppBar>
@@ -150,22 +225,73 @@ export default function ButtonAppBar() {
                 <CloseIcon />
               </IconButton>
             </Box>
-            {navLinks.map(({ label, path }) => {
-              return (
-                <ListItem className={classes.listitem}>
+
+            <ListItem className={classes.listitem}>
+              <Link
+                variant="body1"
+                className={classes.listitemLink}
+                color="secondary"
+                component={RouterLink}
+                to="/"
+                onClick={handleDrawerToggle}
+              >
+                Home
+              </Link>
+              <Link
+                variant="body1"
+                className={classes.listitemLink}
+                color="secondary"
+                component={RouterLink}
+                to="/about"
+                onClick={handleDrawerToggle}
+              >
+                About
+              </Link>
+              <Link
+                variant="body1"
+                className={classes.listitemLink}
+                color="secondary"
+                component={RouterLink}
+                to="/store"
+                onClick={handleDrawerToggle}
+              >
+                Store
+              </Link>
+              {userInfo ? (
+                <div className={classes.sidebarContainer}>
                   <Link
-                    variant="body1"
-                    className={classes.listitemLink}
-                    color="secondary"
+                    className={classes.sidebarLink}
                     component={RouterLink}
-                    to={path}
+                    to="/profile"
+                    variant="body1"
                     onClick={handleDrawerToggle}
                   >
-                    {label}
+                    Profile
                   </Link>
-                </ListItem>
-              );
-            })}
+                </div>
+              ) : (
+                <div className={classes.sidebarContainer}>
+                  <Link
+                    className={classes.sidebarLink}
+                    component={RouterLink}
+                    to="/login"
+                    variant="body1"
+                    onClick={handleDrawerToggle}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    className={classes.sidebarLink}
+                    component={RouterLink}
+                    to="/signup"
+                    variant="body1"
+                    onClick={handleDrawerToggle}
+                  >
+                    SignUp
+                  </Link>
+                </div>
+              )}
+            </ListItem>
           </Drawer>
         </Hidden>
       </div>

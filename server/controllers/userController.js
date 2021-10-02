@@ -32,7 +32,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @access          Public
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { firstname, lastname, city, email, password } = req.body;
+  const { firstname, lastname, city, email, password, profilePic } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -73,6 +73,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.lastname = req.body.lastname || user.lastname;
     user.city = req.body.city || user.city;
     user.email = req.body.email || user.email;
+
     if (req.body.password) {
       user.password = req.body.password;
     }

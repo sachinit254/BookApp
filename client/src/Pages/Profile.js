@@ -1,4 +1,4 @@
-import { CssBaseline } from "@material-ui/core";
+import { CssBaseline } from "@mui/material";
 import React from "react";
 import UserDetails from "../components/UserDetails";
 const Profile = () => {
