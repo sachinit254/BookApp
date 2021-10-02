@@ -6,9 +6,9 @@ import {
   CardMedia,
   CssBaseline,
   Grid,
-  makeStyles,
   Typography,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import PopUp from "./PopUp";
 import { bookData } from "../../src/mockData";
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: theme.spacing(3),
     width: 300,
-    display:'flex',
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     [theme.breakpoints.only("sm")]: {

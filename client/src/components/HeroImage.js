@@ -1,5 +1,6 @@
-import { CssBaseline, Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
+import { CssBaseline, Grid, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import bookSvg from "../images/undraw_book_lover_mkck.svg";
 const useStyles = makeStyles((theme) => ({
   root: {

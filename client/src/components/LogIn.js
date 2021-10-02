@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import {
+  Avatar,
+  Button,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  Container,
+  CssBaseline,
+  IconButton,
+  InputAdornment,
+} from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import { Link as RouterLink, useHistory } from "react-router-dom";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
+import ErrorMessage from "./ErrorMessage";
+import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { CssBaseline, IconButton, InputAdornment } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../actions/userActions";
+import Loading from "./Loading";
+import { useHistory } from "react-router";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& input": { color: "green" },
@@ -47,53 +56,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
+const LogIn = () => {
   const classes = useStyles();
-  const [details, setDetails] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const history = useHistory();
   const [showIcon, setShowIcon] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+
   const toggleIcon = () => {
     setShowIcon(true);
   };
   const togglePassword = () => {
     setShowPassword(!showPassword);
   };
-  let name, value;
-  const handleInputs = (e) => {
-    console.log(e.target.value);
-    name = e.target.name;
-    value = e.target.value;
-    setDetails({ ...details, [name]: value });
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password));
   };
 
-  const postData = async (e) => {
-    e.preventDefault();
-    const { email, password } = details;
-    console.log(details);
-    const res = await fetch("/signin", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
-
-    const data = await res.json();
-    if (res.status === 400 || !data) {
-      window.alert("Invalid credentials");
-    } else {
-      window.alert("Signin successfully");
+  useEffect(() => {
+    if (userInfo) {
       history.push("/");
     }
-  };
+  }, [history,userInfo]);
+
   return (
     <>
       <CssBaseline />
       <Container component="main" maxWidth="xs">
+        {error && <ErrorMessage severity="error">{error}</ErrorMessage>}
+        {loading && <Loading />}
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -101,7 +98,7 @@ const SignIn = () => {
           <Typography component="h1" variant="h4" color="primary">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate method="POST">
+          <form className={classes.form} onSubmit={submitHandler}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -111,10 +108,10 @@ const SignIn = () => {
               type="email"
               label="Email address"
               name="email"
-              value={details.email}
+              value={email}
               autofocus
               className={classes.root}
-              onChange={handleInputs}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -122,22 +119,22 @@ const SignIn = () => {
               required
               fullWidth
               name="password"
-              value={details.password}
+              value={password}
               label="password"
               type={showPassword ? "text" : "password"}
               id="password"
               className={classes.root}
-              onChange={handleInputs}
+              onChange={(e) => setPassword(e.target.value)}
               onInput={toggleIcon}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     {showIcon ? (
                       <IconButton onClick={togglePassword}>
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                        {showPassword ? <Visibility /> : <VisibilityOffIcon />}
                       </IconButton>
                     ) : null}
-                  </InputAdornment> 
+                  </InputAdornment>
                 ),
               }}
             />
@@ -146,9 +143,8 @@ const SignIn = () => {
               variant="contained"
               className={classes.submit}
               fullWidth
-              onClick={postData}
             >
-              Sign in
+              Login
             </Button>
             <Grid container>
               <Grid item xs>
@@ -174,4 +170,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default LogIn;

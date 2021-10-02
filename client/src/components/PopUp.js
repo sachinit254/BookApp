@@ -1,11 +1,6 @@
-import {
-  Box,
-  Button,
-  makeStyles,
-  Popover,
-  Typography,
-} from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import { Box, Button, Popover, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Close from "@material-ui/icons/Close";
 import { bookData } from "../mockData";
 const useStyles = makeStyles((theme) => ({
   box: {
