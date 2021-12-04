@@ -13,8 +13,10 @@ const getBooks = asyncHandler(async (req, res) => {
 // @route     GET /books/userBooks
 // @access    Private
 const getUserBooks = asyncHandler(async (req, res) => {
-  const books = await Book.find({ user: req.user._id });
-  res.json(books);
+  if (req.user._id.match(/^[0-9a-fA-F]{24}$/)) {
+    const books = await Book.find({ user: req.user._id });
+    res.json(books);
+  }
 });
 
 // @desc      Fetch single Book
@@ -35,9 +37,9 @@ const getBookById = asyncHandler(async (req, res) => {
 // @route      POST /books/createBook
 // @access     Private
 const CreateBook = asyncHandler(async (req, res) => {
-  const { title, author, postedBy, postedFrom, pic } = req.body;
+  const { title, author, pic, from, by } = req.body;
 
-  if (!title || !author || !postedBy || !postedFrom || !pic) {
+  if (!title || !author || !pic) {
     res.status(400);
     throw new Error("Please Fill all the fields");
     return;
@@ -46,9 +48,9 @@ const CreateBook = asyncHandler(async (req, res) => {
       user: req.user._id,
       title,
       author,
-      postedBy,
-      postedFrom,
       pic,
+      from,
+      by,
     });
 
     const createdBook = await book.save();

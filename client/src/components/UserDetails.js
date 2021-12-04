@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
   CssBaseline,
-  Grid,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -21,39 +20,51 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     position: "relative",
+    marginBottom: "400px",
   },
   logoutBtn: {
     position: "absolute",
     top: "10px",
-    right: "30px",
+    left: "20px",
+  },
+  form: {
+    position: "absolute",
+    top: "100px",
+    right: "5vw",
+    display: "flex",
+    flexDirection: "column",
+  },
+  textfield: {
+    width: "40vw",
+    marginBottom: "20px",
   },
 }));
 
-const UserDetails = () => {
+const UserDetails = ({ user, logoutHandler }) => {
   const classes = useStyles();
-  const textfield = [
-    { name: "firstname", label: "First Name", type: "text", sm: 6 },
-    { name: "lastname", label: "Last Name", type: "text", sm: 6 },
-    { name: "city", label: "City", type: "text" },
-    { name: "email", label: "Email Address", type: "email" },
-    { name: "password", label: "Password", type: "password" },
-  ];
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-  useEffect(() => {
-    if (!userInfo) {
-      history.push("/");
-    }
-  }, [history, userInfo]);
-  const logoutHandler = () => {
-    dispatch(logout());
-  };
+  // const [user, setUser] = useState({});
+  console.log(`user`, user);
+  // const dispatch = useDispatch();
+  // const history = useHistory();
+  // const userLogin = useSelector((state) => state.userLogin);
+  // const { userInfo } = userLogin;
+  // console.log(`userInfo`, userInfo);
+  // useEffect(() => {
+  //   if (!userInfo) {
+  //     history.push("/");
+  //   } else {
+  //     setUser(userInfo);
+  //   }
+  // }, [history, userInfo]);
+
+  // const logoutHandler = () => {
+  //   dispatch(logout());
+  // };
+
   return (
     <div className={classes.container}>
       <CssBaseline />
-      <Typography variant="h3">User Details</Typography>
+
       <Button
         className={classes.logoutBtn}
         variant="outlined"
@@ -62,23 +73,47 @@ const UserDetails = () => {
         Logout
       </Button>
       <Box className={classes.root}>
-        <form>
-          <Grid container spacing={2}>
-            {textfield.map((field, index) => {
-              return (
-                <Grid item xs={12} sm={field.sm}>
-                  <TextField
-                    label={field.label}
-                    name={field.name}
-                    type={field.type}
-                    required
-                    fullWidth
-                    variant="outlined"
-                  />
-                </Grid>
-              );
-            })}
-          </Grid>
+        <form className={classes.form}>
+          <TextField
+            className={classes.textfield}
+            label="First Name"
+            name="firstname"
+            type="text"
+            value={user?.firstname}
+            required
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            className={classes.textfield}
+            label="Last Name"
+            name="lastname"
+            type="text"
+            value={user?.lastname}
+            required
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            className={classes.textfield}
+            label="City"
+            name="city"
+            type="text"
+            value={user?.city}
+            required
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            className={classes.textfield}
+            label="Email"
+            name="email"
+            type="email"
+            value={user?.email}
+            required
+            fullWidth
+            variant="outlined"
+          />
         </form>
       </Box>
     </div>

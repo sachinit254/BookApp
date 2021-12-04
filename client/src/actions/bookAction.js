@@ -12,6 +12,9 @@ import {
   BOOK_UPDATE_FAIL,
   BOOK_UPDATE_REQUEST,
   BOOK_UPDATE_SUCCESS,
+  USER_BOOKS_FAIL,
+  USER_BOOKS_REQUEST,
+  USER_BOOKS_SUCCESS,
 } from "../constants/bookConstants";
 
 export const listBooks = () => async (dispatch, getState) => {
@@ -43,8 +46,34 @@ export const listBooks = () => async (dispatch, getState) => {
   }
 };
 
+export const listUserBooks = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_BOOKS_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get("/books/userBooks", config);
+
+    dispatch({
+      type: USER_BOOKS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_BOOKS_FAIL, payload: message });
+  }
+};
+
 export const createBook =
-  (title, author, postedBy, postedFrom, pic) => async (dispatch, getState) => {
+  (title, author, pic, from, by) => async (dispatch, getState) => {
     try {
       dispatch({
         type: BOOK_CREATE_REQUEST,
@@ -63,7 +92,7 @@ export const createBook =
 
       const { data } = await axios.post(
         `/books/createBook`,
-        { title, author, postedBy, postedFrom, pic },
+        { title, author, pic, from, by },
         config
       );
 
@@ -134,7 +163,7 @@ export const updateBook =
       };
 
       const { data } = await axios.put(
-        `/books/${id}`,
+        `/books`,
         { title, author, pic },
         config
       );
@@ -154,3 +183,5 @@ export const updateBook =
       });
     }
   };
+
+  

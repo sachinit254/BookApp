@@ -9,14 +9,16 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listBooks, listUserBooks } from "../actions/bookAction";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { deleteBook } from "../actions/bookAction";
+import ErrorMessage from "./ErrorMessage";
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: theme.spacing(3),
     width: 300,
-    position: "relative",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -66,19 +68,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Cards = ({ books, loading, error, userInfo, setCounter, counter }) => {
+const Cards = () => {
   const classes = useStyles();
+
   const dispatch = useDispatch();
+  const history = useHistory();
+  const bookList = useSelector((state) => state.bookList);
+  const { loading, error, books } = bookList;
+  console.log(`books`, books);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  console.log(`userInfo`, userInfo)
+  useEffect(() => {
+    dispatch(listUserBooks());
+    if (!userInfo) {
+      history.push("/");
+    }
+  }, [dispatch, userInfo, history]);
+
+  console.log(`books`, books);
 
   return (
     <>
       <CssBaseline />
       <Box m={3}>
-        {/* {error && <ErrorMessage>{error}</ErrorMessage>} */}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
         {loading && <loading />}
         <Grid container spacing={3} justifyContent="center">
           {books?.map((book) => {
             const bookId = book._id;
+            console.log(`bookId`, bookId);
             return (
               <Grid
                 key={book.id}
@@ -89,22 +108,12 @@ const Cards = ({ books, loading, error, userInfo, setCounter, counter }) => {
                 lg={3}
                 className={classes.gridItem}
               >
-                <Card className={classes.card} variant="outlined" id={book.id}>
-                  {userInfo ? (
-                    <button
-                      className="absolute top-2 right-2 text-gray-500 hover:text-gray-900 hover:outline-black w-5 h-5"
-                      onClick={() => {
-                        window.confirm(
-                          "Are you sure you want to delete this book?"
-                        );
-                        dispatch(deleteBook(bookId));
-                        setCounter(counter + 1);
-                      }}
-                    >
-                      X
-                    </button>
-                  ) : null}
-                  <Link to={`/books/${bookId}`}>
+                <Link to={`/books/${bookId}`}>
+                  <Card
+                    className={classes.card}
+                    variant="outlined"
+                    id={book.id}
+                  >
                     <CardActionArea>
                       <CardMedia
                         className={classes.media}
@@ -121,8 +130,8 @@ const Cards = ({ books, loading, error, userInfo, setCounter, counter }) => {
                         </Typography>
                       </CardContent>
                     </CardActionArea>
-                  </Link>
-                </Card>
+                  </Card>
+                </Link>
               </Grid>
             );
           })}
