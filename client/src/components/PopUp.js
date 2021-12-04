@@ -1,7 +1,6 @@
 import { Box, Button, Popover, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Close from "@material-ui/icons/Close";
-import { bookData } from "../mockData";
 const useStyles = makeStyles((theme) => ({
   box: {
     width: 280,
@@ -11,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PopUp = ({ open, handleClick, handleClose, anchorEl, title, bookId }) => {
+const PopUp = ({ open, handleClick, handleClose, anchorEl, title, books }) => {
   const classes = useStyles();
   const id = open ? "simple-popover" : undefined;
   return (
@@ -31,35 +30,33 @@ const PopUp = ({ open, handleClick, handleClose, anchorEl, title, bookId }) => {
         }}
       >
         <Box className={classes.box}>
-          {bookData
-            .filter((book) => bookId === String(book.id))
-            .map((filteredBook) => (
-              <div>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "end",
-                  }}
-                >
-                  <Button style={{ marginLeft: "auto" }} onClick={handleClose}>
-                    <Close />
-                  </Button>
-                </div>
-                <Typography variant="h6" className={classes.typography}>
-                  Title: {filteredBook.title}
-                </Typography>
-                <Typography variant="body1" className={classes.typography}>
-                  Author: {filteredBook.Author}
-                </Typography>
-                <Typography variant="body1" className={classes.typography}>
-                  Posted by: {filteredBook.by}
-                </Typography>
-                <Typography variant="body1" className={classes.typography}>
-                  Posted from: {filteredBook.location}
-                </Typography>
+          {books.map((book) => (
+            <div>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "end",
+                }}
+              >
+                <Button style={{ marginLeft: "auto" }} onClick={handleClose}>
+                  <Close />
+                </Button>
               </div>
-            ))}
+              <Typography variant="h6" className={classes.typography}>
+                Title: {book.title}
+              </Typography>
+              <Typography variant="body1" className={classes.typography}>
+                Author: {book.Author}
+              </Typography>
+              <Typography variant="body1" className={classes.typography}>
+                Posted by: {book.by}
+              </Typography>
+              <Typography variant="body1" className={classes.typography}>
+                Posted from: {book.location}
+              </Typography>
+            </div>
+          ))}
         </Box>
       </Popover>
     </div>

@@ -1,12 +1,14 @@
 import { CssBaseline } from "@mui/material";
 import React from "react";
+import BookForm from "../components/BookForm";
 import Cards from "../components/Cards";
 import SearchBar from "../components/SearchBar";
 const StorePage = () => {
   return (
     <>
       <CssBaseline />
-      <SearchBar/>
+      <SearchBar />
+      <BookForm />
       <Cards />
     </>
   );

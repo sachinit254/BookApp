@@ -45,14 +45,22 @@ const useStyles = makeStyles((theme) => {
     },
     button: {
       textTransform: "capitalize",
-      fontSize: "20px",
+      fontSize: "1.2rem",
+      height: "55px",
       [theme.breakpoints.only("xs")]: {
         width: "25%",
       },
     },
+    uploadBtn: {
+      fontSize: "1.2rem",
+      textTransform: "none",
+      height: "55px",
+      position: "relative",
+      left: "6rem",
+    },
   };
 });
-const SearchBar = () => {
+const SearchBar = ({ setShow }) => {
   const classes = useStyles();
   return (
     <>
@@ -66,15 +74,15 @@ const SearchBar = () => {
           variant="outlined"
           color="primary"
         />
-        <Button className={classes.button} variant="contained" color="primary">
-          <lord-icon
-            src="https://cdn.lordicon.com/msoeawqm.json"
-            trigger="click"
-            colors="primary:#ffffff,secondary:#ffffff"
-            stroke="100"
-            scale="65"
-            style={{ width: "40px", height: "40px" }}
-          ></lord-icon>
+        <Button className={classes.button} variant="outlined">
+          Search
+        </Button>
+        <Button
+          className={classes.uploadBtn}
+          variant="outlined"
+          onClick={() => setShow(true)}
+        >
+          Upload
         </Button>
       </Box>
     </>

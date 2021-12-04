@@ -10,19 +10,19 @@ const bookSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    postedBy: {
-      type: String,
-      required: true,
-    },
-    postedFrom: {
-      type: String,
-      required: true,
-    },
     pic: {
       type: String,
       required: true,
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    },
+    from: {
+      type: String,
+      required: true,
+    },
+    by: {
+      type: String,
+      required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -32,7 +32,8 @@ const bookSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
+  { typeKey: "$type" }
 );
 
 const Book = mongoose.model("Book", bookSchema);

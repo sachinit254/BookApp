@@ -6,6 +6,7 @@ import {
   bookDeleteReducer,
   bookListReducer,
   bookUpdateReducer,
+  userBookListReducer,
 } from "../reducers/bookReducers";
 import {
   userLoginReducer,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userUpdate: userUpdateReducer,
   bookList: bookListReducer,
+  userBookList: userBookListReducer,
   bookCreate: bookCreateReducer,
   bookUpdate: bookUpdateReducer,
   bookDelete: bookDeleteReducer,
@@ -38,6 +40,5 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
-
 
 export default store;
