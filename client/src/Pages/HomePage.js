@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import HeroImage from "../components/HeroImage";
+import HeroSection from "../components/HeroSection";
 import Cards from "../components/Cards";
 import { CssBaseline } from "@mui/material";
 import SearchBar from "../components/SearchBar";
@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <div>
       <CssBaseline />
-      <HeroImage />
+      <HeroSection />
       <SearchBar show={show} setShow={setShow} />
       {show && <BookForm show={show} setShow={setShow} />}
       <Cards books={books} loading={loading} error={error} />
