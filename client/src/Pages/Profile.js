@@ -19,7 +19,7 @@ const Profile = () => {
   const [counter, setCounter] = useState(0);
   useEffect(() => {
     if (!userInfo) {
-      history.push("/");
+      history.push("/login");
     } else {
       setUser(userInfo);
     }
