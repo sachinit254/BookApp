@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import Cards from "../components/Cards";
 import { CssBaseline } from "@mui/material";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/UploadButton";
 import BookForm from "../components/BookForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -27,13 +27,11 @@ const Home = () => {
 
   console.log(`books`, books);
   return (
-    <div>
-      <CssBaseline />
+    <>
       <HeroSection />
-      <SearchBar show={show} setShow={setShow} />
       {show && <BookForm show={show} setShow={setShow} />}
-      <Cards books={books} loading={loading} error={error} />
-    </div>
+      <Cards books={books} loading={loading} error={error} show={show} setShow={setShow} />
+    </>
   );
 };
 
