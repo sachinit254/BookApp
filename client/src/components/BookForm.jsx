@@ -148,79 +148,118 @@ const BookForm = ({ show, setShow }) => {
     return;
   }
   return (
-    <Container className={classes.container}>
-      <IconButton
-        className={classes.closeBtn}
-        onClick={() => setShow(false)}
-        aria-label="close"
-      >
-        <CloseIcon />
-      </IconButton>
-      <form className={classes.Form} onSubmit={submitHandler}>
-        <Typography className={classes.heading} variant="h5">
-          Upload Book
-        </Typography>
-        <TextField
-          className={classes.textField}
-          id="outlined-basic"
-          label="Book Title"
-          variant="outlined"
-          fullWidth
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <TextField
-          className={classes.textField}
-          id="outlined-basic"
-          label="Author Name"
-          variant="outlined"
-          fullWidth
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
-        <div className={classes.inputSection}>
-          <input
-            ref={ref}
-            accept="image/*"
-            className={classes.input}
-            id="contained-button-file"
-            single
-            type="file"
-            onChange={(e) => uploadPic(e.target.files[0])}
-          />
-          <label className={classes.inputBtn} htmlFor="contained-button-file">
-            <Button variant="contained" component="span">
-              Upload Pic
-            </Button>
-          </label>
-          {pic && (
-            <div>
-              <img
-                className={classes.preview}
-                src={pic}
-                alt="Thumb"
-                // onChange={(e) => imageChange(e)}
-              />
-              <Button
-                className={classes.removeBtn}
-                variant="contained"
-                onClick={(e) => imageRemove(e)}
+    <>
+      {/* // <Container className={classes.container}>
+  //   <IconButton
+  //     className={classes.closeBtn}
+  //     onClick={() => setShow(false)}
+  //     aria-label="close"
+  //   >
+  //     <CloseIcon />
+  //   </IconButton>
+  //   <form className={classes.Form} onSubmit={submitHandler}>
+  //     <Typography className={classes.heading} variant="h5">
+  //       Upload Book
+  //     </Typography>
+  //     <TextField
+  //       className={classes.textField}
+  //       id="outlined-basic"
+  //       label="Book Title"
+  //       variant="outlined"
+  //       fullWidth
+  //       value={title}
+  //       onChange={(e) => setTitle(e.target.value)}
+  //     />
+  //     <TextField
+  //       className={classes.textField}
+  //       id="outlined-basic"
+  //       label="Author Name"
+  //       variant="outlined"
+  //       fullWidth
+  //       value={author}
+  //       onChange={(e) => setAuthor(e.target.value)}
+  //     />
+  //     <div className={classes.inputSection}>
+  //       <input
+  //         ref={ref}
+  //         accept="image/*"
+  //         className={classes.input}
+  //         id="contained-button-file"
+  //         single
+  //         type="file"
+  //         onChange={(e) => uploadPic(e.target.files[0])}
+  //       />
+  //       <label className={classes.inputBtn} htmlFor="contained-button-file">
+  //         <Button variant="contained" component="span">
+  //           Upload Pic
+  //         </Button>
+  //       </label>
+  //       {pic && (
+  //         <div>
+  //           <img
+  //             className={classes.preview}
+  //             src={pic}
+  //             alt="Thumb"
+  //             // onChange={(e) => imageChange(e)}
+  //           />
+  //           <Button
+  //             className={classes.removeBtn}
+  //             variant="contained"
+  //             onClick={(e) => imageRemove(e)}
+  //           >
+  //             Remove Pic
+  //           </Button>
+  //         </div>
+  //       )}
+  //     </div>
+  //     <Button
+  //       type="submit"
+  //       className={classes.submitBtn}
+  //       onClick={(e) => submitHandler(e)}
+  //       fullWidth
+  //     >
+  //       Submit
+  //     </Button>
+  //   </form>
+  // </Container> */}
+
+      <div className="bg-darkslategray">
+        <div className="container h-80 mx-auto">
+          <div className="w-1/4 h-full bg-paleturquoise mx-auto rounded-lg">
+            <div className="flex justify-end">
+              <button
+                className="block w-6 h-6 m-1 rounded-md hover:bg-darkslategray hover:text-white"
+                onClick={() => setShow(false)}
               >
-                Remove Pic
-              </Button>
+                X
+              </button>
             </div>
-          )}
+            <div className="flex justify-center my-4">
+              <input
+                className="w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                type="text"
+                placeholder="Title"
+              />
+            </div>
+            <div className="flex justify-center mb-4">
+              <input
+                type="text"
+                className="w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                placeholder="Author"
+              />
+            </div>
+            <div>
+              <div>
+                <input type="file" />
+                <button className="block">Remove</button>
+              </div>
+              <div></div>
+            </div>
+            <button>Save</button>
+          </div>
         </div>
-        <Button
-          type="submit"
-          className={classes.submitBtn}
-          onClick={(e) => submitHandler(e)}
-          fullWidth
-        >
-          Submit
-        </Button>
-      </form>
-    </Container>
+      </div>
+    </>
   );
 };
 

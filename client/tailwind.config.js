@@ -4,7 +4,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-       poppins: ["Poppins"],
+        poppins: ["Poppins"],
+      },
+      colors: {
+        darkslategray: "#1e6262",
+        paleturquoise: "#b4f1f1",
+        azure: "#ecfffb",
       },
     },
   },
