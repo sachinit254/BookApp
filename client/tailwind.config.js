@@ -11,6 +11,10 @@ module.exports = {
         paleturquoise: "#b4f1f1",
         azure: "#ecfffb",
       },
+      height: {
+        74: "304px",
+        85: "380px",
+      },
     },
   },
   variants: {

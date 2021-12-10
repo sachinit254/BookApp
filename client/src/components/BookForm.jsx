@@ -1,71 +1,63 @@
-import {
-  Button,
-  Container,
-  makeStyles,
-  TextField,
-  Typography,
-  IconButton,
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { createBook } from "../actions/bookAction";
-const useStyles = makeStyles((theme) => ({
-  container: {
-    margin: "4rem auto 4rem",
-    width: "30vw",
-    height: "70vh",
-    position: "relative",
-    backgroundColor: "whitesmoke",
-  },
-  Form: {
-    position: "absolute",
-    top: "2rem",
-    left: "50%",
-    transform: "translate(-50%)",
-    width: "80%",
-    padding: "0rem 1rem",
-  },
-  heading: {
-    textAlign: "center",
-    marginBottom: "2rem",
-  },
-  textField: {
-    marginBottom: "1rem",
-  },
-  inputSection: {
-    height: "110px",
-    marginBottom: "1rem",
-  },
-  input: {
-    display: "none",
-  },
-  preview: {
-    position: "relative",
-    top: "-33px",
-    left: "10rem",
-    borderRadius: "10px",
-    width: "100px",
-    height: "100px",
-  },
-  removeBtn: {
-    position: "relative",
-    top: "-68px",
-    right: "5.6rem",
-    fontSize: "0.7rem",
-  },
-  submitBtn: {
-    outline: "1px solid black",
-  },
-  closeBtn: {
-    position: "relative",
-    top: "10px",
-    left: "20rem",
-  },
-}));
+import noImage from "../images/1024px-No_image_available.svg.png";
+// const useStyles = makeStyles((theme) => ({
+//   container: {
+//     margin: "4rem auto 4rem",
+//     width: "30vw",
+//     height: "70vh",
+//     position: "relative",
+//     backgroundColor: "whitesmoke",
+//   },
+//   Form: {
+//     position: "absolute",
+//     top: "2rem",
+//     left: "50%",
+//     transform: "translate(-50%)",
+//     width: "80%",
+//     padding: "0rem 1rem",
+//   },
+//   heading: {
+//     textAlign: "center",
+//     marginBottom: "2rem",
+//   },
+//   textField: {
+//     marginBottom: "1rem",
+//   },
+//   inputSection: {
+//     height: "110px",
+//     marginBottom: "1rem",
+//   },
+//   input: {
+//     display: "none",
+//   },
+//   preview: {
+//     position: "relative",
+//     top: "-33px",
+//     left: "10rem",
+//     borderRadius: "10px",
+//     width: "100px",
+//     height: "100px",
+//   },
+//   removeBtn: {
+//     position: "relative",
+//     top: "-68px",
+//     right: "5.6rem",
+//     fontSize: "0.7rem",
+//   },
+//   submitBtn: {
+//     outline: "1px solid black",
+//   },
+//   closeBtn: {
+//     position: "relative",
+//     top: "10px",
+//     left: "20rem",
+//   },
+// }));
 const BookForm = ({ show, setShow }) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [pic, setPic] = useState();
@@ -89,7 +81,7 @@ const BookForm = ({ show, setShow }) => {
 
   const uploadPic = (pics) => {
     setPic(pics);
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+    if (pics?.type === "image/jpeg" || pics?.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "BookPic");
@@ -133,13 +125,17 @@ const BookForm = ({ show, setShow }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    window.location.reload();
+    // window.location.reload();
     if (!title || !author || !pic) {
       alert("Please fill all the required fields");
       return;
     }
     dispatch(createBook(title, author, pic, from, by));
     history.push("/");
+    setTitle("");
+    setAuthor("");
+    ref.current.value = "";
+    setPic("");
   };
 
   console.log(`pic`, pic);
@@ -223,9 +219,10 @@ const BookForm = ({ show, setShow }) => {
   //   </form>
   // </Container> */}
 
-      <div className="bg-darkslategray">
-        <div className="container h-80 mx-auto">
-          <div className="w-1/4 h-full bg-paleturquoise mx-auto rounded-lg">
+      <div className="bg-darkslategray filter absolute top-0 left-0 w-screen h-screen">
+        {/* TODO adjust the size of form when image preview is available */}
+        <div className={`container h-screen mx-auto grid place-items-center`}>
+          <div className={`w-4/5 sm:w-2/5 md:w-1/3 lg:w-1/4  ${pic ? "h-85" : "h-80"} bg-paleturquoise mx-auto rounded-lg relative`}>
             <div className="flex justify-end">
               <button
                 className="block w-6 h-6 m-1 rounded-md hover:bg-darkslategray hover:text-white"
@@ -236,26 +233,61 @@ const BookForm = ({ show, setShow }) => {
             </div>
             <div className="flex justify-center my-4">
               <input
-                className="w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                required
+                className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
                 type="text"
                 placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div className="flex justify-center mb-4">
               <input
+                required
                 type="text"
-                className="w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
                 placeholder="Author"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
               />
             </div>
             <div>
-              <div>
-                <input type="file" />
-                <button className="block">Remove</button>
+              <div className="grid items-center">
+                <input
+                  required
+                  ref={ref}
+                  type="file"
+                  accept="image/*"
+                  className="mx-auto w-4/5 font-poppins tracking-tighter"
+                  onChange={(e) => uploadPic(e.target.files[0])}
+                />
               </div>
-              <div></div>
+              {pic && (
+                <div className="my-2 h-32 flex justify-end items-center">
+                  <div className="w-1/3 rounded-lg h-5/6 mr-3 relative">
+                    <img
+                      src={pic}
+                      className="w-full h-full rounded-md"
+                      alt=""
+                    />
+                    <button
+                      className="absolute top-1 text-azure bg-darkslategray rounded-xl hover:bg-azure hover:text-darkslategray px-0.5 right-1 text-xs"
+                      onClick={(e) => imageRemove(e)}
+                    >
+                      X
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-            <button>Save</button>
+            <button
+              className={`absolute font-poppins ${
+                pic ? "bottom-3" : "bottom-4"
+              } left-2/4 transform -translate-x-2/4 bg-darkslategray px-6 py-2 rounded-lg text-md text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent`}
+              onClick={(e) => submitHandler(e)}
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>
