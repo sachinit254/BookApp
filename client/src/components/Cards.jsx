@@ -4,7 +4,7 @@ const Cards = ({ books, setShow }) => {
       {/*TODO make card design */}
       <div className="bg-darkslategray py-4">
         <button
-          className="fixed bottom-4 right-4 px-6 py-2 rounded-xl bg-azure text-lg text-darkslategray hover:bg-paleturquoise"
+          className="fixed bottom-14 right-2 md:bottom-4 md:right-8 px-6 py-2 rounded-xl bg-azure text-lg text-darkslategray hover:bg-paleturquoise"
           onClick={() => setShow(true)}
         >
           Upload
@@ -16,7 +16,7 @@ const Cards = ({ books, setShow }) => {
               <div className="py-8 mx-auto px-4 rounded-md bg-paleturquoise w-4/6 sm:w-4/5 md:w-11/12 lg:w-4/5 h-80">
                 <div className="w-4/5 h-3/4 mx-auto rounded-md mb-4">
                   <img
-                    className="rounded-md w-full h-full object-cover"
+                    className="rounded-md w-full h-full object-ccdover"
                     src={book?.pic}
                     alt=""
                   />

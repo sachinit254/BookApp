@@ -28,9 +28,17 @@ const Home = () => {
   console.log(`books`, books);
   return (
     <>
-      <HeroSection />
+      <div className="relative">
+        <HeroSection />
+        <Cards
+          books={books}
+          loading={loading}
+          error={error}
+          show={show}
+          setShow={setShow}
+        />
+      </div>
       {show && <BookForm show={show} setShow={setShow} />}
-      <Cards books={books} loading={loading} error={error} show={show} setShow={setShow} />
     </>
   );
 };
