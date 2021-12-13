@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import Cards from "../components/Cards";
-import { CssBaseline } from "@mui/material";
-import SearchBar from "../components/UploadButton";
 import BookForm from "../components/BookForm";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";

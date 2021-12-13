@@ -145,7 +145,7 @@ export const deleteBook = (id) => async (dispatch, getState) => {
 };
 
 export const updateBook =
-  (title, author, pic) => async (dispatch, getState) => {
+  (title, author, pic, by, from) => async (dispatch, getState) => {
     try {
       dispatch({
         type: BOOK_UPDATE_REQUEST,
@@ -164,7 +164,7 @@ export const updateBook =
 
       const { data } = await axios.put(
         `/books`,
-        { title, author, pic },
+        { title, author, pic, by, from },
         config
       );
 
@@ -183,5 +183,3 @@ export const updateBook =
       });
     }
   };
-
-  

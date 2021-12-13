@@ -15,9 +15,11 @@ module.exports = {
         74: "304px",
         85: "380px",
       },
+      backgroundColor: ["disabled"],
+      textColor: ["disabled"],
     },
   },
-  variants: {
+  variants: { 
     extend: {},
   },
   plugins: [],
