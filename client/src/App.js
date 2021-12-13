@@ -8,7 +8,6 @@ import SignUpPage from "./Pages/SignUpPage";
 import StorePage from "./Pages/StorePage";
 import Profile from "./Pages/Profile";
 import SingleBook from "./Pages/SingleBook";
-import AboutPage from "./Pages/AboutPage";
 const theme = createTheme({
   palette: {
     primary: {
@@ -44,7 +43,6 @@ function App() {
             <Route path="/store" exact component={StorePage} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/books/:id" exact component={SingleBook} />
-            <Route path="/about" exact component={AboutPage} />
           </Switch>
         </Router>
       </ThemeProvider>

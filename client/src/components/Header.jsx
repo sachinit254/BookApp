@@ -27,11 +27,6 @@ export default function ButtonAppBar() {
               Home
             </button>
           </Link>
-          <Link to="/about" className="nounderline">
-            <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
-              About
-            </button>
-          </Link>
           {userInfo && (
             <Link to="/profile" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
@@ -83,11 +78,6 @@ export default function ButtonAppBar() {
         <Link to="/">
           <div className="block text-md text-darkslategray bg-azure font-normal font-poppins px-8 sm:px-16 md:px-24 py-4  hover:bg-darkslategray hover:text-azure">
             Home
-          </div>
-        </Link>
-        <Link to="/about">
-          <div className="block text-md  bg-azure font-normal font-poppins px-8 sm:px-16 md:px-24 py-4 text-darkslategray hover:bg-darkslategray hover:text-azure">
-            About
           </div>
         </Link>
         {userInfo && (

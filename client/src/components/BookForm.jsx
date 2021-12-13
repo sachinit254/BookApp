@@ -2,60 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { createBook } from "../actions/bookAction";
-import noImage from "../images/1024px-No_image_available.svg.png";
-// const useStyles = makeStyles((theme) => ({
-//   container: {
-//     margin: "4rem auto 4rem",
-//     width: "30vw",
-//     height: "70vh",
-//     position: "relative",
-//     backgroundColor: "whitesmoke",
-//   },
-//   Form: {
-//     position: "absolute",
-//     top: "2rem",
-//     left: "50%",
-//     transform: "translate(-50%)",
-//     width: "80%",
-//     padding: "0rem 1rem",
-//   },
-//   heading: {
-//     textAlign: "center",
-//     marginBottom: "2rem",
-//   },
-//   textField: {
-//     marginBottom: "1rem",
-//   },
-//   inputSection: {
-//     height: "110px",
-//     marginBottom: "1rem",
-//   },
-//   input: {
-//     display: "none",
-//   },
-//   preview: {
-//     position: "relative",
-//     top: "-33px",
-//     left: "10rem",
-//     borderRadius: "10px",
-//     width: "100px",
-//     height: "100px",
-//   },
-//   removeBtn: {
-//     position: "relative",
-//     top: "-68px",
-//     right: "5.6rem",
-//     fontSize: "0.7rem",
-//   },
-//   submitBtn: {
-//     outline: "1px solid black",
-//   },
-//   closeBtn: {
-//     position: "relative",
-//     top: "10px",
-//     left: "20rem",
-//   },
-// }));
+
 const BookForm = ({ show, setShow }) => {
   // const classes = useStyles();
   const [title, setTitle] = useState("");
@@ -220,9 +167,8 @@ const BookForm = ({ show, setShow }) => {
   // </Container> */}
 
       <div className="bg-darkslategray filter absolute top-0 left-0 w-screen h-screen">
-        {/* TODO adjust the size of form when image preview is available */}
         <div className={`container h-screen mx-auto grid place-items-center`}>
-          <div className={`w-4/5 sm:w-2/5 md:w-1/3 lg:w-1/4  ${pic ? "h-85" : "h-80"} bg-paleturquoise mx-auto rounded-lg relative`}>
+          <div className={`w-3/4 sm:w-2/5 md:w-1/3 lg:w-1/4  ${pic ? "h-85" : "h-80"} bg-paleturquoise mx-auto rounded-lg relative`}>
             <div className="flex justify-end">
               <button
                 className="block w-6 h-6 m-1 rounded-md hover:bg-darkslategray hover:text-white"
