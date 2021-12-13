@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { createBook } from "../actions/bookAction";
@@ -15,13 +15,6 @@ const BookForm = ({ show, setShow }) => {
   const history = useHistory();
   const bookCreate = useSelector((state) => state.bookCreate);
   const { loading, error, book } = bookCreate;
-
-  useEffect(() => {
-    const res = localStorage.getItem("userInfo");
-    const data = JSON.parse(res);
-    setBy(data.firstname + " " + data.lastname);
-    setFrom(data.city);
-  }, []);
 
   console.log(`from`, from);
   console.log(`by`, by);
@@ -50,24 +43,11 @@ const BookForm = ({ show, setShow }) => {
     }
   };
 
-  // This function will be triggered when the file field change
-  const imageChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setPic(e.target.files[0]);
-    }
-  };
-
   // This function will remove the selected image from the input
   const imageRemove = (e) => {
     e.preventDefault();
     ref.current.value = "";
     setPic();
-  };
-
-  const resetHandler = () => {
-    setTitle("");
-    setAuthor("");
-    setPic("");
   };
 
   const submitHandler = (e) => {
@@ -83,6 +63,8 @@ const BookForm = ({ show, setShow }) => {
     setAuthor("");
     ref.current.value = "";
     setPic("");
+    setBy("");
+    setFrom("");
   };
 
   console.log(`pic`, pic);
@@ -92,83 +74,11 @@ const BookForm = ({ show, setShow }) => {
   }
   return (
     <>
-      {/* // <Container className={classes.container}>
-  //   <IconButton
-  //     className={classes.closeBtn}
-  //     onClick={() => setShow(false)}
-  //     aria-label="close"
-  //   >
-  //     <CloseIcon />
-  //   </IconButton>
-  //   <form className={classes.Form} onSubmit={submitHandler}>
-  //     <Typography className={classes.heading} variant="h5">
-  //       Upload Book
-  //     </Typography>
-  //     <TextField
-  //       className={classes.textField}
-  //       id="outlined-basic"
-  //       label="Book Title"
-  //       variant="outlined"
-  //       fullWidth
-  //       value={title}
-  //       onChange={(e) => setTitle(e.target.value)}
-  //     />
-  //     <TextField
-  //       className={classes.textField}
-  //       id="outlined-basic"
-  //       label="Author Name"
-  //       variant="outlined"
-  //       fullWidth
-  //       value={author}
-  //       onChange={(e) => setAuthor(e.target.value)}
-  //     />
-  //     <div className={classes.inputSection}>
-  //       <input
-  //         ref={ref}
-  //         accept="image/*"
-  //         className={classes.input}
-  //         id="contained-button-file"
-  //         single
-  //         type="file"
-  //         onChange={(e) => uploadPic(e.target.files[0])}
-  //       />
-  //       <label className={classes.inputBtn} htmlFor="contained-button-file">
-  //         <Button variant="contained" component="span">
-  //           Upload Pic
-  //         </Button>
-  //       </label>
-  //       {pic && (
-  //         <div>
-  //           <img
-  //             className={classes.preview}
-  //             src={pic}
-  //             alt="Thumb"
-  //             // onChange={(e) => imageChange(e)}
-  //           />
-  //           <Button
-  //             className={classes.removeBtn}
-  //             variant="contained"
-  //             onClick={(e) => imageRemove(e)}
-  //           >
-  //             Remove Pic
-  //           </Button>
-  //         </div>
-  //       )}
-  //     </div>
-  //     <Button
-  //       type="submit"
-  //       className={classes.submitBtn}
-  //       onClick={(e) => submitHandler(e)}
-  //       fullWidth
-  //     >
-  //       Submit
-  //     </Button>
-  //   </form>
-  // </Container> */}
-
       <div className="bg-darkslategray filter absolute top-0 left-0 w-screen h-screen">
         <div className={`container h-screen mx-auto grid place-items-center`}>
-          <div className={`w-3/4 sm:w-2/5 md:w-1/3 lg:w-1/4  ${pic ? "h-85" : "h-80"} bg-paleturquoise mx-auto rounded-lg relative`}>
+          <div
+            className={`w-3/4 sm:w-2/5 md:w-1/3 lg:w-1/4 bg-paleturquoise mx-auto rounded-lg relative`}
+          >
             <div className="flex justify-end">
               <button
                 className="block w-6 h-6 m-1 rounded-md hover:bg-darkslategray hover:text-white"
@@ -197,6 +107,26 @@ const BookForm = ({ show, setShow }) => {
                 onChange={(e) => setAuthor(e.target.value)}
               />
             </div>
+            <div className="flex justify-center mb-4">
+              <input
+                required
+                type="text"
+                className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                placeholder="Your Name"
+                value={by}
+                onChange={(e) => setBy(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-center mb-4">
+              <input
+                required
+                type="text"
+                className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                placeholder="Your State"
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+              />
+            </div>
             <div>
               <div className="grid items-center">
                 <input
@@ -204,13 +134,15 @@ const BookForm = ({ show, setShow }) => {
                   ref={ref}
                   type="file"
                   accept="image/*"
-                  className="mx-auto w-4/5 font-poppins tracking-tighter"
+                  className={`mx-auto w-4/5 ${
+                    pic ? "mb-0" : "mb-10"
+                  } font-poppins tracking-tighter`}
                   onChange={(e) => uploadPic(e.target.files[0])}
                 />
               </div>
               {pic && (
-                <div className="my-2 h-32 flex justify-end items-center">
-                  <div className="w-1/3 rounded-lg h-5/6 mr-3 relative">
+                <div className="mb-4 h-24 flex justify-end items-center">
+                  <div className={`w-1/4 rounded-lg h-20 mr-3 relative`}>
                     <img
                       src={pic}
                       className="w-full h-full rounded-md"
@@ -226,14 +158,14 @@ const BookForm = ({ show, setShow }) => {
                 </div>
               )}
             </div>
-            <button
-              className={`absolute font-poppins ${
-                pic ? "bottom-3" : "bottom-4"
-              } left-2/4 transform -translate-x-2/4 bg-darkslategray px-6 py-2 rounded-lg text-md text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent`}
-              onClick={(e) => submitHandler(e)}
-            >
-              Save
-            </button>
+            <div className="w-full grid place-items-center mb-4">
+              <button
+                className={`font-poppins bg-darkslategray px-6 py-2 rounded-lg text-md text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent`}
+                onClick={(e) => submitHandler(e)}
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
       </div>
