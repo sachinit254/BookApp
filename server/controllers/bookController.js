@@ -49,8 +49,8 @@ const CreateBook = asyncHandler(async (req, res) => {
       title,
       author,
       pic,
-      from,
       by,
+      from,
     });
 
     const createdBook = await book.save();
@@ -83,7 +83,7 @@ const DeleteBook = asyncHandler(async (req, res) => {
 // @route     PUT /books/:id
 // @access    Private
 const UpdateBook = asyncHandler(async (req, res) => {
-  const { title, author, pic } = req.body;
+  const { title, author, pic, by, from } = req.body;
 
   const book = await Book.findById(req.params.id);
 
@@ -96,6 +96,8 @@ const UpdateBook = asyncHandler(async (req, res) => {
     book.title = title;
     book.author = author;
     book.pic = pic;
+    book.by = by;
+    book.from = from;
 
     const updatedBook = await book.save();
     res.json(updatedBook);
@@ -113,3 +115,5 @@ export {
   UpdateBook,
   DeleteBook,
 };
+
+// first one

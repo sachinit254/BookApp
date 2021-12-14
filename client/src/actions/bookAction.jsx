@@ -127,7 +127,6 @@ export const deleteBook = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.delete(`/books/${id}`, config);
-
     dispatch({
       type: BOOK_DELETE_SUCCESS,
       payload: data,
@@ -145,12 +144,12 @@ export const deleteBook = (id) => async (dispatch, getState) => {
 };
 
 export const updateBook =
-  (title, author, pic, by, from) => async (dispatch, getState) => {
+  (id, title, author, pic, by, from) => async (dispatch, getState) => {
     try {
       dispatch({
         type: BOOK_UPDATE_REQUEST,
       });
-
+      console.log(`from`, from);
       const {
         userLogin: { userInfo },
       } = getState();
@@ -163,11 +162,11 @@ export const updateBook =
       };
 
       const { data } = await axios.put(
-        `/books`,
+        `/books/${id}`,
         { title, author, pic, by, from },
         config
       );
-
+      console.log(`data`, data);
       dispatch({
         type: BOOK_UPDATE_SUCCESS,
         payload: data,
