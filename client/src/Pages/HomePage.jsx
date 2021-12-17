@@ -10,18 +10,35 @@ const Home = () => {
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+
   const bookList = useSelector((state) => state.bookList);
   const { loading, error, books } = bookList;
-  console.log(`books`, books);
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const bookDelete = useSelector((state) => state.bookDelete);
+  const { success: successDelete } = bookDelete;
+
+  const bookCreate = useSelector((state) => state.bookCreate);
+  const { success: successCreate } = bookCreate;
+
+  const bookUpdate = useSelector((state) => state.bookUpdate);
+  const { success: successUpdate } = bookUpdate;
 
   useEffect(() => {
     dispatch(listBooks());
     if (!userInfo) {
       history.push("/");
     }
-  }, [dispatch, userInfo, history]);
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    successUpdate,
+  ]);
 
   console.log(`books`, books);
   return (

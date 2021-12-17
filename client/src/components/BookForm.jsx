@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { createBook } from "../actions/bookAction";
@@ -14,10 +14,7 @@ const BookForm = ({ show, setShow }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const bookCreate = useSelector((state) => state.bookCreate);
-  const { loading, error, book } = bookCreate;
-
-  console.log(`from`, from);
-  console.log(`by`, by);
+  const { loading, success, error } = bookCreate;
 
   const uploadPic = (pics) => {
     setPic(pics);
@@ -25,8 +22,8 @@ const BookForm = ({ show, setShow }) => {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "BookPic");
-      data.append("cloud_name", "dbckqtgmv");
-      fetch("https://api.cloudinary.com/v1_1/dbckqtgmv/image/upload", {
+      data.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
+      fetch(process.env.REACT_APP_CLOUDINARY_URL, {
         method: "post",
         body: data,
       })
@@ -52,13 +49,11 @@ const BookForm = ({ show, setShow }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // window.location.reload();
     if (!title || !author || !pic) {
       alert("Please fill all the required fields");
       return;
     }
     dispatch(createBook(title, author, pic, from, by));
-    history.push("/");
     setTitle("");
     setAuthor("");
     ref.current.value = "";
@@ -67,7 +62,11 @@ const BookForm = ({ show, setShow }) => {
     setFrom("");
   };
 
-  console.log(`pic`, pic);
+  useEffect(() => {
+    if (success) {
+      setShow(false);
+    }
+  }, [success, history, setShow ]);
 
   if (!show) {
     return;
@@ -122,7 +121,7 @@ const BookForm = ({ show, setShow }) => {
                 required
                 type="text"
                 className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
-                placeholder="Your State"
+                placeholder="Your City"
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
               />

@@ -1,25 +1,19 @@
 import React from "react";
-import { updateBook } from "../actions/bookAction";
-import { useDispatch } from "react-redux";
-const Book = ({
+const AdminPanel = ({
   bookId,
   title,
   setTitle,
   author,
   setAuthor,
   pic,
-  setPic,
   by,
   setBy,
   from,
   setFrom,
+  updateHandler,
   bookDeleteHandler,
+  uploadPic,
 }) => {
-  const dispatch = useDispatch();
- 
-  const updateHandler = () => {
-    dispatch(updateBook(bookId, title, author, pic, by, from));
-  };
   return (
     <>
       <div className="bg-darkslategray">
@@ -65,7 +59,7 @@ const Book = ({
                 <input
                   type="file"
                   className="cursor-pointer bg-azure text-darkslategray p-2 w-3/5 rounded-md mx-auto focus:outline-none focus:ring-1 focus:ring-darkslategray focus:border-transparent"
-                  onChange={(e) => setPic(e.target.files[0])}
+                  onChange={(e) => uploadPic(e.target.files[0])}
                 />
               </div>
               <div className="w-3/5 mx-auto h-10 flex justify-center gap-8">
@@ -90,4 +84,4 @@ const Book = ({
   );
 };
 
-export default Book;
+export default AdminPanel;

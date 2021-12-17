@@ -116,10 +116,11 @@ export const deleteBook = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: BOOK_DELETE_REQUEST });
 
-    const {
+    let {
       userLogin: { userInfo },
+      bookDelete: { bookDelete },
     } = getState();
-
+    bookDelete.success = "false";
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
