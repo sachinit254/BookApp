@@ -11,7 +11,7 @@ const Cards = ({ books, setShow }) => {
         >
           Upload
         </button>
-        <div className="py-16 container mx-auto w-full grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:gap-y-16 md:gap-y-6 lg:gap-y-14">
+        <div className="py-16 container mx-auto w-full grid justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:gap-y-16 md:gap-y-6 lg:gap-y-14">
           {books?.map((book) => {
             return (
               <div
