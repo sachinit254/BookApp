@@ -10,10 +10,3 @@ body {
   height: 100vh;
 }
 
-.nounderline {
-  text-decoration: none !important;
-}
-
-.outline {
-  outline: 2px solid gray;
-}

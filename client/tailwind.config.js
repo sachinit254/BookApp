@@ -1,6 +1,5 @@
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       fontFamily: {
@@ -15,12 +14,7 @@ module.exports = {
         74: "304px",
         85: "380px",
       },
-      backgroundColor: ["disabled"],
-      textColor: ["disabled"],
     },
-  },
-  variants: { 
-    extend: {},
   },
   plugins: [],
 };
