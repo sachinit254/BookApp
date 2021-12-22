@@ -1,13 +1,22 @@
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const Cards = ({ books, setShow }) => {
   const history = useHistory();
+  const bookCreate = useSelector((state) => state.bookCreate);
+  let { loading, success, error } = bookCreate;
+  const uploadHandler = () => {
+    setShow(true);
+    loading = false;
+    success = false;
+    error = "";
+  };
   return (
     <>
       <div className="bg-darkslategray py-4">
         <button
           className="fixed bottom-14 right-2 md:bottom-4 md:right-8 px-6 py-2 rounded-xl bg-azure text-lg text-darkslategray hover:bg-paleturquoise"
-          onClick={() => setShow(true)}
+          onClick={() => uploadHandler()}
         >
           Upload
         </button>

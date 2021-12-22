@@ -55,7 +55,7 @@ const CreateBook = asyncHandler(async (req, res) => {
 
     const createdBook = await book.save();
 
-    res.status(201).json(createdBook);
+    res.status(200).json(createdBook);
   }
 });
 

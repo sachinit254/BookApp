@@ -118,9 +118,8 @@ export const deleteBook = (id) => async (dispatch, getState) => {
 
     let {
       userLogin: { userInfo },
-      bookDelete: { bookDelete },
     } = getState();
-    bookDelete.success = "false";
+
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
@@ -183,3 +182,5 @@ export const updateBook =
       });
     }
   };
+
+

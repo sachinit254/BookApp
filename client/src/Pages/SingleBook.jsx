@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router";
-import { deleteBook, updateBook } from "../actions/bookAction";
 import AdminPanel from "../components/AdminPanel";
+import AlertMessage from "../components/AlertMessage";
 const SingleBook = () => {
   const [bookId, setBookId] = useState();
   const [title, setTitle] = useState();
@@ -11,21 +11,23 @@ const SingleBook = () => {
   const [pic, setPic] = useState();
   const [by, setBy] = useState();
   const [from, setFrom] = useState();
+  const [heading, setHeading] = useState();
+  const [message, setMessage] = useState();
+  const [showMessage, setShowMessage] = useState(false);
   const { id } = useParams();
 
-  const dispatch = useDispatch();
-
-  const bookUpdate = useSelector((state) => state.bookUpdate);
-  const { loading: updating, success: updated, error: updateFail } = bookUpdate;
-
-  const bookDelete = useSelector((state) => state.bookDelete);
-  const { loading: deleting, success: deleted, error: deleteFail } = bookDelete;
-  console.log(`bookDelete`, bookDelete);
   const history = useHistory();
 
   useEffect(() => {
     const getBook = async () => {
-      const { data } = await axios.get(`/books/${id}`);
+      // TODO make a component to that we can show when no data is found
+      const res = await axios.get(`/boks/${id}`);
+      const { data } = res;
+      if (res.status !== 200) {
+        setShowMessage(true);
+        setHeading("Error occurred");
+        setMessage("Can't fetch books from database");
+      }
       setBookId(data?._id);
       setTitle(data?.title);
       setAuthor(data?.author);
@@ -36,29 +38,44 @@ const SingleBook = () => {
     getBook();
   }, [id]);
 
-  const updateHandler = () => {
-    dispatch(updateBook(bookId, title, author, pic, by, from));
-    console.log(`updated`, updated);
-    if (updated) {
-      alert("Book updated successfully  ");
-    }
+  const userInfoFromStorage = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : null;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userInfoFromStorage.token}`,
+    },
   };
 
-  const bookDeleteHandler = (id) => {
-    dispatch(deleteBook(id));
-    console.log(`deleted`, deleted);
-    if (deleted) {
-      history.push("/");
+  const updateHandler = async () => {
+    const res = await axios.put(
+      `/books/${id}`,
+      { title, author, pic, by, from },
+      config
+    );
+    const { data } = res;
+    if (res.status === 200) {
+      setShowMessage(true);
+      setHeading("Book updated");
+      setMessage("Book has been updated successfully");
+    } else {
+      setShowMessage(true);
+      setHeading("Error occurred");
+      setMessage("Book cannot be updated");
     }
-    console.log(`deleteFail`, deleteFail);
-    deleteFail && alert(deleteFail);
+    console.log(`data`, data);
   };
 
-  useEffect(() => {
-    if (deleted) {
+  const bookDeleteHandler = async (id) => {
+    const res = await axios.delete(`/books/${id}`, config);
+    const { data } = res;
+    if (res.status === 200) {
       history.push("/");
     }
-  }, [deleted,history]);
+    console.log(data);
+  };
 
   const uploadPic = (pics) => {
     setPic(pics);
@@ -85,6 +102,13 @@ const SingleBook = () => {
   };
   return (
     <div>
+      {showMessage && (
+        <AlertMessage
+          heading={heading}
+          message={message}
+          setShowMessage={setShowMessage}
+        />
+      )}
       <AdminPanel
         bookId={bookId}
         title={title}
