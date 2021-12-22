@@ -1,93 +1,15 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import {
-  Avatar,
-  Button,
-  TextField,
-  Link,
-  Grid,
-  Typography,
-  Container,
-  CssBaseline,
-  IconButton,
-  InputAdornment,
-} from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import ErrorMessage from "./ErrorMessage";
-import { Link as RouterLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../actions/userActions";
-import Loading from "./Loading";
-import { useHistory } from "react-router";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& input": { color: "green" },
-    "& label": {
-      color: theme.palette.primary.main,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(4),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    backgroundColor: theme.palette.primary.main,
-    color: "#ffffff",
-    fontWeight: "bold",
-    textTransform: "capitalize",
-    fontSize: 17,
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
-    },
-  },
-}));
+import React from "react";
 
-const LogIn = () => {
-  const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showIcon, setShowIcon] = useState(false);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
-
-  const toggleIcon = () => {
-    setShowIcon(true);
-  };
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(login(email, password));
-  };
-
-  useEffect(() => {
-    if (userInfo) {
-      history.push("/");
-    }
-  }, [history,userInfo]);
-
+const LogIn = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  submitHandler,
+}) => {
   return (
     <>
-      <CssBaseline />
+      {/* <CssBaseline />
       <Container component="main" maxWidth="xs">
         {error && <ErrorMessage severity="error">{error}</ErrorMessage>}
         {loading && <Loading />}
@@ -165,7 +87,60 @@ const LogIn = () => {
             </Grid>
           </form>
         </div>
-      </Container>
+      </Container> */}
+      <div className="grid place-items-center bg-darkslategray h-[88.6vh]">
+        <div className="w-1/4 mx-auto bg-paleturquoise py-12 rounded-lg">
+          <form
+            className="flex flex-col items-center space-y-8 mb-6"
+            onSubmit={submitHandler}
+          >
+            <input
+              type="text"
+              placeholder="Email"
+              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <div className="relative w-4/5">
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure">
+                <i class="fas fa-eye-slash"></i>
+              </span>
+              <span className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure">
+                <i class="fas fa-eye"></i>
+              </span>
+            </div>
+            <button
+              className="w-4/5 font-poppins bg-azure py-2 px-3 rounded-lg font-semibold text-darkslategray hover:text-azure hover:bg-darkslategray"
+              type="submit"
+            >
+              Login
+            </button>
+          </form>
+          <div className="w-4/5 flex justify-between space-x-4 mx-auto">
+            <a
+              href="#"
+              className="text-xs font-poppins text-darkslategray hover:underline hover:decoration-darkslategray font-semibold"
+            >
+              Forgot password?
+            </a>
+            <a
+              href="/signup"
+              className="text-xs font-poppins text-darkslategray hover:underline hover:decoration-darkslategray font-semibold"
+            >
+              Don't have an account ?<br /> Sign Up{" "}
+            </a>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

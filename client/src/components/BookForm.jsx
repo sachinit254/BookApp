@@ -1,21 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import { createBook } from "../actions/bookAction";
+import axios from "axios";
+import React, { useRef, useState } from "react";
 
 const BookForm = ({ show, setShow }) => {
-  // const classes = useStyles();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [pic, setPic] = useState();
   const [from, setFrom] = useState("");
   const [by, setBy] = useState("");
   const ref = useRef();
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const bookCreate = useSelector((state) => state.bookCreate);
-  const { loading, success, error } = bookCreate;
 
+  //uploading pic to cloudinary
   const uploadPic = (pics) => {
     setPic(pics);
     if (pics?.type === "image/jpeg" || pics?.type === "image/png") {
@@ -47,26 +41,43 @@ const BookForm = ({ show, setShow }) => {
     setPic();
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    if (!title || !author || !pic) {
+
+    if (!title || !author || !pic || !from || !by) {
       alert("Please fill all the required fields");
       return;
     }
-    dispatch(createBook(title, author, pic, from, by));
+
+    const userInfoFromStorage = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfoFromStorage.token}`,
+      },
+    };
+
+    const res = await axios.post(
+      `/books/createBook`,
+      { title, author, pic, from, by },
+      config
+    );
+    const { data } = res;
+    if (res.status === 200) {
+      setShow(false);
+    }
+    console.log(data);
+
     setTitle("");
     setAuthor("");
-    ref.current.value = "";
     setPic("");
     setBy("");
     setFrom("");
+    ref.current.value = "";
   };
-
-  useEffect(() => {
-    if (success) {
-      setShow(false);
-    }
-  }, [success, history, setShow ]);
 
   if (!show) {
     return;

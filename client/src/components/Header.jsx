@@ -7,6 +7,7 @@ import { logout } from "../actions/userActions";
 export default function ButtonAppBar() {
   const [show, setShow] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
+  // TODO header bug : even after successful login login and signup options are available
   const { userInfo } = userLogin;
   const dispatch = useDispatch();
   const history = useHistory();

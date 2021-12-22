@@ -18,7 +18,7 @@ const AdminPanel = ({
     <>
       <div className="bg-darkslategray">
         <div className="container mx-auto w-screen h-screen border-2 border-gray-500">
-          <div className="container bg-paleturquoise mx-auto w-4/5 h-3/4 mt-8 rounded-lg flex">
+          <div className="container bg-paleturquoise md:flex mx-auto md:w-4/5 h-3/4 mt-8 rounded-lg">
             <div className="w-2/5 grid place-items-center">
               <img
                 src={pic}
@@ -58,7 +58,7 @@ const AdminPanel = ({
               <div className="w-3/5 mx-auto mb-12">
                 <input
                   type="file"
-                  className="cursor-pointer bg-azure text-darkslategray p-2 w-3/5 rounded-md mx-auto focus:outline-none focus:ring-1 focus:ring-darkslategray focus:border-transparent"
+                  className="cursor-pointer font-poppins bg-azure text-darkslategray text-sm p-2 w-3/5 rounded-md mx-auto focus:outline-none focus:ring-1 focus:ring-darkslategray focus:border-transparent file:rounded-lg file:text-sm file:border-none file:px-2 file:py-0.5 file:cursor-pointer file:bg-paleturquoise file:hover:bg-darkslategray file:hover:text-azure file:mr-2 file:font-poppins"
                   onChange={(e) => uploadPic(e.target.files[0])}
                 />
               </div>

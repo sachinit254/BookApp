@@ -2,60 +2,45 @@ import React, { useEffect, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import Cards from "../components/Cards";
 import BookForm from "../components/BookForm";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import { listBooks } from "../actions/bookAction";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-const Home = () => {
+const HomePage = () => {
   const [show, setShow] = useState(false);
-  const dispatch = useDispatch();
+  const [books, setBooks] = useState();
   const history = useHistory();
-
-  const bookList = useSelector((state) => state.bookList);
-  const { loading, error, books } = bookList;
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const bookDelete = useSelector((state) => state.bookDelete);
-  const { success: successDelete } = bookDelete;
-
-  const bookCreate = useSelector((state) => state.bookCreate);
-  const { success: successCreate } = bookCreate;
-
-  const bookUpdate = useSelector((state) => state.bookUpdate);
-  const { success: successUpdate } = bookUpdate;
+  const userInfoFromStorage = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo"))
+    : null;
 
   useEffect(() => {
-    dispatch(listBooks());
-    if (!userInfo) {
-      history.push("/");
+    if (!userInfoFromStorage) {
+      history.push("/login");
     }
-  }, [
-    dispatch,
-    history,
-    userInfo,
-    successDelete,
-    successCreate,
-    successUpdate,
-  ]);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfoFromStorage?.token}`,
+      },
+    };
+    const getBooks = async () => {
+      const res = await axios.get("/books", config);
+      const { data } = res;
+      setBooks(data);
+    };
+    getBooks();
+  }, []);
 
   console.log(`books`, books);
   return (
     <>
       <div className="relative">
         <HeroSection />
-        <Cards
-          books={books}
-          loading={loading}
-          error={error}
-          show={show}
-          setShow={setShow}
-        />
+        <Cards books={books} show={show} setShow={setShow} />
       </div>
       {show && <BookForm show={show} setShow={setShow} />}
     </>
   );
 };
 
-export default Home;
+export default HomePage;

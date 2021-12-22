@@ -32,7 +32,7 @@ export const bookListReducer = (state = { books: [] }, action) => {
 export const bookCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case BOOK_CREATE_REQUEST:
-      return { loading: true, success: false };
+      return { loading: true };
     case BOOK_CREATE_SUCCESS:
       return { loading: false, success: true };
     case BOOK_CREATE_FAIL:
@@ -45,7 +45,7 @@ export const bookCreateReducer = (state = {}, action) => {
 export const bookDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case BOOK_DELETE_REQUEST:
-      return { loading: true, books: {}, success: false };
+      return { loading: true };
     case BOOK_DELETE_SUCCESS:
       return { loading: false, success: true };
     case BOOK_DELETE_FAIL:
@@ -58,7 +58,7 @@ export const bookDeleteReducer = (state = {}, action) => {
 export const bookUpdateReducer = (state = {}, action) => {
   switch (action.type) {
     case BOOK_UPDATE_REQUEST:
-      return { loading: true, success: false };
+      return { loading: true };
     case BOOK_UPDATE_SUCCESS:
       return { loading: false, success: true };
     case BOOK_UPDATE_FAIL:
