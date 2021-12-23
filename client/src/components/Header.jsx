@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,10 +7,20 @@ import { logout } from "../actions/userActions";
 export default function ButtonAppBar() {
   const [show, setShow] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // TODO header bug : even after successful login login and signup options are available
   const { userInfo } = userLogin;
   const dispatch = useDispatch();
   const history = useHistory();
+  useEffect(() => {
+    const userInformation = localStorage.getItem("userInfo");
+    console.log(`userInformation`, userInformation);
+    if (userInformation) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");
@@ -28,28 +38,28 @@ export default function ButtonAppBar() {
               Home
             </button>
           </Link>
-          {userInfo && (
+          {isLoggedIn && (
             <Link to="/profile" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
                 Profile
               </button>
             </Link>
           )}
-          {!userInfo && (
+          {!isLoggedIn && (
             <Link to="/login" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
                 Login
               </button>
             </Link>
           )}
-          {!userInfo && (
+          {!isLoggedIn && (
             <Link to="/signup" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
                 Sign Up
               </button>
             </Link>
           )}
-          {userInfo && (
+          {isLoggedIn && (
             <button
               className="font-poppins font-normal text-darkslategray rounded-lg hover:text-paleturquoise hover:shadow-md hover:bg-darkslategray px-4 py-2 text-md"
               onClick={logoutHandler}

@@ -17,13 +17,13 @@ const AdminPanel = ({
   return (
     <>
       <div className="bg-darkslategray">
-        <div className="container mx-auto w-screen h-screen border-2 border-gray-500">
-          <div className="container bg-paleturquoise md:flex mx-auto md:w-4/5 h-3/4 mt-8 rounded-lg">
-            <div className="w-2/5 grid place-items-center">
+        <div className="container mx-auto w-screen h-screen py-4">
+          <div className="container bg-paleturquoise md:flex justify-evenly mx-auto md:w-4/5 mt-8 rounded-lg">
+            <div className="w-2/5 flex justify-center items-start mt-16">
               <img
                 src={pic}
                 alt="bookCover"
-                className="w-3/5 h-3/5 shadow-xl rounded-lg"
+                className="w-3/4 h-4/5 shadow-xl rounded-lg"
               />
             </div>
             <div className="w-3/5 flex flex-col">
@@ -62,7 +62,7 @@ const AdminPanel = ({
                   onChange={(e) => uploadPic(e.target.files[0])}
                 />
               </div>
-              <div className="w-3/5 mx-auto h-10 flex justify-center gap-8">
+              <div className="w-3/5 mx-auto mb-16 h-10 flex justify-center gap-8">
                 <button
                   className="bg-darkslategray text-azure px-5 py-2 rounded-lg focus:outline-none focus:ring-2 hover:bg-azure hover:text-darkslategray focus:ring-darkslategray focus:border-transparent"
                   onClick={() => updateHandler()}

@@ -18,26 +18,6 @@ const SingleBook = () => {
 
   const history = useHistory();
 
-  useEffect(() => {
-    const getBook = async () => {
-      // TODO make a component to that we can show when no data is found
-      const res = await axios.get(`/boks/${id}`);
-      const { data } = res;
-      if (res.status !== 200) {
-        setShowMessage(true);
-        setHeading("Error occurred");
-        setMessage("Can't fetch books from database");
-      }
-      setBookId(data?._id);
-      setTitle(data?.title);
-      setAuthor(data?.author);
-      setPic(data?.pic);
-      setBy(data?.by);
-      setFrom(data?.from);
-    };
-    getBook();
-  }, [id]);
-
   const userInfoFromStorage = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
@@ -49,55 +29,87 @@ const SingleBook = () => {
     },
   };
 
+  useEffect(() => {
+    const getBook = async () => {
+      try {
+        const res = await axios.get(`/books/${id}`);
+        const { data } = res;
+        setBookId(data?._id);
+        setTitle(data?.title);
+        setAuthor(data?.author);
+        setPic(data?.pic);
+        setBy(data?.by);
+        setFrom(data?.from);
+      } catch (error) {
+        setShowMessage(true);
+        setHeading("Error occurred");
+        setMessage("Book not found");
+      }
+    };
+    getBook();
+  }, [id]);
+
   const updateHandler = async () => {
-    const res = await axios.put(
-      `/books/${id}`,
-      { title, author, pic, by, from },
-      config
-    );
-    const { data } = res;
-    if (res.status === 200) {
-      setShowMessage(true);
-      setHeading("Book updated");
-      setMessage("Book has been updated successfully");
-    } else {
+    try {
+      const res = await axios.put(
+        `/books/${id}`,
+        { title, author, pic, by, from },
+        config
+      );
+      if (res.status === 200) {
+        setShowMessage(true);
+        setHeading("Book updated");
+        setMessage("Book has been updated successfully");
+      }
+    } catch (error) {
       setShowMessage(true);
       setHeading("Error occurred");
-      setMessage("Book cannot be updated");
+      setMessage("You cannot perform this action");
     }
-    console.log(`data`, data);
   };
 
   const bookDeleteHandler = async (id) => {
-    const res = await axios.delete(`/books/${id}`, config);
-    const { data } = res;
-    if (res.status === 200) {
-      history.push("/");
+    try {
+      const res = await axios.delete(`/books/${id}`, config);
+      setShowMessage(true);
+      setHeading("Book Deleted");
+      setMessage("Book has been deleted successfully");
+      if (res.status === 200) {
+        setTimeout(() => {
+          history.push("/");
+        }, [2000]);
+      }
+    } catch (error) {
+      setShowMessage(true);
+      setHeading("Error occurred");
+      setMessage("You cannot perform this action");
     }
-    console.log(data);
   };
 
-  const uploadPic = (pics) => {
+  const uploadPic = async (pics) => {
     setPic(pics);
     if (pics?.type === "image/jpeg" || pics?.type === "image/png") {
-      const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "BookPic");
-      data.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
-      fetch(process.env.REACT_APP_CLOUDINARY_URL, {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPic(data.url.toString());
-          console.log(`data`, data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const body = new FormData();
+      body.append("file", pics);
+      body.append("upload_preset", "BookPic");
+      body.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
+      try {
+        const res = await axios.post(
+          process.env.REACT_APP_CLOUDINARY_URL,
+          body
+        );
+        const { data } = res;
+        console.log(`data`, data);
+        setPic(data.url.toString());
+      } catch (error) {
+        setShowMessage(true);
+        setHeading("Error occurred");
+        setMessage("Image cannot be uploaded");
+      }
     } else {
-      return alert("Please Select an Image");
+      setShowMessage(true);
+      setHeading("Error occurred");
+      setMessage("Please select an image");
     }
   };
   return (
@@ -106,7 +118,11 @@ const SingleBook = () => {
         <AlertMessage
           heading={heading}
           message={message}
-          setShowMessage={setShowMessage}
+          deleteHandler={() => {
+            setShowMessage(false);
+            setHeading("");
+            setMessage("");
+          }}
         />
       )}
       <AdminPanel

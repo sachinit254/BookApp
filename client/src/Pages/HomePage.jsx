@@ -13,6 +13,8 @@ const HomePage = () => {
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null;
 
+  // TODO we need to refresh the page after uploading book
+
   useEffect(() => {
     if (!userInfoFromStorage) {
       history.push("/login");
