@@ -37,6 +37,11 @@ const LoginPage = () => {
           message={message}
           heading={heading}
           setShowMessage={setShowMessage}
+          deleteHandler={() => {
+            setShowMessage(false);
+            setHeading("");
+            setMessage("");
+          }}
         />
       )}
       <LogIn

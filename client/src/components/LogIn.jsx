@@ -1,93 +1,10 @@
 import React from "react";
 
-const LogIn = ({
-  email,
-  setEmail,
-  password,
-  setPassword,
-  submitHandler,
-}) => {
+// TODO email validation
+
+const LogIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
   return (
     <>
-      {/* <CssBaseline />
-      <Container component="main" maxWidth="xs">
-        {error && <ErrorMessage severity="error">{error}</ErrorMessage>}
-        {loading && <Loading />}
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h4" color="primary">
-            Sign in
-          </Typography>
-          <form className={classes.form} onSubmit={submitHandler}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              type="email"
-              label="Email address"
-              name="email"
-              value={email}
-              autofocus
-              className={classes.root}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              value={password}
-              label="password"
-              type={showPassword ? "text" : "password"}
-              id="password"
-              className={classes.root}
-              onChange={(e) => setPassword(e.target.value)}
-              onInput={toggleIcon}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {showIcon ? (
-                      <IconButton onClick={togglePassword}>
-                        {showPassword ? <Visibility /> : <VisibilityOffIcon />}
-                      </IconButton>
-                    ) : null}
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              className={classes.submit}
-              fullWidth
-            >
-              Login
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" color="secondary" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link
-                  color="secondary"
-                  component={RouterLink}
-                  to="/signup"
-                  variant="body2"
-                >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
-      </Container> */}
       <div className="grid place-items-center bg-darkslategray h-[88.6vh]">
         <div className="w-1/4 mx-auto bg-paleturquoise py-12 rounded-lg">
           <form
