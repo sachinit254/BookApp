@@ -25,11 +25,14 @@ const SingleBook = () => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${userInfoFromStorage.token}`,
+      Authorization: `Bearer ${userInfoFromStorage?.token}`,
     },
   };
 
   useEffect(() => {
+    if (!userInfoFromStorage) {
+      history.push("/login");
+    }
     const getBook = async () => {
       try {
         const res = await axios.get(`/books/${id}`);

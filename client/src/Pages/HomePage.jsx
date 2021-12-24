@@ -3,22 +3,18 @@ import HeroSection from "../components/HeroSection";
 import Cards from "../components/Cards";
 import BookForm from "../components/BookForm";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 
 const HomePage = () => {
   const [show, setShow] = useState(false);
   const [books, setBooks] = useState();
-  const history = useHistory();
-  const userInfoFromStorage = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo"))
-    : null;
 
   // TODO we need to refresh the page after uploading book
 
   useEffect(() => {
-    if (!userInfoFromStorage) {
-      history.push("/login");
-    }
+    const userInfoFromStorage = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null;
+
     const config = {
       headers: {
         "Content-Type": "application/json",

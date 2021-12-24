@@ -1,19 +1,19 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const Cards = ({ books, setShow }) => {
   const history = useHistory();
-  const bookCreate = useSelector((state) => state.bookCreate);
-  let { loading, success, error } = bookCreate;
+  // const bookCreate = useSelector((state) => state.bookCreate);
+  // let { loading, success, error } = bookCreate;
   const uploadHandler = () => {
     setShow(true);
-    loading = false;
-    success = false;
-    error = "";
+    // loading = false;
+    // success = false;
+    // error = "";
   };
   return (
     <>
-      <div className="bg-darkslategray py-4">
+      <div className="bg-darkslategray py-4 h-[88.6vh]">
         <button
           className="fixed bottom-14 right-2 md:bottom-4 md:right-8 px-6 py-2 rounded-xl bg-azure text-lg text-darkslategray hover:bg-paleturquoise"
           onClick={() => uploadHandler()}
@@ -25,6 +25,7 @@ const Cards = ({ books, setShow }) => {
             return (
               <div
                 className="py-8 mx-auto px-4 rounded-md bg-paleturquoise w-4/6 sm:w-4/5 md:w-11/12 lg:w-4/5 h-80 cursor-pointer"
+                key={book?._id}
                 onClick={() => history.push(`/books/${book?._id}`)}
               >
                 <div className="w-4/5 h-3/4 mx-auto rounded-md mb-4">

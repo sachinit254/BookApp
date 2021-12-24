@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { Provider } from "react-redux";
+import { ContextProvider } from "./context/LoggedInContext";
 import store from "./store/Store";
 ReactDOM.render(
-  <Provider store={store}>
+  <ContextProvider>
     <App />
-  </Provider>,
+  </ContextProvider>,
   document.getElementById("root")
 );

@@ -1,33 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../actions/userActions";
+import { useUserContext } from "../context/LoggedInContext";
 
 export default function ButtonAppBar() {
+  const { data, setData } = useUserContext();
+  const { userData } = data;
+  const { setUserData } = setData;
   const [show, setShow] = useState(false);
-  const userLogin = useSelector((state) => state.userLogin);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // TODO header bug : even after successful login login and signup options are available
-  const { userInfo } = userLogin;
-  const dispatch = useDispatch();
   const history = useHistory();
-  useEffect(() => {
-    const userInformation = localStorage.getItem("userInfo");
-    console.log(`userInformation`, userInformation);
-    if (userInformation) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+
   const logoutHandler = () => {
-    dispatch(logout());
+    localStorage.removeItem("userInfo");
+    setUserData();
     history.push("/");
   };
+
   return (
     <>
-      {/* New Navbar */}
       <div className="w-full bg-paleturquoise flex justify-between items-center mx-auto px-6 md:px-8 py-4 shadow-md">
         <div className="text-4xl text-darkslategray font-light font-poppins md:pl-8">
           Bookstore
@@ -38,28 +28,35 @@ export default function ButtonAppBar() {
               Home
             </button>
           </Link>
-          {isLoggedIn && (
+          {userData && (
+            <Link to="/myBooks" className="nounderline">
+              <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
+                My Books
+              </button>
+            </Link>
+          )}
+          {userData && (
             <Link to="/profile" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
                 Profile
               </button>
             </Link>
           )}
-          {!isLoggedIn && (
+          {!userData && (
             <Link to="/login" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
                 Login
               </button>
             </Link>
           )}
-          {!isLoggedIn && (
+          {!userData && (
             <Link to="/signup" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
                 Sign Up
               </button>
             </Link>
           )}
-          {isLoggedIn && (
+          {userData && (
             <button
               className="font-poppins font-normal text-darkslategray rounded-lg hover:text-paleturquoise hover:shadow-md hover:bg-darkslategray px-4 py-2 text-md"
               onClick={logoutHandler}
@@ -91,28 +88,28 @@ export default function ButtonAppBar() {
             Home
           </div>
         </Link>
-        {userInfo && (
+        {userData && (
           <Link to="/profile">
             <div className="block text-md  bg-azure font-normal font-poppins px-8 sm:px-16 md:px-24 py-4 text-darkslategray hover:bg-darkslategray hover:text-azure">
               Profile
             </div>
           </Link>
         )}
-        {!userInfo && (
+        {!userData && (
           <Link to="/login">
             <div className="block text-md  bg-azure font-normal font-poppins px-8 sm:px-16 md:px-24 py-4 text-darkslategray hover:bg-darkslategray hover:text-azure">
               Login
             </div>
           </Link>
         )}
-        {!userInfo && (
+        {!userData && (
           <Link to="/signup">
             <div className="block text-md bg-azure font-normal font-poppins px-8 sm:px-16 md:px-24 py-4 text-darkslategray hover:bg-darkslategray hover:text-azure">
               Sign Up
             </div>
           </Link>
         )}
-        {userInfo && (
+        {userData && (
           <div
             className="block text-md  bg-azure font-normal font-poppins px-8 sm:px-16 md:px-24 py-4 text-darkslategray hover:bg-darkslategray hover:text-azure"
             onClick={logoutHandler}
