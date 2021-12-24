@@ -13,10 +13,8 @@ const getBooks = asyncHandler(async (req, res) => {
 // @route     GET /books/userBooks
 // @access    Private
 const getUserBooks = asyncHandler(async (req, res) => {
-  if (req.user._id.match(/^[0-9a-fA-F]{24}$/)) {
-    const books = await Book.find({ user: req.user._id });
-    res.json(books);
-  }
+  const books = await Book.find({ user: req.user._id });
+  res.json(books);
 });
 
 // @desc      Fetch single Book

@@ -1,5 +1,4 @@
 import React from "react";
-
 // TODO email validation
 
 const LogIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
@@ -12,7 +11,7 @@ const LogIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
             onSubmit={submitHandler}
           >
             <input
-              type="text"
+              type="email"
               placeholder="Email"
               className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
               required

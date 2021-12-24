@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
 import LogIn from "../components/LogIn";
+import { useUserContext } from "../context/LoggedInContext";
 const LoginPage = () => {
+  const { setData } = useUserContext();
+  const { setUserData } = setData;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState();
@@ -21,6 +24,7 @@ const LoginPage = () => {
     const res = await axios.post("/users/login", { email, password }, config);
     const { data } = res;
     localStorage.setItem("userInfo", JSON.stringify(data));
+    setUserData(data);
     if (res.status === 200) {
       setShowMessage(true);
       setHeading("Login succeed");

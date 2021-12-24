@@ -16,8 +16,8 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { register } from "../actions/userActions";
+// import { useDispatch, useSelector } from "react-redux";
+// import { register } from "../actions/userActions";
 import ErrorMessage from "./ErrorMessage";
 import Loading from "./Loading";
 const useStyles = makeStyles((theme) => ({
@@ -75,9 +75,9 @@ const SignUp = () => {
   const [message, setMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
-  const dispatch = useDispatch();
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  // const dispatch = useDispatch();
+  // const userRegister = useSelector((state) => state.userRegister);
+  // const { loading, error, userInfo } = userRegister;
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const submitHandler = (e) => {
@@ -85,21 +85,21 @@ const SignUp = () => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(register(firstname, lastname, city, email, password));
+      // dispatch(register(firstname, lastname, city, email, password));
     }
   };
-  useEffect(() => {
-    if (userInfo) {
-      history.push("/");
-    }
-  }, [history, userInfo]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     history.push("/");
+  //   }
+  // }, [history, userInfo]);
   return (
     <>
       <CssBaseline />
       <Container component="main" maxWidth="xs">
-        {error && <ErrorMessage severity="error">{error}</ErrorMessage>}
+        {/* {error && <ErrorMessage severity="error">{error}</ErrorMessage>} */}
         {message && <ErrorMessage severity="error">{message}</ErrorMessage>}
-        {loading && <Loading />}
+        {/* {loading && <Loading />} */}
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
