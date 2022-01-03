@@ -1,7 +1,7 @@
 import React from "react";
 // TODO email validation
 
-const LogIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
+const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
   return (
     <>
       <div className="grid place-items-center bg-darkslategray h-[88.6vh]">
@@ -61,4 +61,4 @@ const LogIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
   );
 };
 
-export default LogIn;
+export default SignIn;

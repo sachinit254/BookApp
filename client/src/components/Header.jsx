@@ -43,9 +43,9 @@ export default function ButtonAppBar() {
             </Link>
           )}
           {!userData && (
-            <Link to="/login" className="nounderline">
+            <Link to="/signin" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
-                Login
+                Sign In
               </button>
             </Link>
           )}
@@ -96,9 +96,9 @@ export default function ButtonAppBar() {
           </Link>
         )}
         {!userData && (
-          <Link to="/login">
+          <Link to="/signin">
             <div className="block text-md  bg-azure font-normal font-poppins px-8 sm:px-16 md:px-24 py-4 text-darkslategray hover:bg-darkslategray hover:text-azure">
-              Login
+              Sign In
             </div>
           </Link>
         )}

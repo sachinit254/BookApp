@@ -1,19 +1,19 @@
 // import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const Cards = ({ books, setShow }) => {
   const history = useHistory();
-  // const bookCreate = useSelector((state) => state.bookCreate);
-  // let { loading, success, error } = bookCreate;
   const uploadHandler = () => {
     setShow(true);
-    // loading = false;
-    // success = false;
-    // error = "";
   };
+
+  const url = useLocation();
+  const path = url?.pathname;
+  console.log(`path`, path);
+
   return (
     <>
-      <div className="bg-darkslategray py-4 h-[88.6vh]">
+      <div className="bg-darkslategray py-4 h-full min-h-screen">
         <button
           className="fixed bottom-14 right-2 md:bottom-4 md:right-8 px-6 py-2 rounded-xl bg-azure text-lg text-darkslategray hover:bg-paleturquoise"
           onClick={() => uploadHandler()}

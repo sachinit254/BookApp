@@ -31,7 +31,7 @@ const SingleBook = () => {
 
   useEffect(() => {
     if (!userInfoFromStorage) {
-      history.push("/login");
+      history.push("/signin");
     }
     const getBook = async () => {
       try {
@@ -79,7 +79,7 @@ const SingleBook = () => {
       setMessage("Book has been deleted successfully");
       if (res.status === 200) {
         setTimeout(() => {
-          history.push("/");
+          history.push("/myBooks");
         }, [2000]);
       }
     } catch (error) {
