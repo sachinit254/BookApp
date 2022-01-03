@@ -69,7 +69,9 @@ const BookForm = ({ show, setShow }) => {
           { title, author, pic, from, by },
           config
         );
+        console.log(`res`, res);
         if (res.status === 200) {
+          console.log(`Successfull`);
           setShowMessage(true);
           setHeading("Book created");
           setMessage("Book has been created successfully");
@@ -95,7 +97,7 @@ const BookForm = ({ show, setShow }) => {
     return;
   }
   return (
-    <>
+    <div>
       {showMessage && (
         <AlertMessage
           heading={heading}
@@ -204,7 +206,7 @@ const BookForm = ({ show, setShow }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

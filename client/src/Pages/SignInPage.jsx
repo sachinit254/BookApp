@@ -2,9 +2,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
-import LogIn from "../components/LogIn";
+import LogIn from "../components/SignIn";
 import { useUserContext } from "../context/LoggedInContext";
-const LoginPage = () => {
+const SignInPage = () => {
   const { setData } = useUserContext();
   const { setUserData } = setData;
   const [email, setEmail] = useState("");
@@ -59,4 +59,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignInPage;

@@ -29,6 +29,8 @@ const HomePage = () => {
     getBooks();
   }, []);
 
+  // TODO Admin Panel shouldn't be accessible from home page
+
   console.log(`books`, books);
   return (
     <>
