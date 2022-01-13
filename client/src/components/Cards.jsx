@@ -1,15 +1,16 @@
 // import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
-const Cards = ({ books, setShow }) => {
-  const history = useHistory();
+const Cards = ({ books, setShow, route }) => {
   const uploadHandler = () => {
     setShow(true);
   };
-
+  const history = useHistory();
   const url = useLocation();
   const path = url?.pathname;
   console.log(`path`, path);
+
+  const pathName = path === "/myBooks" ? "books" : "singleBook";
 
   return (
     <>
@@ -26,7 +27,7 @@ const Cards = ({ books, setShow }) => {
               <div
                 className="py-8 mx-auto px-4 rounded-md bg-paleturquoise w-4/6 sm:w-4/5 md:w-11/12 lg:w-4/5 h-80 cursor-pointer"
                 key={book?._id}
-                onClick={() => history.push(`/books/${book?._id}`)}
+                onClick={() => history.push(`${pathName}/${book?._id}`)}
               >
                 <div className="w-4/5 h-3/4 mx-auto rounded-md mb-4">
                   <img

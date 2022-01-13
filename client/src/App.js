@@ -6,8 +6,9 @@ import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
 import StorePage from "./Pages/StorePage";
 import Profile from "./Pages/ProfilePage";
-import BookPage from "./Pages/BookPage";
-import MyBooks from "./Pages/MyBooks";
+import AdminPage from "./Pages/AdminPage";
+import MyBooksPage from "./Pages/MyBooksPage";
+import DetailsPage from "./Pages/DetailsPage";
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
           <Route path="/signup" exact component={SignUpPage} />
           <Route path="/store" exact component={StorePage} />
           <Route path="/profile" exact component={Profile} />
-          <Route path="/books/:id" exact component={BookPage} />
-          <Route path="/myBooks" exact component={MyBooks} />
+          <Route path="/books/:id" exact component={AdminPage} />
+          <Route path="/myBooks" exact component={MyBooksPage} />
+          <Route path="/singleBook/:id" exact component={DetailsPage} />
         </Switch>
       </Router>
     </>

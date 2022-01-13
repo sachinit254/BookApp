@@ -26,7 +26,7 @@ const AdminPanel = ({
                 className="w-3/4 h-4/5 shadow-xl rounded-lg"
               />
             </div>
-            <div className="w-3/5 flex flex-col">
+            <div className="w-3/5 flex flex-col"> 
               <input
                 type="text"
                 placeholder="Title"

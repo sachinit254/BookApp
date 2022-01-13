@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router";
+import { useParams, useHistory, useLocation } from "react-router";
 import AdminPanel from "../components/AdminPanel";
 import AlertMessage from "../components/AlertMessage";
 const SingleBook = () => {
@@ -17,6 +16,9 @@ const SingleBook = () => {
   const { id } = useParams();
 
   const history = useHistory();
+  const location = useLocation();
+
+  console.log(location);
 
   const userInfoFromStorage = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))
@@ -115,6 +117,10 @@ const SingleBook = () => {
       setMessage("Please select an image");
     }
   };
+
+  const historyPush = () => {
+    history.push("/singleBook");
+  };
   return (
     <div>
       {showMessage && (
@@ -142,6 +148,7 @@ const SingleBook = () => {
         updateHandler={updateHandler}
         bookDeleteHandler={bookDeleteHandler}
         uploadPic={uploadPic}
+        historyPush={historyPush}
       />
     </div>
   );
