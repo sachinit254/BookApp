@@ -3,10 +3,12 @@ import HeroSection from "../components/HeroSection";
 import Cards from "../components/Cards";
 import BookForm from "../components/BookForm";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const HomePage = () => {
   const [show, setShow] = useState(false);
   const [books, setBooks] = useState();
+  const history = useHistory();
 
   // TODO we need to refresh the page after uploading book
 
@@ -32,6 +34,7 @@ const HomePage = () => {
   // TODO Admin Panel shouldn't be accessible from home page
 
   console.log(`books`, books);
+
   return (
     <>
       <div className="relative">
