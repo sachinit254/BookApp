@@ -16,10 +16,17 @@ const ContextProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("userInfo"))
       : null
   );
+  const [books, setBooks] = useState();
   console.log(`userData`, userData);
+
   return (
     <UserContext.Provider
-      value={{ data: { userData }, setData: { setUserData } }}
+      value={{
+        data: { userData },
+        setData: { setUserData },
+        books: { books },
+        setBooks: { setBooks },
+      }}
     >
       {children}
     </UserContext.Provider>

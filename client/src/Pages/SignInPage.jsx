@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
 import LogIn from "../components/SignIn";
-import { useUserContext } from "../context/LoggedInContext";
+import { useUserContext } from "../context/UserContext";
 const SignInPage = () => {
   const { setData } = useUserContext();
   const { setUserData } = setData;
@@ -21,17 +21,25 @@ const SignInPage = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const res = await axios.post("/users/login", { email, password }, config);
-    const { data } = res;
-    localStorage.setItem("userInfo", JSON.stringify(data));
-    setUserData(data);
-    if (res.status === 200) {
+    try {
+      const res = await axios.post("/users/login", { email, password }, config);
+      const { data } = res;
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      setUserData(data);
       setShowMessage(true);
       setHeading("Login succeed");
       setMessage("User logged in successfully");
       setTimeout(() => {
         history.push("/");
       }, [2000]);
+    } catch (error) {
+      setShowMessage(true);
+      setHeading("Login failed");
+      setMessage(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      );
     }
   };
   return (

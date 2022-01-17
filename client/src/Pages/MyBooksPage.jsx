@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AlertMessage from "../components/AlertMessage";
 import Cards from "../components/Cards";
-import { useUserContext } from "../context/LoggedInContext";
+import { useUserContext } from "../context/UserContext";
 
 const MyBooks = () => {
   const { data } = useUserContext();
@@ -25,7 +25,7 @@ const MyBooks = () => {
       } catch (error) {
         setShowMessage(true);
         setHeading("Error occurred");
-        setMessage("Something went wrong !!!");
+        setMessage("Cannot get books");
       }
     };
     getUserBooks();
@@ -44,9 +44,7 @@ const MyBooks = () => {
           }}
         />
       )}
-      <Cards
-        books={books?.filter((book) => book.user === userData?._id)}
-      />
+      <Cards books={books?.filter((book) => book.user === userData?._id)} />
     </div>
   );
 };

@@ -34,7 +34,7 @@ const DetailsPage = () => {
       } catch (error) {
         setShowMessage(true);
         setHeading("Error occurred");
-        setMessage("Book not found");
+        setMessage("Cannot get book details");
       }
     };
     getBook();

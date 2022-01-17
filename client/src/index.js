@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { ContextProvider } from "./context/LoggedInContext";
-import store from "./store/Store";
+import { ContextProvider } from "./context/UserContext";
 ReactDOM.render(
   <ContextProvider>
     <App />

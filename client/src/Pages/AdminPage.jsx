@@ -61,33 +61,31 @@ const SingleBook = () => {
         { title, author, pic, by, from },
         config
       );
-      if (res.status === 200) {
-        setShowMessage(true);
-        setHeading("Book updated");
-        setMessage("Book has been updated successfully");
-      }
+      console.log(`res`, res.data);
+      setShowMessage(true);
+      setHeading("Book updated");
+      setMessage("Book has been updated successfully");
     } catch (error) {
       setShowMessage(true);
       setHeading("Error occurred");
-      setMessage("You cannot perform this action");
+      setMessage("Book details update failed");
     }
   };
 
   const bookDeleteHandler = async (id) => {
     try {
       const res = await axios.delete(`/books/${id}`, config);
+      console.log(`res`, res.data);
       setShowMessage(true);
       setHeading("Book Deleted");
       setMessage("Book has been deleted successfully");
-      if (res.status === 200) {
-        setTimeout(() => {
-          history.push("/myBooks");
-        }, [2000]);
-      }
+      setTimeout(() => {
+        history.push("/myBooks");
+      }, [2000]);
     } catch (error) {
       setShowMessage(true);
       setHeading("Error occurred");
-      setMessage("You cannot perform this action");
+      setMessage("Book delete failed");
     }
   };
 

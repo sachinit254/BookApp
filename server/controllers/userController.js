@@ -65,8 +65,8 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    GET user profile
-// @route   GET users/profile
+// @description    Update user profile
+// @route   PUT users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -95,5 +95,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User Not found");
   }
 });
+
+// @description 
 
 export { authUser, updateUserProfile, registerUser };

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// TODO email validation
 
 const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +31,9 @@ const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
                 className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                <i className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i>
+                <i
+                  className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"}
+                ></i>
               </span>
             </div>
             <button
