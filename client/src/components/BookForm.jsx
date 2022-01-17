@@ -29,6 +29,9 @@ const BookForm = ({ show, setShow }) => {
         const { data } = res;
         console.log(`data`, data);
         setPic(data.url.toString());
+        setShowMessage(true);
+        setHeading("Image uploaded");
+        setMessage("Image uploaded successfully");
       } catch (error) {
         setShowMessage(true);
         setHeading("Error occurred");
@@ -69,16 +72,13 @@ const BookForm = ({ show, setShow }) => {
           { title, author, pic, from, by },
           config
         );
-        console.log(`res`, res);
-        if (res.status === 200) {
-          console.log(`Successfull`);
-          setShowMessage(true);
-          setHeading("Book created");
-          setMessage("Book has been created successfully");
-          setTimeout(() => {
-            setShow(false);
-          }, [2000]);
-        }
+        console.log(`res.data`, res.data);
+        setShowMessage(true);
+        setHeading("Book created");
+        setMessage("Book has been created successfully");
+        setTimeout(() => {
+          setShow(false);
+        }, [2000]);
         setTitle("");
         setAuthor("");
         setPic("");
@@ -88,7 +88,11 @@ const BookForm = ({ show, setShow }) => {
       } catch (error) {
         setShowMessage(true);
         setHeading("Error occurred");
-        setMessage(error.message);
+        setMessage(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
       }
     }
   };

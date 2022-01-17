@@ -36,8 +36,6 @@ const SignUp = () => {
           password,
         });
         console.log(`res`, res);
-        const { data } = res;
-        console.log(`data`, data);
         setShowMessage(true);
         setHeading("Sign Up successful");
         setMessage("User signed up successfully");
@@ -47,7 +45,11 @@ const SignUp = () => {
       } catch (error) {
         setShowMessage(true);
         setHeading("Sign Up failed");
-        setMessage(error.message);
+        setMessage(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
       }
     }
   };
