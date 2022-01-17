@@ -1,234 +1,165 @@
-import React, { useEffect, useState } from "react";
-import {
-  Avatar,
-  Button,
-  TextField,
-  Link,
-  Grid,
-  Typography,
-  Container,
-  CssBaseline,
-  IconButton,
-  InputAdornment,
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import { makeStyles } from "@material-ui/core/styles";
-import { Link as RouterLink, useHistory } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { register } from "../actions/userActions";
-import ErrorMessage from "./ErrorMessage";
-import Loading from "./Loading";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& input": { color: "green" },
-    "& label": {
-      color: theme.palette.primary.main,
-    },
-  },
-  paper: {
-    margin: theme.spacing(3),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
-  },
-  form: {
-    width: "100%",
-    marginTop: theme.spacing(1),
-    display: "grid",
-    placeItems: "center",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    backgroundColor: theme.palette.primary.main,
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 17,
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
-    },
-  },
-  grid: {
-    margin: 0,
-    [theme.breakpoints.down("xs")]: {
-      "& > .MuiGrid-item": {
-        margin: 2,
-      },
-    },
-  },
-}));
+import React, { useState } from "react";
 
+import axios from "axios";
+import AlertMessage from "./AlertMessage";
+import { useHistory } from "react-router-dom";
 const SignUp = () => {
-  const classes = useStyles();
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [city, setCity] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState(null);
+  const [confirmPassword, setConfirmpassword] = useState("");
+  const [heading, setHeading] = useState();
+  const [message, setMessage] = useState();
+  const [showMessage, setShowMessage] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
-  // const dispatch = useDispatch();
-  // const userRegister = useSelector((state) => state.userRegister);
-  // const { loading, error, userInfo } = userRegister;
+  const togglePassword = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
+      setShowMessage(true);
+      setHeading("Incorrect password");
+      setMessage("Confirm password does not match");
     } else {
-      // dispatch(register(firstname, lastname, city, email, password));
+      try {
+        const res = await axios.post("/users/register", {
+          firstname,
+          lastname,
+          city,
+          email,
+          password,
+        });
+        console.log(`res`, res);
+        const { data } = res;
+        console.log(`data`, data);
+        setShowMessage(true);
+        setHeading("Sign Up successful");
+        setMessage("User signed up successfully");
+        setTimeout(() => {
+          history.push("/signin");
+        }, 2000);
+      } catch (error) {
+        setShowMessage(true);
+        setHeading("Sign Up failed");
+        setMessage(error.message);
+      }
     }
   };
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     history.push("/");
-  //   }
-  // }, [history, userInfo]);
+
   return (
-    <>
-      <CssBaseline />
-      <Container component="main" maxWidth="xs">
-        {/* {error && <ErrorMessage severity="error">{error}</ErrorMessage>} */}
-        {message && <ErrorMessage severity="error">{message}</ErrorMessage>}
-        {/* {loading && <Loading />} */}
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h4" color="primary">
-            Sign up
-          </Typography>
-          <form className={classes.form} onSubmit={submitHandler}>
-            <Grid container className={classes.grid} spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="firstname"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="First Name"
-                  value={firstname}
-                  className={classes.root}
-                  onChange={(e) => setFirstname(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="lastname"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Last Name"
-                  value={lastname}
-                  className={classes.root}
-                  onChange={(e) => setLastname(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="city"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="City"
-                  value={city}
-                  className={classes.root}
-                  onChange={(e) => setCity(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="email"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Email"
-                  value={email}
-                  className={classes.root}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="password"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Password"
-                  value={password}
-                  className={classes.root}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type={showPassword ? "text" : "password"}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="confirmPassword"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Confirm Password"
-                  value={confirmPassword}
-                  className={classes.root}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  type={showPassword ? "text" : "password"}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              variant="contained"
-              className={classes.submit}
-              fullWidth
-            >
-              Sign up
-            </Button>
-            <Link
-              href="#"
-              color="secondary"
-              variant="body2"
-              component={RouterLink}
-              to="/signin"
-            >
-              Already have an account? Sign in
-            </Link>
+    <div>
+      {showMessage && (
+        <AlertMessage
+          heading={heading}
+          message={message}
+          deleteHandler={() => {
+            setShowMessage(false);
+            setHeading("");
+            setMessage("");
+          }}
+        />
+      )}
+      <div className="bg-darkslategray h-[89.2vh] grid place-items-center">
+        <div className="w-1/4 bg-paleturquoise py-8 rounded-lg">
+          <form
+            className="flex flex-col items-center space-y-4"
+            onSubmit={submitHandler}
+          >
+            <input
+              required
+              type="text"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
+              placeholder="First Name"
+              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+            />
+            <input
+              required
+              type="text"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
+              placeholder="Last Name"
+              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+            />
+            <input
+              required
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="City"
+              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+            />
+            <input
+              required
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+            />
+            <div className="relative w-4/5">
+              <input
+                required
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                pattern=".{8,}"
+                title="Minimum eight characters required."
+              />
+              <span
+                className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <i
+                  className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"}
+                ></i>
+              </span>
+            </div>
+            <div className="relative w-4/5">
+              <input
+                required
+                type={showPassword ? "text" : "password"}
+                placeholder="Confirm Password"
+                className="w-full font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                value={confirmPassword}
+                onChange={(e) => setConfirmpassword(e.target.value)}
+                pattern=".{8,}"
+                title="Minimum eight characters required."
+              />
+              <span className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure">
+                <button onClick={(e) => togglePassword(e)}>
+                  <i
+                    class={showPassword ? "fas fa-eye" : "fas fa-eye-slash"}
+                  ></i>
+                </button>
+              </span>
+            </div>
+            <div className="w-4/5 flex flex-col items-center space-y-4">
+              <button
+                className="w-full font-poppins bg-azure py-2 px-3 rounded-lg font-semibold text-darkslategray hover:text-azure hover:bg-darkslategray"
+                type="submit"
+              >
+                Sign Up
+              </button>
+              <a
+                href="/signup"
+                className="text-xs font-poppins text-darkslategray hover:underline hover:decoration-darkslategray font-semibold"
+              >
+                Already have an account ?<br /> Sign In
+              </a>
+            </div>
           </form>
         </div>
-      </Container>
-    </>
+      </div>
+    </div>
   );
 };
 
