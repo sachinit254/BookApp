@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 // TODO email validation
 
 const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <>
       <div className="grid place-items-center bg-darkslategray h-[88.6vh]">
@@ -20,18 +21,18 @@ const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
             />
             <div className="relative w-4/5">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 className="w-full font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <span className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure">
-                <i class="fas fa-eye-slash"></i>
-              </span>
-              <span className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure">
-                <i class="fas fa-eye"></i>
+              <span
+                className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <i className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"}></i>
               </span>
             </div>
             <button
@@ -43,7 +44,7 @@ const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
           </form>
           <div className="w-4/5 flex justify-between space-x-4 mx-auto">
             <a
-              href="#"
+              href="/#"
               className="text-xs font-poppins text-darkslategray hover:underline hover:decoration-darkslategray font-semibold"
             >
               Forgot password?

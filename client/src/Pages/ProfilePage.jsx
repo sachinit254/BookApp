@@ -32,7 +32,7 @@ const Profile = () => {
     history.push("/");
   };
   console.log(`user`, user);
-return (
+  return (
     <div className="relative">
       <CssBaseline />
       <UserDetails user={user} logoutHandler={logoutHandler} />

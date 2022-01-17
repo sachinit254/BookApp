@@ -3,6 +3,8 @@ import asyncHandler from "express-async-handler";
 import User from "../model/userModel.js";
 import generateToken from "../utils/generateToken.js";
 
+// TODO create a new api for profile picture upload
+
 // @description   Auth the user
 // @route         POST /users/login
 // @access        Public
