@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory, useLocation } from "react-router";
 import AdminPanel from "../components/AdminPanel";
 import AlertMessage from "../components/AlertMessage";
+import { useUserContext } from "../context/UserContext";
+
 const SingleBook = () => {
+  const { books, setBooks } = useUserContext();
   const [bookId, setBookId] = useState();
   const [title, setTitle] = useState();
   const [author, setAuthor] = useState();
@@ -61,7 +64,13 @@ const SingleBook = () => {
         { title, author, pic, by, from },
         config
       );
-      console.log(`res`, res.data);
+      console.log(`res.data`, res.data);
+      let updatedBookList = books.filter((book) => book?._id !== id);
+      let book = books.filter((book) => book?._id === id);
+      book = res.data;
+      let finalBooks = [...updatedBookList, book];
+      setBooks(finalBooks);
+      console.log(`book`, book);
       setShowMessage(true);
       setHeading("Book updated");
       setMessage("Book has been updated successfully");
@@ -76,6 +85,12 @@ const SingleBook = () => {
     try {
       const res = await axios.delete(`/books/${id}`, config);
       console.log(`res`, res.data);
+      console.log(`res.data.message`, res.data.message);
+      if (res.data.message === "Book Removed") {
+        let book = books.filter((book) => book?._id !== id);
+        console.log(`book`, book);
+        setBooks(book);
+      }
       setShowMessage(true);
       setHeading("Book Deleted");
       setMessage("Book has been deleted successfully");
