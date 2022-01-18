@@ -4,9 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
 export default function ButtonAppBar() {
-  const { data, setData } = useUserContext();
-  const { userData } = data;
-  const { setUserData } = setData;
+  const { userData, setUserData } = useUserContext();
   const [show, setShow] = useState(false);
   const history = useHistory();
 

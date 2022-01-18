@@ -7,7 +7,7 @@ const AlertMessage = ({ message, heading, deleteHandler }) => {
         className="absolute top-0 right-2"
         onClick={() => deleteHandler()}
       >
-        <i class="fas fa-times text-darkslategray"></i>
+        <i className="fas fa-times text-darkslategray"></i>
       </button>
       <h1 className="text-center text-lg font-semibold text-darkslategray font-poppins">
         {heading}

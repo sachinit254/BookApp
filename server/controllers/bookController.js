@@ -37,7 +37,7 @@ const getBookById = asyncHandler(async (req, res) => {
 const CreateBook = asyncHandler(async (req, res) => {
   const { title, author, pic, from, by } = req.body;
 
-  if (!title || !author || !pic) {
+  if (!title || !author || !pic || !from || !by) {
     res.status(400);
     throw new Error("Please Fill all the fields");
     return;

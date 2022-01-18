@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
+import { useUserContext } from "../context/UserContext";
 import AlertMessage from "./AlertMessage";
 
 const BookForm = ({ show, setShow }) => {
+  const { books, setBooks } = useUserContext();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [pic, setPic] = useState();
@@ -29,9 +31,6 @@ const BookForm = ({ show, setShow }) => {
         const { data } = res;
         console.log(`data`, data);
         setPic(data.url.toString());
-        setShowMessage(true);
-        setHeading("Image uploaded");
-        setMessage("Image uploaded successfully");
       } catch (error) {
         setShowMessage(true);
         setHeading("Error occurred");
@@ -72,7 +71,8 @@ const BookForm = ({ show, setShow }) => {
           { title, author, pic, from, by },
           config
         );
-        console.log(`res.data`, res.data);
+        const { data } = res;
+        setBooks([...books, data]);
         setShowMessage(true);
         setHeading("Book created");
         setMessage("Book has been created successfully");
@@ -130,7 +130,7 @@ const BookForm = ({ show, setShow }) => {
               <div className="flex justify-center my-4">
                 <input
                   required
-                  className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                  className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder:font-poppins text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
                   type="text"
                   placeholder="Title"
                   value={title}
@@ -141,7 +141,7 @@ const BookForm = ({ show, setShow }) => {
                 <input
                   required
                   type="text"
-                  className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                  className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder:font-poppins text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
                   placeholder="Author"
                   value={author}
                   onChange={(e) => setAuthor(e.target.value)}
@@ -151,7 +151,7 @@ const BookForm = ({ show, setShow }) => {
                 <input
                   required
                   type="text"
-                  className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                  className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder:font-poppins text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
                   placeholder="Your Name"
                   value={by}
                   onChange={(e) => setBy(e.target.value)}
@@ -161,7 +161,7 @@ const BookForm = ({ show, setShow }) => {
                 <input
                   required
                   type="text"
-                  className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder-gray-200 text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                  className="font-poppins w-4/5 h-10 px-2 py-1 rounded-lg bg-darkslategray placeholder:font-poppins text-azure focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
                   placeholder="Your City"
                   value={from}
                   onChange={(e) => setFrom(e.target.value)}

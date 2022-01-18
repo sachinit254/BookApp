@@ -2,11 +2,10 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
-import LogIn from "../components/SignIn";
+import SignIn from "../components/SignIn";
 import { useUserContext } from "../context/UserContext";
 const SignInPage = () => {
-  const { setData } = useUserContext();
-  const { setUserData } = setData;
+  const { setUserData } = useUserContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState();
@@ -56,7 +55,7 @@ const SignInPage = () => {
           }}
         />
       )}
-      <LogIn
+      <SignIn
         email={email}
         setEmail={setEmail}
         password={password}

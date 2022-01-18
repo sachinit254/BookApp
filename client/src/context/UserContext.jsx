@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
+import axios from "axios";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const UserContext = createContext();
 
@@ -16,16 +17,41 @@ const ContextProvider = ({ children }) => {
       ? JSON.parse(localStorage.getItem("userInfo"))
       : null
   );
-  const [books, setBooks] = useState();
-  console.log(`userData`, userData);
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const userInfoFromStorage = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfoFromStorage?.token}`,
+      },
+    };
+    const getBooks = async () => {
+      try {
+        const res = await axios.get("/books", config);
+        const { data } = res;
+        setBooks(data);
+      } catch (error) {
+        console.log(`error`, error);
+      }
+    };
+    getBooks();
+  }, [setBooks]);
+
+  console.log("Context");
+  console.log(`books`, books);
 
   return (
     <UserContext.Provider
       value={{
-        data: { userData },
-        setData: { setUserData },
-        books: { books },
-        setBooks: { setBooks },
+        userData,
+        setUserData,
+        books,
+        setBooks,
       }}
     >
       {children}
