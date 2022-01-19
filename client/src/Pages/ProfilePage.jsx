@@ -32,9 +32,10 @@ const Profile = () => {
     history.push("/");
   };
   console.log(`user`, user);
+
+  // TODO create a profile page
   return (
     <div className="relative">
-      <CssBaseline />
       <UserDetails user={user} logoutHandler={logoutHandler} />
     </div>
   );

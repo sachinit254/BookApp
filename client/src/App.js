@@ -9,12 +9,16 @@ import Profile from "./Pages/ProfilePage";
 import AdminPage from "./Pages/AdminPage";
 import MyBooksPage from "./Pages/MyBooksPage";
 import DetailsPage from "./Pages/DetailsPage";
+import ProfileModal from "./components/ProfileModal";
+import { useState } from "react";
 
 function App() {
+  const [showDetails, setShowDetails] = useState(false);
   return (
-    <>
+    <div className="bg-darkslategray relative">
       <Router>
-        <Header />
+        <Header showDetails={showDetails} setShowDetails={setShowDetails} />
+        {showDetails && <ProfileModal setShowDetails={setShowDetails} />}
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/signin" exact component={SignInPage} />
@@ -26,7 +30,7 @@ function App() {
           <Route path="/singleBook/:id" exact component={DetailsPage} />
         </Switch>
       </Router>
-    </>
+    </div>
   );
 }
 

@@ -5,7 +5,6 @@ const userSchema = mongoose.Schema(
   {
     profilepic: {
       type: String,
-      required: true,
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
@@ -28,6 +27,12 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    instagram: {
+      type: String,
+    },
+    facebook: {
+      type: String,
     },
   },
   { timestamps: true }

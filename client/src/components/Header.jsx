@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
-
-export default function ButtonAppBar() {
+import noProfile from "../images/user.png";
+export default function Header({ setShowDetails }) {
   const { userData, setUserData } = useUserContext();
   const [show, setShow] = useState(false);
   const history = useHistory();
@@ -33,13 +33,6 @@ export default function ButtonAppBar() {
               </button>
             </Link>
           )}
-          {userData && (
-            <Link to="/profile" className="nounderline">
-              <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
-                Profile
-              </button>
-            </Link>
-          )}
           {!userData && (
             <Link to="/signin" className="nounderline">
               <button className="font-poppins font-normal text-darkslategray rounded-lg hover:shadow-md hover:text-paleturquoise hover:bg-darkslategray px-4 py-2 text-md">
@@ -60,6 +53,14 @@ export default function ButtonAppBar() {
               onClick={logoutHandler}
             >
               Logout
+            </button>
+          )}
+          {userData && (
+            <button
+              className="rounded-full border-[1px] border-darkslategray p-1"
+              onClick={() => setShowDetails(true)}
+            >
+              <img src={noProfile} alt="" className="w-6 h-6 object-cover" />
             </button>
           )}
         </div>
