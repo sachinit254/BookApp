@@ -97,9 +97,7 @@ const BookForm = ({ show, setShow }) => {
     }
   };
 
-  if (!show) {
-    return;
-  }
+  
   return (
     <div>
       {showMessage && (

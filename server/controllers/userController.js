@@ -17,10 +17,13 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user.id,
+      profilepic: user.profilepic,
       firstname: user.firstname,
       lastname: user.lastname,
       city: user.city,
       email: user.email,
+      instagram: user.instagram,
+      facebook: user.facebook,
       token: generateToken(user._id),
     });
   } else {
@@ -53,10 +56,13 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({
       _id: user._id,
+      profilepic: user.profilepic,
       firstname: user.firstname,
       lastname: user.lastname,
       city: user.city,
       email: user.email,
+      instagram: user.instagram,
+      facebook: user.facebook,
       token: generateToken(user._id),
     });
   } else {
@@ -71,10 +77,13 @@ const registerUser = asyncHandler(async (req, res) => {
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
+    user.profilepic = req.body.profilepic || user.profilepic;
     user.firstname = req.body.firstname || user.firstname;
     user.lastname = req.body.lastname || user.lastname;
     user.city = req.body.city || user.city;
     user.email = req.body.email || user.email;
+    user.instagram = req.body.instagram || user.instagram;
+    user.facebook = req.body.facebook || user.facebook;
 
     if (req.body.password) {
       user.password = req.body.password;
@@ -84,10 +93,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
     res.json({
       _id: updatedUser._id,
+      profilepic: updatedUser.profilepic,
       firstname: updatedUser.firstname,
       lastname: updatedUser.lastname,
       city: updatedUser.city,
       email: updatedUser.email,
+      instagram: updatedUser.instagram,
+      facebook: updatedUser.facebook,
       token: generateToken(updatedUser._id),
     });
   } else {
@@ -95,7 +107,5 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User Not found");
   }
 });
-
-// @description 
 
 export { authUser, updateUserProfile, registerUser };
