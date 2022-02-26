@@ -34,6 +34,7 @@ const SignInPage = () => {
     } catch (error) {
       setShowMessage(true);
       setHeading("Login failed");
+      
       setMessage(
         error.response && error.response.data.message
           ? error.response.data.message

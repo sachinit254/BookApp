@@ -1,135 +1,194 @@
-import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  CssBaseline,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { logout } from "../actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "grid",
-    placeItems: "center",
-    width: "100%",
-    height: "auto",
-    padding: "4rem",
-  },
-  container: {
-    position: "relative",
-    marginBottom: "400px",
-  },
-  logoutBtn: {
-    position: "absolute",
-    top: "10px",
-    left: "20px",
-  },
-  form: {
-    position: "absolute",
-    top: "100px",
-    right: "5vw",
-    display: "flex",
-    flexDirection: "column",
-  },
-  textfield: {
-    width: "40vw",
-    marginBottom: "20px",
-  },
-}));
+import React from "react";
+import { Link } from "react-router-dom";
+import AlertMessage from "./AlertMessage";
 
-const UserDetails = ({ user, logoutHandler }) => {
-  const classes = useStyles();
-  // const [user, setUser] = useState({});
-  console.log(`user`, user);
-  // const dispatch = useDispatch();
-  // const history = useHistory();
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const { userInfo } = userLogin;
-  // console.log(`userInfo`, userInfo);
-  // useEffect(() => {
-  //   if (!userInfo) {
-  //     history.push("/");
+const UserDetails = (props) => {
+  const {
+    pic,
+    ref,
+    uploadPic,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    imageRemove,
+    userData,
+    handleChange,
+    submitHandler,
+  } = props;
+  // const [title, setTitle] = useState("");
+  // const [author, setAuthor] = useState("");
+  // const [pic, setPic] = useState();
+  // const [from, setFrom] = useState("");
+  // const [by, setBy] = useState("");
+
+  // const [profilePic, setProfilePic] = useState();
+
+  // const [heading, setHeading] = useState();
+  // const [message, setMessage] = useState();
+  // const [showMessage, setShowMessage] = useState(false);
+  // const ref = useRef();
+
+  //uploading pic to cloudinary
+  // const uploadPic = async (pics) => {
+  //   setProfilePic(pics);
+  //   if (pics?.type === "image/jpeg" || pics?.type === "image/png") {
+  //     const body = new FormData();
+  //     body.append("file", pics);
+  //     body.append("upload_preset", "BookPic");
+  //     body.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
+  //     try {
+  //       const res = await axios.post(
+  //         process.env.REACT_APP_CLOUDINARY_URL,
+  //         body
+  //       );
+  //       const { data } = res;
+  //       console.log(`data`, data);
+  //       setPic(data.url.toString());
+  //     } catch (error) {
+  //       setShowMessage(true);
+  //       setHeading("Error occurred");
+  //       setMessage("Image cannot be uploaded");
+  //     }
   //   } else {
-  //     setUser(userInfo);
+  //     setShowMessage(true);
+  //     setHeading("Error occurred");
+  //     setMessage("Please select an image");
   //   }
-  // }, [history, userInfo]);
-
-  // const logoutHandler = () => {
-  //   dispatch(logout());
   // };
 
-  return (
-    <>
-      {/* <div className={classes.container}>
-        <CssBaseline />
+  // This function will remove the selected image from the input
+  // const imageRemove = (e) => {
+  //   e.preventDefault();
+  //   ref.current.value = "";
+  //   setPic();
+  // };
 
-        <Button
-          className={classes.logoutBtn}
-          variant="outlined"
-          onClick={logoutHandler}
-        >
-          Logout
-        </Button>
-        <Box className={classes.root}>
-          <form className={classes.form}>
-            <TextField
-              className={classes.textfield}
-              label="First Name"
-              name="firstname"
-              type="text"
-              value={user?.firstname}
-              required
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              className={classes.textfield}
-              label="Last Name"
-              name="lastname"
-              type="text"
-              value={user?.lastname}
-              required
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              className={classes.textfield}
-              label="City"
-              name="city"
-              type="text"
-              value={user?.city}
-              required
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              className={classes.textfield}
-              label="Email"
-              name="email"
-              type="email"
-              value={user?.email}
-              required
-              fullWidth
-              variant="outlined"
-            />
-          </form>
-        </Box>
-      </div> */}
-      <div className="bg-darkslategray w-screen h-[calc(100vh-72px)] grid place-items-center">
-        <div className="container w-4/6 h-5/6 rounded-lg bg-paleturquoise p-[2px]">
-          <div className="relative w-full rounded-t-lg bg-darkslategray h-2/6">
-            <div className="absolute left-1/2 top-1/2 bg-white -translate-x-1/2 w-1/5 h-40 rounded-lg border-2 border-white"></div>
-          </div>
-          <div className="grid place-items-center mt-24">
-            <h1 className="font-poppins">Name</h1>
-            <h4 className="font-poppins">City</h4>  
+  console.log(userData.phone);
+
+  return (
+    <div>
+      <div className="bg-darkslategray top-50 left-50 border-1 absolute z-50 h-[calc(100vh-72px)] w-screen border-black filter">
+        <div className="container mx-auto grid h-screen place-items-center">
+          <div className="bg-paleturquoise relative mx-auto w-3/4 rounded-lg py-5 sm:w-2/5 md:w-1/3 lg:w-[35%]">
+            <form onSubmit={submitHandler}>
+              <div className="my-4 flex justify-center space-x-2">
+                <input
+                  required
+                  className="font-poppins bg-darkslategray placeholder:font-poppins text-azure focus:ring-azure h-10 w-[39%] rounded-lg px-2 py-1 focus:border-transparent focus:outline-none focus:ring-2"
+                  type="text"
+                  placeholder="First Name"
+                  name="firstname"
+                  value={userData.firstname ? userData.firstname : ""}
+                  onChange={(e) => handleChange(e)}
+                />
+                <input
+                  required
+                  type="text"
+                  className="font-poppins bg-darkslategray placeholder:font-poppins text-azure focus:ring-azure h-10 w-[39%] rounded-lg px-2 py-1 focus:border-transparent focus:outline-none focus:ring-2"
+                  placeholder="Last Name"
+                  name="lastname"
+                  value={userData.lastname ? userData.lastname : ""}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+
+              <div className="mb-4 flex justify-center">
+                <input
+                  required
+                  type="text"
+                  className="font-poppins bg-darkslategray placeholder:font-poppins text-azure focus:ring-azure h-10 w-4/5 rounded-lg px-2 py-1 focus:border-transparent focus:outline-none focus:ring-2"
+                  placeholder="City"
+                  name="city"
+                  value={userData.city ? userData.city : ""}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <div className="mb-4 flex justify-center">
+                <input
+                  required
+                  type="text"
+                  className="font-poppins bg-darkslategray placeholder:font-poppins text-azure focus:ring-azure h-10 w-4/5 rounded-lg px-2 py-1 focus:border-transparent focus:outline-none focus:ring-2"
+                  placeholder="Phone Number"
+                  name="phone"
+                  value={userData.phone ? userData.phone : ""}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <div className="mb-4 flex justify-center">
+                <input
+                  required
+                  type="email"
+                  className="font-poppins bg-darkslategray placeholder:font-poppins text-azure focus:ring-azure h-10 w-4/5 rounded-lg px-2 py-1 focus:border-transparent focus:outline-none focus:ring-2"
+                  placeholder="Email"
+                  name="email"
+                  value={userData.email ? userData.email : ""}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <div className="mb-4 flex justify-center">
+                <input
+                  type="password"
+                  className="font-poppins bg-darkslategray placeholder:font-poppins text-azure focus:ring-azure h-10 w-4/5 rounded-lg px-2 py-1 focus:border-transparent focus:outline-none focus:ring-2"
+                  placeholder="Password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="mb-4 flex justify-center">
+                <input
+                  type="password"
+                  className="font-poppins bg-darkslategray placeholder:font-poppins text-azure focus:ring-azure h-10 w-4/5 rounded-lg px-2 py-1 focus:border-transparent focus:outline-none focus:ring-2"
+                  placeholder="Confirm Password"
+                  name="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+              <div>
+                <div className="grid items-center">
+                  <input
+                    ref={ref}
+                    type="file"
+                    accept="image/*"
+                    className={`mx-auto w-4/5 ${
+                      pic ? "mb-0" : "mb-10"
+                    } font-poppins tracking-tighter`}
+                    onChange={(e) => uploadPic(e.target.files[0])}
+                  />
+                </div>
+                {pic && (
+                  <div className="mb-4 flex h-24 items-center justify-end">
+                    <div className={`relative mr-3 h-20 w-1/4 rounded-lg`}>
+                      <img
+                        src={userData.profilePic ? userData.profilePic : ""}
+                        className="h-full w-full rounded-md"
+                        alt=""
+                      />
+                      <button
+                        className="text-azure bg-darkslategray hover:bg-azure hover:text-darkslategray absolute top-1 right-1 rounded-xl px-0.5 text-xs"
+                        onClick={(e) => imageRemove(e)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="mb-4 grid w-full place-items-center">
+                <button
+                  className={`font-poppins bg-darkslategray text-md text-azure focus:ring-azure rounded-lg px-6 py-2 focus:border-transparent focus:outline-none focus:ring-2`}
+                  type="submit"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
