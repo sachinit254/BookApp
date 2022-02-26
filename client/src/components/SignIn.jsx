@@ -32,7 +32,7 @@ const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 <i
-                  className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"}
+                  className={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
                 ></i>
               </span>
             </div>

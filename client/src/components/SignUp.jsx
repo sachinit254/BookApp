@@ -8,6 +8,7 @@ const SignUp = () => {
   const [lastname, setLastname] = useState("");
   const [city, setCity] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(0);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmpassword] = useState("");
   const [heading, setHeading] = useState();
@@ -33,6 +34,7 @@ const SignUp = () => {
           lastname,
           city,
           email,
+          phone,
           password,
         });
         console.log(`res`, res);
@@ -67,8 +69,8 @@ const SignUp = () => {
           }}
         />
       )}
-      <div className="bg-darkslategray h-[89.2vh] grid place-items-center">
-        <div className="w-1/4 bg-paleturquoise py-8 rounded-lg">
+      <div className="bg-darkslategray grid h-[89.2vh] place-items-center">
+        <div className="bg-paleturquoise w-1/4 rounded-lg py-8">
           <form
             className="flex flex-col items-center space-y-4"
             onSubmit={submitHandler}
@@ -79,7 +81,7 @@ const SignUp = () => {
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
               placeholder="First Name"
-              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+              className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <input
               required
@@ -87,7 +89,7 @@ const SignUp = () => {
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
               placeholder="Last Name"
-              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+              className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <input
               required
@@ -95,7 +97,7 @@ const SignUp = () => {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="City"
-              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+              className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <input
               required
@@ -103,25 +105,33 @@ const SignUp = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+              className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
+            />
+            <input
+              required
+              type="number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Phone Number"
+              className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <div className="relative w-4/5">
               <input
                 required
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                className="w-full font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-full rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 pattern=".{8,}"
                 title="Minimum eight characters required."
               />
               <span
-                className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure"
+                className="text-azure absolute top-1/2 left-60 -translate-y-1/2 transform text-sm"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 <i
-                  className={showPassword ? "fas fa-eye" : "fas fa-eye-slash"}
+                  className={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
                 ></i>
               </span>
             </div>
@@ -130,30 +140,30 @@ const SignUp = () => {
                 required
                 type={showPassword ? "text" : "password"}
                 placeholder="Confirm Password"
-                className="w-full font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-full rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
                 value={confirmPassword}
                 onChange={(e) => setConfirmpassword(e.target.value)}
                 pattern=".{8,}"
                 title="Minimum eight characters required."
               />
-              <span className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure">
+              <span className="text-azure absolute top-1/2 left-60 -translate-y-1/2 transform text-sm">
                 <button onClick={(e) => togglePassword(e)}>
                   <i
-                    class={showPassword ? "fas fa-eye" : "fas fa-eye-slash"}
+                    class={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
                   ></i>
                 </button>
               </span>
             </div>
-            <div className="w-4/5 flex flex-col items-center space-y-4">
+            <div className="flex w-4/5 flex-col items-center space-y-4">
               <button
-                className="w-full font-poppins bg-azure py-2 px-3 rounded-lg font-semibold text-darkslategray hover:text-azure hover:bg-darkslategray"
+                className="font-poppins bg-azure text-darkslategray hover:text-azure hover:bg-darkslategray w-full rounded-lg px-3 py-2 font-semibold"
                 type="submit"
               >
                 Sign Up
               </button>
               <a
                 href="/signup"
-                className="text-xs font-poppins text-darkslategray hover:underline hover:decoration-darkslategray font-semibold"
+                className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline"
               >
                 Already have an account ?<br /> Sign In
               </a>

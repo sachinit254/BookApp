@@ -15,7 +15,7 @@ import { useState } from "react";
 function App() {
   const [showDetails, setShowDetails] = useState(false);
   return (
-    <div className="bg-darkslategray relative">
+    <div className="bg-darkslategray relative overflow-y-auto">
       <Router>
         <Header showDetails={showDetails} setShowDetails={setShowDetails} />
         {showDetails && <ProfileModal setShowDetails={setShowDetails} />}
@@ -24,7 +24,7 @@ function App() {
           <Route path="/signin" exact component={SignInPage} />
           <Route path="/signup" exact component={SignUpPage} />
           <Route path="/store" exact component={StorePage} />
-          <Route path="/profile" exact component={Profile} />
+          <Route path="/profile/:id" exact component={Profile} />
           <Route path="/books/:id" exact component={AdminPage} />
           <Route path="/myBooks" exact component={MyBooksPage} />
           <Route path="/singleBook/:id" exact component={DetailsPage} />

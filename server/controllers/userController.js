@@ -3,7 +3,26 @@ import asyncHandler from "express-async-handler";
 import User from "../model/userModel.js";
 import generateToken from "../utils/generateToken.js";
 
-// TODO create a new api for profile picture upload
+// @description  Get user by id
+// @route        GET /users/:id
+// @access       Private
+const getUserById = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    res.json({
+      _id: user.id,
+      profilepic: user.profilepic,
+      firstname: user.firstname,
+      lastname: user.lastname,
+      city: user.city,
+      phone: user.phone,
+      email: user.email,
+    });
+  } else {
+    res.status(401);
+    throw new Error("User not found");
+  }
+});
 
 // @description   Auth the user
 // @route         POST /users/login
@@ -21,9 +40,8 @@ const authUser = asyncHandler(async (req, res) => {
       firstname: user.firstname,
       lastname: user.lastname,
       city: user.city,
+      phone: user.phone,
       email: user.email,
-      instagram: user.instagram,
-      facebook: user.facebook,
       token: generateToken(user._id),
     });
   } else {
@@ -52,6 +70,7 @@ const registerUser = asyncHandler(async (req, res) => {
     city,
     email,
     password,
+    phone,
   });
   if (user) {
     res.status(201).json({
@@ -61,8 +80,7 @@ const registerUser = asyncHandler(async (req, res) => {
       lastname: user.lastname,
       city: user.city,
       email: user.email,
-      instagram: user.instagram,
-      facebook: user.facebook,
+      phone: user.phone,
       token: generateToken(user._id),
     });
   } else {
@@ -82,8 +100,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.lastname = req.body.lastname || user.lastname;
     user.city = req.body.city || user.city;
     user.email = req.body.email || user.email;
-    user.instagram = req.body.instagram || user.instagram;
-    user.facebook = req.body.facebook || user.facebook;
+    user.phone = req.body.phone || user.phone;
 
     if (req.body.password) {
       user.password = req.body.password;
@@ -98,8 +115,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       lastname: updatedUser.lastname,
       city: updatedUser.city,
       email: updatedUser.email,
-      instagram: updatedUser.instagram,
-      facebook: updatedUser.facebook,
+      phone: updatedUser.phone,
       token: generateToken(updatedUser._id),
     });
   } else {
@@ -108,4 +124,4 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, updateUserProfile, registerUser };
+export { getUserById, authUser, updateUserProfile, registerUser };
