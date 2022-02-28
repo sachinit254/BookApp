@@ -4,45 +4,39 @@ import { useParams } from "react-router-dom";
 import AlertMessage from "../components/AlertMessage";
 
 import UserDetails from "../components/UserDetails";
+import { useUserContext } from "../context/UserContext";
 const Profile = () => {
-  const [userData, setUserData] = useState({});
+  const { userData, setUserData } = useUserContext();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
   const [pic, setPic] = useState();
-  const [from, setFrom] = useState("");
-  const [by, setBy] = useState("");
-
-  const [profilePic, setProfilePic] = useState();
-
   const [heading, setHeading] = useState();
   const [message, setMessage] = useState();
   const [showMessage, setShowMessage] = useState(false);
   const ref = useRef();
   const params = useParams();
   const { id } = params;
-
-  useEffect(() => {
-    const getUserData = async () => {
-      const userInfoFromStorage = localStorage.getItem("userInfo")
-        ? JSON.parse(localStorage.getItem("userInfo"))
-        : null;
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfoFromStorage.token}`,
-        },
-      };
-      const { data } = await axios.get(`/users/${id}`, config);
-      console.log(data);
-      setUserData(data);
-    };
-    getUserData();
-  }, [id]);
+  console.log(typeof id);
+  // useEffect(() => {
+  //   const getUserData = async () => {
+  //     const userInfoFromStorage = localStorage.getItem("userInfo")
+  //       ? JSON.parse(localStorage.getItem("userInfo"))
+  //       : null;
+  //     const config = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${userInfoFromStorage.token}`,
+  //       },
+  //     };
+  //     const { data } = await axios.get(`/users/${id}`, config);
+  //     console.log(data);
+  //     setUserData(data);
+  //   };
+  //   getUserData();
+  // }, [id]);
 
   const uploadPic = async (pics) => {
-    setProfilePic(pics);
+    setPic(pics);
     if (pics?.type === "image/jpeg" || pics?.type === "image/png") {
       const body = new FormData();
       body.append("file", pics);
@@ -55,7 +49,7 @@ const Profile = () => {
         );
         const { data } = res;
         console.log(`data`, data);
-        setUserData({ ...userData, profilepic: data.url.toString() });
+        setPic(data.url.toString());
       } catch (error) {
         setShowMessage(true);
         setHeading("Error occurred");
@@ -97,8 +91,16 @@ const Profile = () => {
           Authorization: `Bearer ${userInfoFromStorage.token}`,
         },
       };
+      const body = {
+        firstname: userData.firstname,
+        lastname: userData.lastname,
+        city: userData.city,
+        email: userData.email,
+        profilepic: pic,
+        phone: userData.phone,
+      };
       try {
-        const res = await axios.put(`/users/profile`, userData, config);
+        const res = await axios.put(`/users/profile`, body, config);
         const { data } = res;
         setUserData(data);
       } catch (error) {
@@ -112,21 +114,10 @@ const Profile = () => {
   };
 
   let props = {
-    title: title,
-    setTitle: setTitle,
-    author: author,
-    setAuthor: setAuthor,
     pic: pic,
     setPic: setPic,
-    from: from,
-    setFrom: setFrom,
-    by: by,
-    setBy: setBy,
-    profilePic: profilePic,
-    setProfilePic: setProfilePic,
     uploadPic: uploadPic,
     imageRemove: imageRemove,
-    ref: ref,
     userData: userData,
     setUserData: setUserData,
     password: password,
