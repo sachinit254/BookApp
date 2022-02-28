@@ -5,7 +5,7 @@ import AlertMessage from "../components/AlertMessage";
 import SignIn from "../components/SignIn";
 import { useUserContext } from "../context/UserContext";
 const SignInPage = () => {
-  const { setUserData } = useUserContext();
+  const { setUserData, setIsLoggedIn } = useUserContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState();
@@ -25,6 +25,7 @@ const SignInPage = () => {
       const { data } = res;
       localStorage.setItem("userInfo", JSON.stringify(data));
       setUserData(data);
+      setIsLoggedIn(true);
       setShowMessage(true);
       setHeading("Login succeed");
       setMessage("User logged in successfully");
@@ -34,7 +35,7 @@ const SignInPage = () => {
     } catch (error) {
       setShowMessage(true);
       setHeading("Login failed");
-      
+
       setMessage(
         error.response && error.response.data.message
           ? error.response.data.message

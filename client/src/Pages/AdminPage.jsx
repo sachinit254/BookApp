@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, useLocation } from "react-router";
 import AdminPanel from "../components/AdminPanel";
-import AlertMessage from "../components/AlertMessage";
+import { ToastContainer, toast } from "react-toastify";
 import { useUserContext } from "../context/UserContext";
 
 const SingleBook = () => {
@@ -13,9 +13,14 @@ const SingleBook = () => {
   const [pic, setPic] = useState();
   const [by, setBy] = useState();
   const [from, setFrom] = useState();
-  const [heading, setHeading] = useState();
-  const [message, setMessage] = useState();
-  const [showMessage, setShowMessage] = useState(false);
+  // const options = {
+  //   position: "top-right",
+  //   autoClose: 3000,
+  //   hideProgressBar: false,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: false,
+  // };
   const { id } = useParams();
 
   const history = useHistory();
@@ -49,9 +54,7 @@ const SingleBook = () => {
         setBy(data?.by);
         setFrom(data?.from);
       } catch (error) {
-        setShowMessage(true);
-        setHeading("Error occurred");
-        setMessage("Book not found");
+        toast.error("Cannot get book details");
       }
     };
     getBook();
@@ -71,13 +74,9 @@ const SingleBook = () => {
       let finalBooks = [...updatedBookList, book];
       setBooks(finalBooks);
       console.log(`book`, book);
-      setShowMessage(true);
-      setHeading("Book updated");
-      setMessage("Book has been updated successfully");
+      toast.success("Book has been updated successfully");
     } catch (error) {
-      setShowMessage(true);
-      setHeading("Error occurred");
-      setMessage("Book details update failed");
+      toast.error("Book details update failed");
     }
   };
 
@@ -91,16 +90,12 @@ const SingleBook = () => {
         console.log(`book`, book);
         setBooks(book);
       }
-      setShowMessage(true);
-      setHeading("Book Deleted");
-      setMessage("Book has been deleted successfully");
+      toast.success("Book has been deleted successfully");
       setTimeout(() => {
         history.push("/myBooks");
       }, [2000]);
     } catch (error) {
-      setShowMessage(true);
-      setHeading("Error occurred");
-      setMessage("Book delete failed");
+      toast.error("Book delete failed");
     }
   };
 
@@ -120,14 +115,10 @@ const SingleBook = () => {
         console.log(`data`, data);
         setPic(data.url.toString());
       } catch (error) {
-        setShowMessage(true);
-        setHeading("Error occurred");
-        setMessage("Image cannot be uploaded");
+        toast.error("Image cannot be uploaded");
       }
     } else {
-      setShowMessage(true);
-      setHeading("Error occurred");
-      setMessage("Please select an image");
+      toast.warn("Please select an image");
     }
   };
 
@@ -135,35 +126,27 @@ const SingleBook = () => {
     history.push("/singleBook");
   };
   return (
-    <div>
-      {showMessage && (
-        <AlertMessage
-          heading={heading}
-          message={message}
-          deleteHandler={() => {
-            setShowMessage(false);
-            setHeading("");
-            setMessage("");
-          }}
+    <>
+      <div>
+        <ToastContainer theme="light"></ToastContainer>
+        <AdminPanel
+          bookId={bookId}
+          title={title}
+          setTitle={setTitle}
+          author={author}
+          setAuthor={setAuthor}
+          pic={pic}
+          by={by}
+          setBy={setBy}
+          from={from}
+          setFrom={setFrom}
+          updateHandler={updateHandler}
+          bookDeleteHandler={bookDeleteHandler}
+          uploadPic={uploadPic}
+          historyPush={historyPush}
         />
-      )}
-      <AdminPanel
-        bookId={bookId}
-        title={title}
-        setTitle={setTitle}
-        author={author}
-        setAuthor={setAuthor}
-        pic={pic}
-        by={by}
-        setBy={setBy}
-        from={from}
-        setFrom={setFrom}
-        updateHandler={updateHandler}
-        bookDeleteHandler={bookDeleteHandler}
-        uploadPic={uploadPic}
-        historyPush={historyPush}
-      />
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -12,11 +12,8 @@ const useUserContext = () => {
 };
 
 const ContextProvider = ({ children }) => {
-  const [userData, setUserData] = useState(() =>
-    localStorage.getItem("userInfo")
-      ? JSON.parse(localStorage.getItem("userInfo"))
-      : null
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({});
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -39,8 +36,42 @@ const ContextProvider = ({ children }) => {
         console.log(`error`, error);
       }
     };
+
     getBooks();
-  }, [setBooks]);
+  }, []);
+
+  useEffect(() => {
+    const userInfoFromStorage = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfoFromStorage?.token}`,
+      },
+    };
+    const getUserData = async () => {
+      try {
+        if (userInfoFromStorage) {
+          const { _id: id } = userInfoFromStorage;
+          const { data } = await axios.get(`/users/${id}`, config);
+          setUserData(data);
+        }
+      } catch (err) {
+        console.log(`error`, err);
+      }
+    };
+
+    getUserData();
+  }, []);
+
+  useEffect(() => {
+    const userInfoFromStorage = localStorage.getItem("userInfo");
+    if (userInfoFromStorage) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   console.log("Context");
   console.log(`books`, books);
@@ -52,6 +83,8 @@ const ContextProvider = ({ children }) => {
         setUserData,
         books,
         setBooks,
+        isLoggedIn,
+        setIsLoggedIn,
       }}
     >
       {children}

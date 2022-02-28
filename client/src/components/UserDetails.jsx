@@ -1,18 +1,19 @@
 import React from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import AlertMessage from "./AlertMessage";
 
 const UserDetails = (props) => {
   const {
     pic,
-    ref,
+    profilePic,
     uploadPic,
     password,
     setPassword,
     confirmPassword,
     setConfirmPassword,
-    imageRemove,
     userData,
+    setUserData,
     handleChange,
     submitHandler,
   } = props;
@@ -27,7 +28,7 @@ const UserDetails = (props) => {
   // const [heading, setHeading] = useState();
   // const [message, setMessage] = useState();
   // const [showMessage, setShowMessage] = useState(false);
-  // const ref = useRef();
+  const ref = useRef();
 
   //uploading pic to cloudinary
   // const uploadPic = async (pics) => {
@@ -58,13 +59,13 @@ const UserDetails = (props) => {
   // };
 
   // This function will remove the selected image from the input
-  // const imageRemove = (e) => {
-  //   e.preventDefault();
-  //   ref.current.value = "";
-  //   setPic();
-  // };
+  const imageRemove = (e) => {
+    e.preventDefault();
+    ref.current.value = "";
+    setUserData({ ...userData, profilePic: "" });
+  };
 
-  console.log(userData.phone);
+  console.log(profilePic);
 
   return (
     <div>
@@ -149,7 +150,6 @@ const UserDetails = (props) => {
               <div>
                 <div className="grid items-center">
                   <input
-                    ref={ref}
                     type="file"
                     accept="image/*"
                     className={`mx-auto w-4/5 ${
@@ -162,9 +162,10 @@ const UserDetails = (props) => {
                   <div className="mb-4 flex h-24 items-center justify-end">
                     <div className={`relative mr-3 h-20 w-1/4 rounded-lg`}>
                       <img
-                        src={userData.profilePic ? userData.profilePic : ""}
+                        src={pic ? pic : ""}
                         className="h-full w-full rounded-md"
                         alt=""
+                        ref={ref}
                       />
                       <button
                         className="text-azure bg-darkslategray hover:bg-azure hover:text-darkslategray absolute top-1 right-1 rounded-xl px-0.5 text-xs"

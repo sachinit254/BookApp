@@ -1,39 +1,37 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import noProfile from "../images/user.png";
 export default function Header({ setShowDetails }) {
-  const { userData, setUserData } = useUserContext();
+  const { userData, setUserData, isLoggedIn, setIsLoggedIn } = useUserContext();
   const [show, setShow] = useState(false);
-  const [profilePic, setProfilePic] = useState("");
   const history = useHistory();
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     setUserData();
+    setIsLoggedIn(false);
     history.push("/");
   };
-  useEffect(() => {
-    const getUserData = async () => {
-      const userInfoFromStorage = localStorage.getItem("userInfo")
-        ? JSON.parse(localStorage.getItem("userInfo"))
-        : null;
-      const { _id: id } = JSON.parse(localStorage.getItem("userInfo"));
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfoFromStorage.token}`,
-        },
-      };
-      const { data } = await axios.get(`/users/${id}`, config);
-      const { profilepic } = data;
+  // useEffect(() => {
+  //   const getUserData = async () => {
+  //     const userInfoFromStorage = localStorage.getItem("userInfo")
+  //       ? JSON.parse(localStorage.getItem("userInfo"))
+  //       : null;
+  //     const { _id: id } = JSON.parse(localStorage.getItem("userInfo"));
+  //     const config = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${userInfoFromStorage.token}`,
+  //       },
+  //     };
+  //     const { data } = await axios.get(`/users/${id}`, config);
+  //     const { profilepic } = data;
 
-      setProfilePic(profilepic);
-    };
-    getUserData();
-  }, []);
+  //     setProfilePic(profilepic);
+  //   };
+  //   getUserData();
+  // }, []);
 
   return (
     <>
@@ -47,28 +45,28 @@ export default function Header({ setShowDetails }) {
               Home
             </button>
           </Link>
-          {userData && (
+          {isLoggedIn && (
             <Link to="/myBooks" className="nounderline">
               <button className="font-poppins text-darkslategray hover:text-paleturquoise hover:bg-darkslategray text-md rounded-lg px-4 py-2 font-normal hover:shadow-md">
                 My Books
               </button>
             </Link>
           )}
-          {!userData && (
+          {!isLoggedIn && (
             <Link to="/signin" className="nounderline">
               <button className="font-poppins text-darkslategray hover:text-paleturquoise hover:bg-darkslategray text-md rounded-lg px-4 py-2 font-normal hover:shadow-md">
                 Sign In
               </button>
             </Link>
           )}
-          {!userData && (
+          {!isLoggedIn && (
             <Link to="/signup" className="nounderline">
               <button className="font-poppins text-darkslategray hover:text-paleturquoise hover:bg-darkslategray text-md rounded-lg px-4 py-2 font-normal hover:shadow-md">
                 Sign Up
               </button>
             </Link>
           )}
-          {userData && (
+          {isLoggedIn && (
             <button
               className="font-poppins text-darkslategray hover:text-paleturquoise hover:bg-darkslategray text-md rounded-lg px-4 py-2 font-normal hover:shadow-md"
               onClick={logoutHandler}
@@ -76,13 +74,13 @@ export default function Header({ setShowDetails }) {
               Logout
             </button>
           )}
-          {userData && (
+          {isLoggedIn && (
             <button
               className="border-darkslategray"
               onClick={() => setShowDetails(true)}
             >
               <img
-                src={profilePic ? profilePic : noProfile}
+                src={userData?.profilepic ? userData.profilepic : noProfile}
                 alt=""
                 className="h-10 w-10 rounded-full object-cover"
               />
@@ -112,28 +110,28 @@ export default function Header({ setShowDetails }) {
             Home
           </div>
         </Link>
-        {userData && (
+        {isLoggedIn && (
           <Link to="/profile">
             <div className="text-md bg-azure  font-poppins text-darkslategray hover:bg-darkslategray hover:text-azure block px-8 py-4 font-normal sm:px-16 md:px-24">
               Profile
             </div>
           </Link>
         )}
-        {!userData && (
+        {!isLoggedIn && (
           <Link to="/signin">
             <div className="text-md bg-azure  font-poppins text-darkslategray hover:bg-darkslategray hover:text-azure block px-8 py-4 font-normal sm:px-16 md:px-24">
               Sign In
             </div>
           </Link>
         )}
-        {!userData && (
+        {!isLoggedIn && (
           <Link to="/signup">
             <div className="text-md bg-azure font-poppins text-darkslategray hover:bg-darkslategray hover:text-azure block px-8 py-4 font-normal sm:px-16 md:px-24">
               Sign Up
             </div>
           </Link>
         )}
-        {userData && (
+        {isLoggedIn && (
           <div
             className="text-md bg-azure  font-poppins text-darkslategray hover:bg-darkslategray hover:text-azure block px-8 py-4 font-normal sm:px-16 md:px-24"
             onClick={logoutHandler}
