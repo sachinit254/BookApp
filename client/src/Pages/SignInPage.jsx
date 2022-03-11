@@ -1,16 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import AlertMessage from "../components/AlertMessage";
+import { Slide, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import SignIn from "../components/SignIn";
 import { useUserContext } from "../context/UserContext";
 const SignInPage = () => {
   const { setUserData, setIsLoggedIn } = useUserContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState();
-  const [heading, setHeading] = useState();
-  const [showMessage, setShowMessage] = useState(false);
   const history = useHistory();
   const config = {
     headers: {
@@ -26,17 +24,12 @@ const SignInPage = () => {
       localStorage.setItem("userInfo", JSON.stringify(data));
       setUserData(data);
       setIsLoggedIn(true);
-      setShowMessage(true);
-      setHeading("Login succeed");
-      setMessage("User logged in successfully");
+      toast.success("User logged in successfully");
       setTimeout(() => {
         history.push("/");
       }, [2000]);
     } catch (error) {
-      setShowMessage(true);
-      setHeading("Login failed");
-
-      setMessage(
+      toast.error(
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message
@@ -45,18 +38,12 @@ const SignInPage = () => {
   };
   return (
     <>
-      {showMessage && (
-        <AlertMessage
-          message={message}
-          heading={heading}
-          setShowMessage={setShowMessage}
-          deleteHandler={() => {
-            setShowMessage(false);
-            setHeading("");
-            setMessage("");
-          }}
-        />
-      )}
+      <ToastContainer
+        theme="light"
+        autoClose={2000}
+        transition={Slide}
+        hideProgressBar={true}
+      />
       <SignIn
         email={email}
         setEmail={setEmail}

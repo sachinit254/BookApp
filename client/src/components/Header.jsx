@@ -13,25 +13,6 @@ export default function Header({ setShowDetails }) {
     setIsLoggedIn(false);
     history.push("/");
   };
-  // useEffect(() => {
-  //   const getUserData = async () => {
-  //     const userInfoFromStorage = localStorage.getItem("userInfo")
-  //       ? JSON.parse(localStorage.getItem("userInfo"))
-  //       : null;
-  //     const { _id: id } = JSON.parse(localStorage.getItem("userInfo"));
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${userInfoFromStorage.token}`,
-  //       },
-  //     };
-  //     const { data } = await axios.get(`/users/${id}`, config);
-  //     const { profilepic } = data;
-
-  //     setProfilePic(profilepic);
-  //   };
-  //   getUserData();
-  // }, []);
 
   return (
     <>
@@ -143,5 +124,3 @@ export default function Header({ setShowDetails }) {
     </>
   );
 }
-
-// TODO : we need to refresh the header to run the useEffect to get the latest profile pic

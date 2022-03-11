@@ -1,39 +1,20 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import AlertMessage from "../components/AlertMessage";
-
+import { Slide, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import UserDetails from "../components/UserDetails";
 import { useUserContext } from "../context/UserContext";
+
 const Profile = () => {
   const { userData, setUserData } = useUserContext();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pic, setPic] = useState();
-  const [heading, setHeading] = useState();
-  const [message, setMessage] = useState();
-  const [showMessage, setShowMessage] = useState(false);
   const ref = useRef();
   const params = useParams();
   const { id } = params;
   console.log(typeof id);
-  // useEffect(() => {
-  //   const getUserData = async () => {
-  //     const userInfoFromStorage = localStorage.getItem("userInfo")
-  //       ? JSON.parse(localStorage.getItem("userInfo"))
-  //       : null;
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${userInfoFromStorage.token}`,
-  //       },
-  //     };
-  //     const { data } = await axios.get(`/users/${id}`, config);
-  //     console.log(data);
-  //     setUserData(data);
-  //   };
-  //   getUserData();
-  // }, [id]);
 
   const uploadPic = async (pics) => {
     setPic(pics);
@@ -51,14 +32,10 @@ const Profile = () => {
         console.log(`data`, data);
         setPic(data.url.toString());
       } catch (error) {
-        setShowMessage(true);
-        setHeading("Error occurred");
-        setMessage("Image cannot be uploaded");
+        toast.error("Image cannot be uploaded");
       }
     } else {
-      setShowMessage(true);
-      setHeading("Error occurred");
-      setMessage("Please select an image");
+      toast.warn("Please select an image");
     }
   };
   const imageRemove = (e) => {
@@ -104,7 +81,7 @@ const Profile = () => {
         const { data } = res;
         setUserData(data);
       } catch (error) {
-        console.log(
+        toast.error(
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message
@@ -130,17 +107,12 @@ const Profile = () => {
 
   return (
     <div className="bg-darkslategray relative h-screen w-screen overflow-y-hidden">
-      {showMessage && (
-        <AlertMessage
-          heading={heading}
-          message={message}
-          deleteHandler={() => {
-            setShowMessage(false);
-            setHeading("");
-            setMessage("");
-          }}
-        />
-      )}
+      <ToastContainer
+        theme="light"
+        autoClose={2000}
+        transition={Slide}
+        hideProgressBar={true}
+      />
       <UserDetails {...props} />
     </div>
   );

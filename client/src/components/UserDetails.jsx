@@ -1,7 +1,5 @@
 import React from "react";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
-import AlertMessage from "./AlertMessage";
 
 const UserDetails = (props) => {
   const {
@@ -17,46 +15,8 @@ const UserDetails = (props) => {
     handleChange,
     submitHandler,
   } = props;
-  // const [title, setTitle] = useState("");
-  // const [author, setAuthor] = useState("");
-  // const [pic, setPic] = useState();
-  // const [from, setFrom] = useState("");
-  // const [by, setBy] = useState("");
 
-  // const [profilePic, setProfilePic] = useState();
-
-  // const [heading, setHeading] = useState();
-  // const [message, setMessage] = useState();
-  // const [showMessage, setShowMessage] = useState(false);
   const ref = useRef();
-
-  //uploading pic to cloudinary
-  // const uploadPic = async (pics) => {
-  //   setProfilePic(pics);
-  //   if (pics?.type === "image/jpeg" || pics?.type === "image/png") {
-  //     const body = new FormData();
-  //     body.append("file", pics);
-  //     body.append("upload_preset", "BookPic");
-  //     body.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
-  //     try {
-  //       const res = await axios.post(
-  //         process.env.REACT_APP_CLOUDINARY_URL,
-  //         body
-  //       );
-  //       const { data } = res;
-  //       console.log(`data`, data);
-  //       setPic(data.url.toString());
-  //     } catch (error) {
-  //       setShowMessage(true);
-  //       setHeading("Error occurred");
-  //       setMessage("Image cannot be uploaded");
-  //     }
-  //   } else {
-  //     setShowMessage(true);
-  //     setHeading("Error occurred");
-  //     setMessage("Please select an image");
-  //   }
-  // };
 
   // This function will remove the selected image from the input
   const imageRemove = (e) => {

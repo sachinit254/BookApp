@@ -4,7 +4,6 @@ import HomePage from "./Pages/HomePage";
 import Header from "./components/Header.jsx";
 import SignInPage from "./Pages/SignInPage";
 import SignUpPage from "./Pages/SignUpPage";
-import StorePage from "./Pages/StorePage";
 import Profile from "./Pages/ProfilePage";
 import AdminPage from "./Pages/AdminPage";
 import MyBooksPage from "./Pages/MyBooksPage";
@@ -23,7 +22,6 @@ function App() {
           <Route path="/" exact component={HomePage} />
           <Route path="/signin" exact component={SignInPage} />
           <Route path="/signup" exact component={SignUpPage} />
-          <Route path="/store" exact component={StorePage} />
           <Route path="/profile/:id" exact component={Profile} />
           <Route path="/books/:id" exact component={AdminPage} />
           <Route path="/myBooks" exact component={MyBooksPage} />

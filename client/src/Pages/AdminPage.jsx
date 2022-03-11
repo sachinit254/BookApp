@@ -2,8 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, useLocation } from "react-router";
 import AdminPanel from "../components/AdminPanel";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import { useUserContext } from "../context/UserContext";
+import "react-toastify/dist/ReactToastify.css";
 
 const SingleBook = () => {
   const { books, setBooks } = useUserContext();
@@ -13,14 +14,7 @@ const SingleBook = () => {
   const [pic, setPic] = useState();
   const [by, setBy] = useState();
   const [from, setFrom] = useState();
-  // const options = {
-  //   position: "top-right",
-  //   autoClose: 3000,
-  //   hideProgressBar: false,
-  //   closeOnClick: true,
-  //   pauseOnHover: true,
-  //   draggable: false,
-  // };
+
   const { id } = useParams();
 
   const history = useHistory();
@@ -128,7 +122,12 @@ const SingleBook = () => {
   return (
     <>
       <div>
-        <ToastContainer theme="light"></ToastContainer>
+        <ToastContainer
+          theme="light"
+          autoClose={2000}
+          transition={Slide}
+          hideProgressBar={true}
+        />
         <AdminPanel
           bookId={bookId}
           title={title}
