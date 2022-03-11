@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-
 import axios from "axios";
-import AlertMessage from "./AlertMessage";
 import { useHistory } from "react-router-dom";
+import { Slide, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const SignUp = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -11,9 +12,6 @@ const SignUp = () => {
   const [phone, setPhone] = useState(0);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmpassword] = useState("");
-  const [heading, setHeading] = useState();
-  const [message, setMessage] = useState();
-  const [showMessage, setShowMessage] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
   const togglePassword = (e) => {
@@ -24,9 +22,7 @@ const SignUp = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setShowMessage(true);
-      setHeading("Incorrect password");
-      setMessage("Confirm password does not match");
+      toast.warn("Incorrect password");
     } else {
       try {
         const res = await axios.post("/users/register", {
@@ -38,16 +34,12 @@ const SignUp = () => {
           password,
         });
         console.log(`res`, res);
-        setShowMessage(true);
-        setHeading("Sign Up successful");
-        setMessage("User signed up successfully");
+        toast.success("Sign Up successfull");
         setTimeout(() => {
           history.push("/signin");
         }, 2000);
       } catch (error) {
-        setShowMessage(true);
-        setHeading("Sign Up failed");
-        setMessage(
+        toast.error(
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message
@@ -58,17 +50,12 @@ const SignUp = () => {
 
   return (
     <div>
-      {showMessage && (
-        <AlertMessage
-          heading={heading}
-          message={message}
-          deleteHandler={() => {
-            setShowMessage(false);
-            setHeading("");
-            setMessage("");
-          }}
-        />
-      )}
+      <ToastContainer
+        theme="light"
+        autoClose={2000}
+        transition={Slide}
+        hideProgressBar={true}
+      />
       <div className="bg-darkslategray grid h-[89.2vh] place-items-center">
         <div className="bg-paleturquoise w-1/4 rounded-lg py-8">
           <form

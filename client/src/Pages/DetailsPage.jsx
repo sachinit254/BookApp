@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, useLocation } from "react-router";
-import AlertMessage from "../components/AlertMessage";
+import { Slide, toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import SingleBook from "../components/SingleBook";
 const DetailsPage = () => {
   const [bookId, setBookId] = useState();
@@ -10,9 +11,7 @@ const DetailsPage = () => {
   const [pic, setPic] = useState();
   const [by, setBy] = useState();
   const [from, setFrom] = useState();
-  const [heading, setHeading] = useState();
-  const [message, setMessage] = useState();
-  const [showMessage, setShowMessage] = useState(false);
+
   const { id } = useParams();
 
   const history = useHistory();
@@ -32,9 +31,7 @@ const DetailsPage = () => {
         setBy(data?.by);
         setFrom(data?.from);
       } catch (error) {
-        setShowMessage(true);
-        setHeading("Error occurred");
-        setMessage("Cannot get book details");
+        toast.error("Cannot get book details");
       }
     };
     getBook();
@@ -46,17 +43,12 @@ const DetailsPage = () => {
 
   return (
     <div>
-      {showMessage && (
-        <AlertMessage
-          heading={heading}
-          message={message}
-          deleteHandler={() => {
-            setShowMessage(false);
-            setHeading("");
-            setMessage("");
-          }}
-        />
-      )}
+      <ToastContainer
+        theme="light"
+        autoClose={2000}
+        transition={Slide}
+        hideProgressBar={true}
+      />
       <SingleBook
         bookId={bookId}
         title={title}

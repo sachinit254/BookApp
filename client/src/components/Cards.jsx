@@ -14,35 +14,42 @@ const Cards = ({ books, setShow, route }) => {
 
   return (
     <>
-      <div className="bg-darkslategray py-4 h-full min-h-screen">
+      <div className="bg-darkslategray h-full min-h-screen py-4">
         <button
-          className="fixed bottom-14 right-2 md:bottom-4 md:right-8 px-6 py-2 rounded-xl bg-azure text-lg text-darkslategray hover:bg-paleturquoise"
+          className="bg-azure text-darkslategray hover:bg-paleturquoise fixed bottom-14 right-2 rounded-xl px-6 py-2 text-lg md:bottom-4 md:right-8"
           onClick={() => uploadHandler()}
         >
           Upload
         </button>
-        <div className="py-16 container mx-auto w-full grid justify-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 sm:gap-y-16 md:gap-y-6 lg:gap-y-14">
-          {books &&
-            books?.map((book) => {
+        <div className="container mx-auto grid w-full grid-cols-1 justify-center gap-y-8 py-16 sm:grid-cols-2 sm:gap-y-16 md:grid-cols-3 md:gap-y-6 lg:grid-cols-4 lg:gap-y-14">
+          {books.length > 0 ? (
+            books.map((book) => {
               return (
                 <div
-                  className="py-8 mx-auto px-4 rounded-md bg-paleturquoise w-4/6 sm:w-4/5 md:w-11/12 lg:w-4/5 h-80 cursor-pointer"
+                  className="bg-paleturquoise mx-auto h-80 w-4/6 cursor-pointer rounded-md py-8 px-4 sm:w-4/5 md:w-11/12 lg:w-4/5"
                   key={book?._id}
                   onClick={() => history.push(`${pathName}/${book?._id}`)}
                 >
-                  <div className="w-4/5 h-3/4 mx-auto rounded-md mb-4">
+                  <div className="mx-auto mb-4 h-3/4 w-4/5 rounded-md">
                     <img
-                      className="rounded-md w-full h-full object-fill"
+                      className="h-full w-full rounded-md object-fill"
                       src={book?.pic}
                       alt=""
                     />
                   </div>
-                  <p className="mx-auto text-center text-lg text-darkslategray font-poppins w-11/12 h-16 overflow-hidden">
+                  <p className="text-darkslategray font-poppins mx-auto h-16 w-11/12 overflow-hidden text-center text-lg">
                     {book.title}
                   </p>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <div className="grid h-[70vh] w-[100vw] place-content-center">
+              <h1 className="text-paleturquoise text-2xl">
+                No books available !!!
+              </h1>
+            </div>
+          )}
         </div>
       </div>
     </>

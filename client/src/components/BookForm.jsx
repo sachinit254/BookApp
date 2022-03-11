@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import { useUserContext } from "../context/UserContext";
-import AlertMessage from "./AlertMessage";
+import "react-toastify/dist/ReactToastify.css";
 
 const BookForm = ({ show, setShow }) => {
   const { books, setBooks } = useUserContext();
@@ -10,9 +11,7 @@ const BookForm = ({ show, setShow }) => {
   const [pic, setPic] = useState();
   const [from, setFrom] = useState("");
   const [by, setBy] = useState("");
-  const [heading, setHeading] = useState();
-  const [message, setMessage] = useState();
-  const [showMessage, setShowMessage] = useState(false);
+
   const ref = useRef();
 
   //uploading pic to cloudinary
@@ -32,14 +31,10 @@ const BookForm = ({ show, setShow }) => {
         console.log(`data`, data);
         setPic(data.url.toString());
       } catch (error) {
-        setShowMessage(true);
-        setHeading("Error occurred");
-        setMessage("Image cannot be uploaded");
+        toast.error("Image cannot be uploaded");
       }
     } else {
-      setShowMessage(true);
-      setHeading("Error occurred");
-      setMessage("Please select an image");
+      toast.warn("Please select an image");
     }
   };
 
@@ -73,9 +68,7 @@ const BookForm = ({ show, setShow }) => {
         );
         const { data } = res;
         setBooks([...books, data]);
-        setShowMessage(true);
-        setHeading("Book created");
-        setMessage("Book has been created successfully");
+        toast.success("Book has been created successfully");
         setTimeout(() => {
           setShow(false);
         }, [2000]);
@@ -86,9 +79,7 @@ const BookForm = ({ show, setShow }) => {
         setFrom("");
         ref.current.value = "";
       } catch (error) {
-        setShowMessage(true);
-        setHeading("Error occurred");
-        setMessage(
+        toast.error(
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message
@@ -99,17 +90,12 @@ const BookForm = ({ show, setShow }) => {
 
   return (
     <div>
-      {showMessage && (
-        <AlertMessage
-          heading={heading}
-          message={message}
-          deleteHandler={() => {
-            setShowMessage(false);
-            setHeading("");
-            setMessage("");
-          }}
-        />
-      )}
+      <ToastContainer
+        theme="light"
+        autoClose={2000}
+        transition={Slide}
+        hideProgressBar={true}
+      />
       <div className="bg-darkslategray absolute top-0 left-0 h-screen w-screen filter">
         <div className={`container mx-auto grid h-screen place-items-center`}>
           <div
@@ -187,7 +173,7 @@ const BookForm = ({ show, setShow }) => {
                         alt=""
                       />
                       <button
-                        className="text-azure bg-darkslategray hover:bg-azure hover:text-darkslategray absolute top-1 right-1 rounded-xl px-0.5 text-xs"
+                        className="text-darkslategray bg-azure absolute top-1 right-1 rounded-xl px-1 text-xs hover:text-black"
                         onClick={(e) => imageRemove(e)}
                       >
                         X
@@ -213,3 +199,5 @@ const BookForm = ({ show, setShow }) => {
 };
 
 export default BookForm;
+
+// TODO: create like functionality so a user can like a book
