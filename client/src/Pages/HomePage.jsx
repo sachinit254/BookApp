@@ -4,6 +4,7 @@ import Cards from "../components/Cards";
 import BookForm from "../components/BookForm";
 import { useUserContext } from "../context/UserContext";
 import ProfileModal from "../components/ProfileModal";
+import SearchBar from "../components/SearchBar";
 
 const HomePage = () => {
   const { books } = useUserContext();
@@ -16,6 +17,7 @@ const HomePage = () => {
     <>
       <div className="relative">
         <HeroSection />
+        <SearchBar />
         <Cards books={books} show={show} setShow={setShow} />
       </div>
       {show && <BookForm show={show} setShow={setShow} />}
