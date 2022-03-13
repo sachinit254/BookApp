@@ -105,6 +105,28 @@ const UpdateBook = asyncHandler(async (req, res) => {
   }
 });
 
+const filterBooks = asyncHandler(async (req, res) => {
+  console.log("query", req.query.search);
+  const text = req.query.search;
+  const books = await Book.find();
+  if (text) {
+    const filteredBooks = books.filter(
+      (book) =>
+        book.title.toString().toLowerCase().includes(text.toLowerCase()) ||
+        book.title.toString().includes(text.toLowerCase()) ||
+        book.author.toString().toLowerCase().includes(text.toLowerCase()) ||
+        book.author.toString().includes(text.toLowerCase()) ||
+        book.from.toString().toLowerCase().includes(text.toLowerCase()) ||
+        book.from.toString().includes(text.toLowerCase())
+    );
+    res.json(filteredBooks);
+    console.log(filteredBooks);
+  } else {
+    res.status(404);
+    throw new Error("No book found");
+  }
+});
+
 export {
   getBooks,
   getBookById,
@@ -112,6 +134,7 @@ export {
   CreateBook,
   UpdateBook,
   DeleteBook,
+  filterBooks,
 };
 
 // first one
