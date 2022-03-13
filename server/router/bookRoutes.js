@@ -6,6 +6,7 @@ import {
   CreateBook,
   DeleteBook,
   UpdateBook,
+  filterBooks,
 } from "../controllers/bookController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -17,5 +18,6 @@ router.post("/createBook", protect, CreateBook);
 router.put("/:id", protect, UpdateBook);
 router.delete("/:id", protect, DeleteBook);
 router.get("/userBooks", protect, getUserBooks);
+router.post("/filterBooks", filterBooks);
 
 export default router;
