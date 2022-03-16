@@ -17,7 +17,10 @@ export default function Header({ setShowDetails }) {
   return (
     <>
       <div className="bg-paleturquoise mx-auto flex w-full items-center justify-between px-6 py-4 shadow-md md:px-8">
-        <div className="text-darkslategray font-poppins text-4xl font-light md:pl-8">
+        <div
+          className="text-darkslategray font-poppins text-4xl font-light md:pl-8"
+          onClick={() => history.push("/")}
+        >
           Bookstore
         </div>
         <div className="hidden items-center justify-center space-x-8 md:flex">
@@ -106,27 +109,39 @@ export default function Header({ setShowDetails }) {
       </div>
       <div className={show ? "menu shadow-md md:hidden" : "hidden"}>
         <Link to="/">
-          <div className="text-md text-darkslategray bg-paleturquoise font-poppins hover:bg-azure hover:text-darkslategray border-darkslategray block border-t-[1px] px-8  py-4 font-normal sm:border-t-0 sm:px-16 md:px-24">
+          <div
+            className="text-md text-darkslategray bg-paleturquoise font-poppins hover:bg-azure hover:text-darkslategray border-darkslategray block border-t-[1px] px-8  py-4 font-normal sm:px-16 md:px-24"
+            onClick={() => setShow(!show)}
+          >
             Home
           </div>
         </Link>
         {isLoggedIn && (
           <Link to="/myBooks" className="nounderline">
-            <div className="text-md text-darkslategray bg-paleturquoise font-poppins hover:bg-azure hover:text-darkslategray  block px-8  py-4 font-normal sm:border-t-0 sm:px-16 md:px-24">
+            <div
+              className="text-md text-darkslategray bg-paleturquoise font-poppins hover:bg-azure hover:text-darkslategray  block px-8  py-4 font-normal sm:px-16 md:px-24"
+              onClick={() => setShow(!show)}
+            >
               My Books
             </div>
           </Link>
         )}
         {!isLoggedIn && (
           <Link to="/signin">
-            <div className="text-md bg-paleturquoise font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24">
+            <div
+              className="text-md bg-paleturquoise font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24"
+              onClick={() => setShow(!show)}
+            >
               Sign In
             </div>
           </Link>
         )}
         {!isLoggedIn && (
           <Link to="/signup">
-            <div className="text-md bg-paleturquoise font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24">
+            <div
+              className="text-md bg-paleturquoise font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24"
+              onClick={() => setShow(!show)}
+            >
               Sign Up
             </div>
           </Link>
@@ -134,7 +149,10 @@ export default function Header({ setShowDetails }) {
         {isLoggedIn && (
           <div
             className="text-md bg-paleturquoise  font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24"
-            onClick={logoutHandler}
+            onClick={() => {
+              logoutHandler();
+              setShow(!show );
+            }}
           >
             Logout
           </div>
