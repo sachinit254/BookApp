@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "../toast.css";
 import SignIn from "../components/SignIn";
 import { useUserContext } from "../context/UserContext";
 const SignInPage = () => {

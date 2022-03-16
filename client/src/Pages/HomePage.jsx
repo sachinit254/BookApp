@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import Cards from "../components/Cards";
 import BookForm from "../components/BookForm";
@@ -8,6 +8,7 @@ import SearchBar from "../components/SearchBar";
 import axios from "axios";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "../toast.css";
 
 const HomePage = () => {
   const { books } = useUserContext();
@@ -15,7 +16,12 @@ const HomePage = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [filteredBooks, setFilteredBooks] = useState([]);
+  const fieldRef = useRef();
   console.log(`books`, books);
+
+  // useEffect(() => {
+  //   fieldRef.current.scrollIntoView();
+  // }, [show]);
 
   const searchHandler = async () => {
     try {
@@ -41,22 +47,26 @@ const HomePage = () => {
         transition={Slide}
         hideProgressBar={true}
       />
-      <div className="relative">
-        <HeroSection />
-        <SearchBar
-          searchText={searchText}
-          setSearchText={setSearchText}
-          searchHandler={searchHandler}
-          setFilteredBooks={setFilteredBooks}
-        />
-        <Cards
-          books={books}
-          filteredBooks={filteredBooks}
-          show={show}
-          setShow={setShow}
-        />
+      <div className="relative overflow-auto">
+        {!show && <HeroSection />}
+        {!show && (
+          <SearchBar
+            searchText={searchText}
+            setSearchText={setSearchText}
+            searchHandler={searchHandler}
+            setFilteredBooks={setFilteredBooks}
+          />
+        )}
+        {!show && (
+          <Cards
+            books={books}
+            filteredBooks={filteredBooks}
+            show={show}
+            setShow={setShow}
+          />
+        )}
       </div>
-      {show && <BookForm show={show} setShow={setShow} />}
+      {show && <BookForm show={show} setShow={setShow} fieldRef={fieldRef} />}
       {showDetails && (
         <ProfileModal show={showDetails} setShow={setShowDetails} />
       )}

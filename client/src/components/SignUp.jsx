@@ -3,13 +3,14 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "../toast.css";
 
 const SignUp = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [city, setCity] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState(0);
+  const [phone, setPhone] = useState();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmpassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -57,7 +58,7 @@ const SignUp = () => {
         hideProgressBar={true}
       />
       <div className="bg-darkslategray grid h-[89.2vh] place-items-center">
-        <div className="bg-paleturquoise w-1/4 rounded-lg py-8">
+        <div className="bg-paleturquoise w-[80%] rounded-lg  py-8 lg:w-1/4">
           <form
             className="flex flex-col items-center space-y-4"
             onSubmit={submitHandler}
@@ -114,7 +115,7 @@ const SignUp = () => {
                 title="Minimum eight characters required."
               />
               <span
-                className="text-azure absolute top-1/2 left-60 -translate-y-1/2 transform text-sm"
+                className="text-azure absolute top-1/2 right-[5%] -translate-y-1/2 transform text-sm"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 <i
@@ -133,7 +134,7 @@ const SignUp = () => {
                 pattern=".{8,}"
                 title="Minimum eight characters required."
               />
-              <span className="text-azure absolute top-1/2 left-60 -translate-y-1/2 transform text-sm">
+              <span className="text-azure absolute top-1/2 right-[5%] -translate-y-1/2 transform text-sm">
                 <button onClick={(e) => togglePassword(e)}>
                   <i
                     class={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
