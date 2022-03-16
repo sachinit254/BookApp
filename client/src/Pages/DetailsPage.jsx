@@ -4,6 +4,8 @@ import { useParams, useHistory, useLocation } from "react-router";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SingleBook from "../components/SingleBook";
+import "../toast.css";
+
 const DetailsPage = () => {
   const [bookId, setBookId] = useState();
   const [title, setTitle] = useState();

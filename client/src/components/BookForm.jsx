@@ -3,8 +3,8 @@ import React, { useRef, useState } from "react";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { useUserContext } from "../context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
-
-const BookForm = ({ show, setShow }) => {
+import "../toast.css";
+const BookForm = ({ show, setShow, fieldRef }) => {
   const { books, setBooks } = useUserContext();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -89,14 +89,17 @@ const BookForm = ({ show, setShow }) => {
   };
 
   return (
-    <div>
+    <div
+      className="grid h-[100vh] place-content-center overflow-hidden"
+      ref={fieldRef}
+    >
       <ToastContainer
         theme="light"
         autoClose={2000}
         transition={Slide}
         hideProgressBar={true}
       />
-      <div className="bg-darkslategray absolute top-0 left-0 h-screen w-screen filter">
+      <div className="bg-darkslategray  h-[100vh] w-screen overflow-hidden filter">
         <div className={`container mx-auto grid h-screen place-items-center`}>
           <div
             className={`bg-paleturquoise relative mx-auto w-3/4 rounded-lg sm:w-2/5 md:w-1/3 lg:w-1/4`}

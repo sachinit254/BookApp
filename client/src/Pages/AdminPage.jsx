@@ -5,6 +5,7 @@ import AdminPanel from "../components/AdminPanel";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import { useUserContext } from "../context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
+import "../toast.css";
 
 const SingleBook = () => {
   const { books, setBooks } = useUserContext();

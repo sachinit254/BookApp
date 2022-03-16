@@ -4,6 +4,7 @@ import { useRef } from "react";
 const UserDetails = (props) => {
   const {
     pic,
+    setPic,
     profilePic,
     uploadPic,
     password,
@@ -23,6 +24,7 @@ const UserDetails = (props) => {
     e.preventDefault();
     ref.current.value = "";
     setUserData({ ...userData, profilePic: "" });
+    setPic("");
   };
 
   console.log(profilePic);
@@ -31,7 +33,7 @@ const UserDetails = (props) => {
     <div>
       <div className="bg-darkslategray top-50 left-50 border-1 absolute z-50 h-[calc(100vh-72px)] w-screen border-black filter">
         <div className="container mx-auto grid h-screen place-items-center">
-          <div className="bg-paleturquoise relative mx-auto w-3/4 rounded-lg py-5 sm:w-2/5 md:w-1/3 lg:w-[35%]">
+          <div className="bg-paleturquoise relative mx-auto w-3/4 rounded-lg py-5 sm:w-2/5 lg:w-[30%]">
             <form onSubmit={submitHandler}>
               <div className="my-4 flex justify-center space-x-2">
                 <input
@@ -110,6 +112,7 @@ const UserDetails = (props) => {
               <div>
                 <div className="grid items-center">
                   <input
+                    ref={ref}
                     type="file"
                     accept="image/*"
                     className={`mx-auto w-4/5 ${
@@ -123,12 +126,11 @@ const UserDetails = (props) => {
                     <div className={`relative mr-3 h-20 w-1/4 rounded-lg`}>
                       <img
                         src={pic ? pic : ""}
-                        className="h-full w-full rounded-md"
+                        className="h-full w-[80%] rounded-md"
                         alt=""
-                        ref={ref}
                       />
                       <button
-                        className="text-azure bg-darkslategray hover:bg-azure hover:text-darkslategray absolute top-1 right-1 rounded-xl px-0.5 text-xs"
+                        className="text-darkslategray hover:bg-azure hover:text-darkslategray absolute top-1 right-8 rounded-xl bg-white px-0.5 text-xs"
                         onClick={(e) => imageRemove(e)}
                       >
                         X
