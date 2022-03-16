@@ -32,7 +32,7 @@ const ProfileModal = ({ setShowDetails }) => {
   }, []);
 
   return (
-    <div className="bg-paleturquoise border-paleturquoise absolute top-20 right-6 z-[100000] h-60 w-1/6 rounded-lg border-[1px]">
+    <div className="bg-paleturquoise border-paleturquoise absolute top-24 right-2 z-[100000] h-60 w-[200px] rounded-lg border-[1px] lg:right-6">
       <div className="relative h-6">
         <button
           className="hover:bg-darkslategray absolute top-[2px] right-[2px] block h-6 w-6 rounded-md hover:text-white"
@@ -45,13 +45,16 @@ const ProfileModal = ({ setShowDetails }) => {
         <img
           src={userInfo?.profilepic}
           alt="profilePic"
-          className="border-darkslategray mb-2 h-16 w-16 rounded-full border-[1px]"
+          className="border-darkslategray mb-2 h-20 w-20   rounded-full border-[1px]"
         />
         <h1>{userInfo?.firstname + " " + userInfo?.lastname}</h1>
         <h3 className="mb-4">{userInfo?.city}</h3>
         <button
           className="bg-darkslategray text-paleturquoise rounded-lg px-3 py-1"
-          onClick={() => history.push(`/profile/${id}`)}
+          onClick={() => {
+            setShowDetails(false);
+            history.push(`/profile/${id}`);
+          }}
         >
           Edit Profile
         </button>

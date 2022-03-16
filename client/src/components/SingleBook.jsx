@@ -14,27 +14,27 @@ const BookDetail = ({
   return (
     <>
       <div className="bg-darkslategray">
-        <div className="container mx-auto w-screen h-[88.6vh] py-4">
-          <div className="container bg-paleturquoise h-[70vh] md:flex justify-evenly mx-auto md:w-4/5 mt-12 rounded-lg">
-            <div className="w-2/5 flex justify-center items-start mt-16">
+        <div className="container mx-auto h-[88.6vh] w-4/5 py-4 lg:w-screen">
+          <div className="bg-paleturquoise container mx-auto mt-12 flex h-[70vh] flex-col justify-center rounded-lg md:w-4/5 md:flex-row md:justify-evenly  ">
+            <div className="mx-auto mt-4 flex w-[80%] items-start justify-center md:mt-16 md:w-2/5">
               <img
                 src={pic}
                 alt="bookCover"
-                className="w-3/4 h-4/5 shadow-xl rounded-lg"
+                className="h-full w-[80%] rounded-lg shadow-xl md:h-4/5 md:w-3/4"
               />
             </div>
-            <div className="w-3/5 flex flex-col">
-              <p className="flex items-center font-poppins w-3/5 h-10 px-2 py-1 bg-azure placeholder-gray-200 text-darkslategray focus:outline-none focus:ring-1 focus:ring-darkslategray focus:border-transparent mt-16 p-2 mb-4 rounded-lg text-lg mx-auto disabled:bg-paleturquoise">
-                {title}
+            <div className="mx-auto flex w-[100%] flex-col md:w-3/5">
+              <p className="font-poppins bg-azure text-darkslategray focus:ring-darkslategray mx-auto mt-4 mb-4 h-10 w-3/5 overflow-x-auto rounded-lg px-2 py-1 text-lg md:mt-16">
+                Title - {title}
               </p>
-              <p className="font-poppins w-3/5 h-10 px-2 py-1 bg-azure placeholder-gray-200 text-darkslategray focus:outline-none focus:ring-1 focus:ring-darkslategray focus:border-transparent p-2 mb-4 rounded-lg text-lg mx-auto disabled:bg-paleturquoise">
-                {author}
+              <p className="font-poppins bg-azure text-darkslategray focus:ring-darkslategray mx-auto mb-4 h-10 w-3/5 overflow-x-scroll rounded-lg px-2 py-1 text-lg">
+                Author - {author}
               </p>
-              <p className="font-poppins w-3/5 h-10 px-2 py-1 bg-azure placeholder-gray-200 text-darkslategray focus:outline-none focus:ring-1 focus:ring-darkslategray focus:border-transparent p-2 mb-4 rounded-lg text-lg mx-auto disabled:bg-paleturquoise">
-                {by}
+              <p className="font-poppins bg-azure text-darkslategray focus:ring-darkslategray mx-auto mb-4 h-10 w-3/5 rounded-lg px-2 py-1 text-lg">
+                By - {by}
               </p>
-              <p className="font-poppins w-3/5 h-10 px-2 py-1 bg-azure placeholder-gray-200 text-darkslategray focus:outline-none focus:ring-1 focus:ring-darkslategray focus:border-transparent p-2 mb-4 rounded-lg text-lg mx-auto disabled:bg-paleturquoise">
-                {from}
+              <p className="font-poppins bg-azure text-darkslategray focus:ring-darkslategray mx-auto mb-4 h-10 w-3/5 rounded-lg px-2 py-1 text-lg">
+                From - {from}
               </p>
             </div>
           </div>
@@ -44,4 +44,5 @@ const BookDetail = ({
   );
 };
 
+//
 export default BookDetail;

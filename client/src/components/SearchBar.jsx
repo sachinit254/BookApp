@@ -7,12 +7,12 @@ const SearchBar = ({
   setFilteredBooks,
 }) => {
   return (
-    <div className="mt-12 grid place-content-center">
+    <div className="md:mt-12 grid place-content-center">
       <div className="flex justify-around space-x-4 py-4">
-        <div className="relative flex h-12 w-[30vw] justify-center">
+        <div className="relative flex h-12 w-[60vw] md:w-[30vw] justify-center">
           <input
-            className="font-poppins bg-azure placeholder:font-poppins text-darkslategray focus:ring-paleturquoise h-12 w-[30vw] rounded-lg px-4 focus:border-transparent focus:outline-none focus:ring-2"
-            placeholder="Search books"
+            className="font-poppins bg-azure placeholder:font-poppins text-darkslategray focus:ring-paleturquoise h-12 w-[100%] md:w-[30vw] rounded-lg px-4 focus:border-transparent focus:outline-none focus:ring-2"
+            placeholder="Search books..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />

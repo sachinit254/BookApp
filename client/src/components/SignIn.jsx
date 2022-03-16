@@ -4,16 +4,16 @@ const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <>
-      <div className="grid place-items-center bg-darkslategray h-[88.6vh]">
-        <div className="w-1/4 mx-auto bg-paleturquoise py-12 rounded-lg">
+      <div className="bg-darkslategray grid h-[88.6vh] place-items-center">
+        <div className="bg-paleturquoise mx-auto w-[80%] rounded-lg py-12 lg:w-1/4">
           <form
-            className="flex flex-col items-center space-y-8 mb-6"
+            className="mb-6 flex flex-col items-center space-y-8"
             onSubmit={submitHandler}
           >
             <input
               type="email"
               placeholder="Email"
-              className="w-4/5 font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+              className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg py-2 px-3 focus:border-transparent focus:outline-none focus:ring-2"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -22,13 +22,13 @@ const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                className="w-full font-poppins placeholder:font-poppins bg-darkslategray text-azure rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-azure focus:border-transparent"
+                className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-full rounded-lg py-2 px-3 focus:border-transparent focus:outline-none focus:ring-2"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <span
-                className="absolute top-1/2 transform -translate-y-1/2 left-60 text-sm text-azure"
+                className="text-azure absolute top-1/2 right-[5%] -translate-y-1/2 transform text-sm"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 <i
@@ -37,22 +37,22 @@ const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
               </span>
             </div>
             <button
-              className="w-4/5 font-poppins bg-azure py-2 px-3 rounded-lg font-semibold text-darkslategray hover:text-azure hover:bg-darkslategray"
+              className="font-poppins bg-azure text-darkslategray hover:text-azure hover:bg-darkslategray w-4/5 rounded-lg py-2 px-3 font-semibold"
               type="submit"
             >
               Login
             </button>
           </form>
-          <div className="w-4/5 flex justify-between space-x-4 mx-auto">
+          <div className="mx-auto flex w-4/5 justify-between space-x-4">
             <a
               href="/#"
-              className="text-xs font-poppins text-darkslategray hover:underline hover:decoration-darkslategray font-semibold"
+              className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline"
             >
               Forgot password?
             </a>
             <a
               href="/signup"
-              className="text-xs font-poppins text-darkslategray hover:underline hover:decoration-darkslategray font-semibold"
+              className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline"
             >
               Don't have an account ?<br /> Sign Up{" "}
             </a>

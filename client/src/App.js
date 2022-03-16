@@ -25,7 +25,7 @@ function App() {
           <Route path="/profile/:id" exact component={Profile} />
           <Route path="/books/:id" exact component={AdminPage} />
           <Route path="/myBooks" exact component={MyBooksPage} />
-          <Route path="/singleBook/:id" exact component={DetailsPage} />
+          <Route path="/bookDetails/:id" exact component={DetailsPage} />
         </Switch>
       </Router>
     </div>

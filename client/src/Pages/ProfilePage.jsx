@@ -5,6 +5,8 @@ import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserDetails from "../components/UserDetails";
 import { useUserContext } from "../context/UserContext";
+import "../toast.css";
+
 
 const Profile = () => {
   const { userData, setUserData } = useUserContext();
