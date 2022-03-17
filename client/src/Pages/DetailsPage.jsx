@@ -13,10 +13,9 @@ const DetailsPage = () => {
   const [pic, setPic] = useState();
   const [by, setBy] = useState();
   const [from, setFrom] = useState();
-
+  const [phone, setPhone] = useState();
   const { id } = useParams();
 
-  const history = useHistory();
   const location = useLocation();
 
   console.log(location);
@@ -32,16 +31,13 @@ const DetailsPage = () => {
         setPic(data?.pic);
         setBy(data?.by);
         setFrom(data?.from);
+        setPhone(data?.phoneNumber);
       } catch (error) {
         toast.error("Cannot get book details");
       }
     };
     getBook();
   }, [id]);
-
-  const historyPush = () => {
-    history.push("/singleBook");
-  };
 
   return (
     <div>
@@ -62,7 +58,7 @@ const DetailsPage = () => {
         setBy={setBy}
         from={from}
         setFrom={setFrom}
-        historyPush={historyPush}
+        phone={phone}
       />
     </div>
   );

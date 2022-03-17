@@ -1,21 +1,10 @@
 import React from "react";
-const BookDetail = ({
-  bookId,
-  title,
-  setTitle,
-  author,
-  setAuthor,
-  pic,
-  by,
-  setBy,
-  from,
-  setFrom,
-}) => {
+const BookDetail = ({ title, author, pic, by, from, phone }) => {
   return (
     <>
       <div className="bg-darkslategray flex items-center justify-center md:h-[89.15vh] md:w-screen">
         <div className="container py-4 lg:w-screen">
-          <div className="bg-paleturquoise container w-[80vw] mx-auto flex flex-col items-center justify-center rounded-lg py-12 md:h-[70vh] md:w-4/6 md:flex-row md:py-0">
+          <div className="bg-paleturquoise container mx-auto flex w-[80vw] flex-col items-center justify-center rounded-lg py-12 md:h-[70vh] md:w-4/6 md:flex-row md:py-0">
             <div className="mx-auto mb-8 w-[90%] md:mb-0 md:w-2/5">
               <img
                 src={pic}
@@ -36,6 +25,9 @@ const BookDetail = ({
                 </p>
                 <p className="decoration-paleturquoise font-poppins text-darslategray mx-auto mb-4 w-[90%]   break-words rounded-lg px-2 py-1 text-justify text-lg underline underline-offset-1 md:w-4/5">
                   From - {from}
+                </p>
+                <p className="decoration-paleturquoise font-poppins text-darslategray mx-auto mb-4 w-[90%]   break-words rounded-lg px-2 py-1 text-justify text-lg underline underline-offset-1 md:w-4/5">
+                  Phone No. - {phone}
                 </p>
               </div>
             </div>

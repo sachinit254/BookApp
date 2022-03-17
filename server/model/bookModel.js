@@ -23,6 +23,10 @@ const bookSchema = mongoose.Schema(
     by: {
       type: String,
       required: true,
+    },  
+    phoneNumber: {
+      type: Number,
+      required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
