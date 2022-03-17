@@ -11,11 +11,11 @@ const BookForm = ({ show, setShow, fieldRef }) => {
   const [pic, setPic] = useState();
   const [from, setFrom] = useState("");
   const [by, setBy] = useState("");
-
+  const { phone: phoneNumber } = JSON.parse(localStorage.getItem("userInfo"));
   const ref = useRef();
 
   //uploading pic to cloudinary
-  const uploadPic = async (pics) => {
+  const uploadPic = async (pics) => { 
     setPic(pics);
     if (pics?.type === "image/jpeg" || pics?.type === "image/png") {
       const body = new FormData();
@@ -63,7 +63,7 @@ const BookForm = ({ show, setShow, fieldRef }) => {
       try {
         const res = await axios.post(
           `/books/createBook`,
-          { title, author, pic, from, by },
+          { title, author, pic, from, by, phoneNumber },
           config
         );
         const { data } = res;

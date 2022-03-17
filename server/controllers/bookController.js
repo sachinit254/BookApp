@@ -35,8 +35,8 @@ const getBookById = asyncHandler(async (req, res) => {
 // @route      POST /books/createBook
 // @access     Private
 const CreateBook = asyncHandler(async (req, res) => {
-  const { title, author, pic, from, by } = req.body;
-
+  const { title, author, pic, from, by, phoneNumber } = req.body;
+  console.log(req.user._id);
   if (!title || !author || !pic || !from || !by) {
     res.status(400);
     throw new Error("Please Fill all the fields");
@@ -49,6 +49,7 @@ const CreateBook = asyncHandler(async (req, res) => {
       pic,
       by,
       from,
+      phoneNumber,
     });
 
     const createdBook = await book.save();

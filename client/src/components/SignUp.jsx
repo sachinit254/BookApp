@@ -22,29 +22,43 @@ const SignUp = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.warn("Incorrect password");
+    debugger;
+    if (
+      firstname === "" ||
+      lastname === "" ||
+      city === "" ||
+      email === "" ||
+      phone === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      toast.error("Please fill all the input fields");
+      console.log("invalid");
     } else {
-      try {
-        const res = await axios.post("/users/register", {
-          firstname,
-          lastname,
-          city,
-          email,
-          phone,
-          password,
-        });
-        console.log(`res`, res);
-        toast.success("Sign Up successfull");
-        setTimeout(() => {
-          history.push("/signin");
-        }, 2000);
-      } catch (error) {
-        toast.error(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
+      if (password !== confirmPassword) {
+        toast.warn("Incorrect password");
+      } else {
+        try {
+          const res = await axios.post("/users/register", {
+            firstname,
+            lastname,
+            city,
+            email,
+            phone,
+            password,
+          });
+          console.log(`res`, res);
+          toast.success("Sign Up successfull");
+          setTimeout(() => {
+            history.push("/signin");
+          }, 2000);
+        } catch (error) {
+          toast.error(
+            error.response && error.response.data.message
+              ? error.response.data.message
+              : error.message
+          );
+        }
       }
     }
   };
@@ -57,14 +71,13 @@ const SignUp = () => {
         transition={Slide}
         hideProgressBar={true}
       />
-      <div className="bg-darkslategray grid h-[89.2vh] place-items-center">
+      <div className="bg-darkslategray grid h-[90.2vh] place-items-center">
         <div className="bg-paleturquoise w-[80%] rounded-lg  py-8 lg:w-1/4">
           <form
             className="flex flex-col items-center space-y-4"
             onSubmit={submitHandler}
           >
             <input
-              required
               type="text"
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
@@ -72,7 +85,6 @@ const SignUp = () => {
               className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <input
-              required
               type="text"
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
@@ -80,7 +92,6 @@ const SignUp = () => {
               className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <input
-              required
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -88,24 +99,25 @@ const SignUp = () => {
               className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <input
-              required
               type="email"
               value={email}
+              pattern="^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$"
+              title="Email should match this format john@gmail.com"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <input
-              required
-              type="number"
+              type="tel"
               value={phone}
+              pattern="[0-9]{10}"
+              title="Phone number should contain 10 digits only."
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Phone Number"
               className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-4/5 rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
             />
             <div className="relative w-4/5">
               <input
-                required
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-full rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
@@ -125,7 +137,6 @@ const SignUp = () => {
             </div>
             <div className="relative w-4/5">
               <input
-                required
                 type={showPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-full rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"

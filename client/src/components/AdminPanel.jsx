@@ -18,12 +18,12 @@ const AdminPanel = ({
     <>
       <div className="bg-darkslategray flex h-[89.15vh] items-center justify-center">
         <div className="container w-[80%] py-4 md:w-screen">
-          <div className="bg-paleturquoise container mx-auto mt-[250px] justify-evenly rounded-lg py-8 md:flex md:w-4/6">
+          <div className="bg-paleturquoise container mx-auto mt-[250px] justify-evenly rounded-lg py-8 md:mt-0 md:flex md:w-4/6">
             <div className="mx-auto flex w-[60%] items-start justify-center md:mx-0 md:mt-16 md:w-2/5">
               <img
                 src={pic}
                 alt="bookCover"
-                className="h-[220px] w-[100%] rounded-lg shadow-xl md:w-3/4"
+                className="h-[220px] w-[100%] rounded-lg shadow-xl md:h-[300px] md:w-3/4"   
               />
             </div>
             <div className="flex flex-col md:w-3/5">
@@ -103,7 +103,7 @@ const AdminPanel = ({
                   />
                 </div>
               </div>
-              <div className="mx-auto md:mb-16 flex h-10 w-3/5 justify-center gap-8">
+              <div className="mx-auto flex h-10 w-3/5 justify-center gap-8 md:mb-16">
                 <button
                   className="bg-darkslategray text-azure hover:bg-azure hover:text-darkslategray focus:ring-darkslategray rounded-lg px-5 py-2 focus:border-transparent focus:outline-none focus:ring-2"
                   onClick={() => updateHandler()}
@@ -119,7 +119,7 @@ const AdminPanel = ({
               </div>
             </div>
           </div>
-        </div>  
+        </div>
       </div>
     </>
   );
