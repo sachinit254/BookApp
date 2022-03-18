@@ -108,7 +108,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-darkslategray relative h-screen w-screen overflow-y-hidden">
+    <div className="bg-darkslategray overflow-y-hidden">
       <ToastContainer
         theme="light"
         autoClose={2000}

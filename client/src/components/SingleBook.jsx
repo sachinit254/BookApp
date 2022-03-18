@@ -2,7 +2,7 @@ import React from "react";
 const BookDetail = ({ title, author, pic, by, from, phone }) => {
   return (
     <>
-      <div className="bg-darkslategray flex items-center justify-center md:h-[89.15vh] md:w-screen">
+      <div className="bg-darkslategray flex items-center h-screen justify-center md:h-[89.15vh] overfow-x-auto md:w-screen">
         <div className="container py-4 lg:w-screen">
           <div className="bg-paleturquoise container mx-auto flex w-[80vw] flex-col items-center justify-center rounded-lg py-12 md:h-[70vh] md:w-4/6 md:flex-row md:py-0">
             <div className="mx-auto mb-8 w-[90%] md:mb-0 md:w-2/5">
