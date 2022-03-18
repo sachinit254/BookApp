@@ -16,14 +16,14 @@ const AdminPanel = ({
 }) => {
   return (
     <>
-      <div className="bg-darkslategray flex h-[89.15vh] items-center justify-center">
+      <div className="bg-darkslategray flex items-center justify-center md:h-[89.15vh]">
         <div className="container w-[80%] py-4 md:w-screen">
-          <div className="bg-paleturquoise container mx-auto mt-[250px] justify-evenly rounded-lg py-8 md:mt-0 md:flex md:w-4/6">
+          <div className="bg-paleturquoise container mx-auto my-[55px] justify-evenly rounded-lg py-8 md:mt-0 md:flex md:w-4/6 md:my-0">
             <div className="mx-auto flex w-[60%] items-start justify-center md:mx-0 md:mt-16 md:w-2/5">
               <img
                 src={pic}
                 alt="bookCover"
-                className="h-[220px] w-[100%] rounded-lg shadow-xl md:h-[300px] md:w-3/4"   
+                className="h-[220px] w-[100%] rounded-lg shadow-xl md:h-[300px] md:w-3/4"
               />
             </div>
             <div className="flex flex-col md:w-3/5">

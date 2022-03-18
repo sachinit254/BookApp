@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import Cards from "../components/Cards";
 import BookForm from "../components/BookForm";
