@@ -24,27 +24,27 @@ export default function Header({ setShowDetails }) {
           Bookstore
         </div>
         <div className="hidden items-center justify-center space-x-8 md:flex">
-          <Link to="/" className="nounderline">
+          <Link to="/">
             <button className="font-poppins text-darkslategray hover:text-paleturquoise hover:bg-darkslategray text-md rounded-lg px-4 py-2 font-normal hover:shadow-md">
               Home
             </button>
           </Link>
           {isLoggedIn && (
-            <Link to="/myBooks" className="nounderline">
+            <Link to="/myBooks">
               <button className="font-poppins text-darkslategray hover:text-paleturquoise hover:bg-darkslategray text-md rounded-lg px-4 py-2 font-normal hover:shadow-md">
                 My Books
               </button>
             </Link>
           )}
           {!isLoggedIn && (
-            <Link to="/signin" className="nounderline">
+            <Link to="/signin">
               <button className="font-poppins text-darkslategray hover:text-paleturquoise hover:bg-darkslategray text-md rounded-lg px-4 py-2 font-normal hover:shadow-md">
                 Sign In
               </button>
             </Link>
           )}
           {!isLoggedIn && (
-            <Link to="/signup" className="nounderline">
+            <Link to="/signup">
               <button className="font-poppins text-darkslategray hover:text-paleturquoise hover:bg-darkslategray text-md rounded-lg px-4 py-2 font-normal hover:shadow-md">
                 Sign Up
               </button>
@@ -92,6 +92,7 @@ export default function Header({ setShowDetails }) {
             </svg>
           </button>
         </div>
+
         <div className="md:hidden">
           {isLoggedIn && (
             <button
@@ -107,7 +108,8 @@ export default function Header({ setShowDetails }) {
           )}
         </div>
       </div>
-      <div className={show ? "menu shadow-md md:hidden" : "hidden"}>
+      {/* -------------------------------------------------------mobile nav------------------------------------------------------- */}
+      <div className={show ? "shadow-md md:hidden" : "hidden"}>
         <Link to="/">
           <div
             className="text-md text-darkslategray bg-paleturquoise font-poppins hover:bg-azure hover:text-darkslategray border-darkslategray block border-t-[1px] px-8  py-4 font-normal sm:px-16 md:px-24"
@@ -117,7 +119,7 @@ export default function Header({ setShowDetails }) {
           </div>
         </Link>
         {isLoggedIn && (
-          <Link to="/myBooks" className="nounderline">
+          <Link to="/myBooks">
             <div
               className="text-md text-darkslategray bg-paleturquoise font-poppins hover:bg-azure hover:text-darkslategray  block px-8  py-4 font-normal sm:px-16 md:px-24"
               onClick={() => setShow(!show)}
@@ -129,7 +131,7 @@ export default function Header({ setShowDetails }) {
         {!isLoggedIn && (
           <Link to="/signin">
             <div
-              className="text-md bg-paleturquoise font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24"
+              className="text-md bg-paleturquoise font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24 -mt-[1px]"
               onClick={() => setShow(!show)}
             >
               Sign In
@@ -139,7 +141,7 @@ export default function Header({ setShowDetails }) {
         {!isLoggedIn && (
           <Link to="/signup">
             <div
-              className="text-md bg-paleturquoise font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24"
+              className="text-md bg-paleturquoise font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24 -mt-[1px]"
               onClick={() => setShow(!show)}
             >
               Sign Up
@@ -151,7 +153,7 @@ export default function Header({ setShowDetails }) {
             className="text-md bg-paleturquoise  font-poppins text-darkslategray hover:bg-azure hover:text-darkslategray block px-8 py-4 font-normal sm:px-16 md:px-24"
             onClick={() => {
               logoutHandler();
-              setShow(!show );
+              setShow(!show);
             }}
           >
             Logout

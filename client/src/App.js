@@ -14,7 +14,7 @@ import { useState } from "react";
 function App() {
   const [showDetails, setShowDetails] = useState(false);
   return (
-    <div className="bg-darkslategray relative overflow-y-auto">
+    <div className="bg-darkslategray relative overflow-y-auto h-screen">
       <Router>
         <Header showDetails={showDetails} setShowDetails={setShowDetails} />
         {showDetails && <ProfileModal setShowDetails={setShowDetails} />}

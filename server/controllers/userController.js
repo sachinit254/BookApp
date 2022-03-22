@@ -1,7 +1,9 @@
-import expressAsyncHandler from "express-async-handler";
 import asyncHandler from "express-async-handler";
+import Token from "../model/token.js";
+import sendEmail from "../utils/sendEmail.js";
 import User from "../model/userModel.js";
 import generateToken from "../utils/generateToken.js";
+import crypto from "crypto";
 
 // @description  Get user by id
 // @route        GET /users/:id
@@ -89,9 +91,9 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @description    Update user profile
-// @route   PUT users/profile
-// @access  Private
+// @description     Update user profile
+// @route           PUT users/profile
+// @access          Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
@@ -124,4 +126,66 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { getUserById, authUser, updateUserProfile, registerUser };
+// @description     Reset link for password
+// @route           POST users/forgot-password
+// @access          Public
+const getPasswordResetLink = asyncHandler(async (req, res) => {
+  if (req.body.email) {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      res.status(404);
+      throw new Error("Email does not exist");
+    }
+    let token = await Token.findOne({ userId: user._id });
+    if (!token) {
+      token = await new Token({
+        userId: user._id,
+        token: crypto.randomBytes(32).toString("hex"),
+      }).save();
+    }
+    const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
+    await sendEmail(user.email, "Password reset", link);
+    res.send("Password reset link has been sent to your email address");
+  } else {
+    res.status(404);
+    throw new Error("Please provide email");
+  }
+});
+
+// @description     Reset password
+// @route           POST users/reset-password
+// @access          Public
+const resetPassword = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.userId);
+  if (!user) {
+    res.status(400);
+    throw new Error("Invalid link or expired");
+  }
+  const token = await Token.findOne({
+    userId: user._id,
+    token: req.params.token,
+  });
+
+  if (!token) {
+    res.status(400);
+    throw new Error("Invalid link or expired");
+  }
+  if (req.body.password) {
+    user.password = req.body.password;
+    await user.save();
+    await token.delete();
+    res.send("Password reset successfully");
+  } else {
+    res.status(400);
+    throw new Error("Please provide new password");
+  }
+});
+
+export {
+  getUserById,
+  authUser,
+  updateUserProfile,
+  registerUser,
+  getPasswordResetLink,
+  resetPassword,
+};
