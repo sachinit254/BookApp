@@ -10,11 +10,13 @@ import MyBooksPage from "./Pages/MyBooksPage";
 import DetailsPage from "./Pages/DetailsPage";
 import ProfileModal from "./components/ProfileModal";
 import { useState } from "react";
+import ResetPasswordPage from "./Pages/ResetPasswordPage";
+import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 
 function App() {
   const [showDetails, setShowDetails] = useState(false);
   return (
-    <div className="bg-darkslategray relative overflow-y-auto h-screen">
+    <div className="bg-darkslategray relative h-screen overflow-y-auto">
       <Router>
         <Header showDetails={showDetails} setShowDetails={setShowDetails} />
         {showDetails && <ProfileModal setShowDetails={setShowDetails} />}
@@ -26,6 +28,12 @@ function App() {
           <Route path="/books/:id" exact component={AdminPage} />
           <Route path="/myBooks" exact component={MyBooksPage} />
           <Route path="/bookDetails/:id" exact component={DetailsPage} />
+          <Route path="/forgot-password" exact component={ForgotPasswordPage} />
+          <Route
+            path="/reset-password/:id/:token"
+            exact
+            component={ResetPasswordPage}
+          />
         </Switch>
       </Router>
     </div>
