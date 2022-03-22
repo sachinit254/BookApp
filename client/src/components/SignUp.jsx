@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../toast.css";
@@ -14,10 +14,17 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmpassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const history = useHistory();
   const togglePassword = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPassword = (e) => {
+    e.preventDefault();
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   const submitHandler = async (e) => {
@@ -126,18 +133,17 @@ const SignUp = () => {
                 pattern=".{8,}"
                 title="Minimum eight characters required."
               />
-              <span
-                className="text-azure absolute top-1/2 right-[5%] -translate-y-1/2 transform text-sm"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                <i
-                  className={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
-                ></i>
+              <span className="text-azure absolute top-1/2 right-[5%] -translate-y-1/2 transform text-sm">
+                <button onClick={(e) => togglePassword(e)}>
+                  <i
+                    class={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
+                  ></i>
+                </button>
               </span>
             </div>
             <div className="relative w-4/5">
               <input
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 className="font-poppins placeholder:font-poppins bg-darkslategray text-azure focus:ring-azure w-full rounded-lg px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2"
                 value={confirmPassword}
@@ -146,9 +152,11 @@ const SignUp = () => {
                 title="Minimum eight characters required."
               />
               <span className="text-azure absolute top-1/2 right-[5%] -translate-y-1/2 transform text-sm">
-                <button onClick={(e) => togglePassword(e)}>
+                <button onClick={(e) => toggleConfirmPassword(e)}>
                   <i
-                    class={showPassword ? "fas fa-eye-slash" : "fas fa-eye"}
+                    class={
+                      showConfirmPassword ? "fas fa-eye-slash" : "fas fa-eye"
+                    }
                   ></i>
                 </button>
               </span>
@@ -160,12 +168,11 @@ const SignUp = () => {
               >
                 Sign Up
               </button>
-              <a
-                href="/signup"
-                className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline"
-              >
-                Already have an account ?<br /> Sign In
-              </a>
+              <Link to="/signin">
+                <p className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline">
+                  Already have an account ?<br /> Sign In
+                </p>
+              </Link>
             </div>
           </form>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,18 +45,16 @@ const SignIn = ({ email, setEmail, password, setPassword, submitHandler }) => {
             </button>
           </form>
           <div className="mx-auto flex w-4/5 justify-between space-x-4">
-            <a
-              href="/#"
-              className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline"
-            >
-              Forgot password?
-            </a>
-            <a
-              href="/signup"
-              className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline"
-            >
-              Don't have an account ?<br /> Sign Up{" "}
-            </a>
+            <Link to="/forgot-password">
+              <p className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline">
+                Forgot password?
+              </p>
+            </Link>
+            <Link to="/signup">
+              <p className="font-poppins text-darkslategray hover:decoration-darkslategray text-xs font-semibold hover:underline">
+                Don't have an account ?<br /> Sign Up{" "}
+              </p>
+            </Link>
           </div>
         </div>
       </div>

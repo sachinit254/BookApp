@@ -134,7 +134,7 @@ const getPasswordResetLink = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       res.status(404);
-      throw new Error("Email does not exist");
+      throw new Error("Email is not registered");
     }
     let token = await Token.findOne({ userId: user._id });
     if (!token) {
@@ -143,9 +143,11 @@ const getPasswordResetLink = asyncHandler(async (req, res) => {
         token: crypto.randomBytes(32).toString("hex"),
       }).save();
     }
-    const link = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
+    const link = `${process.env.BASE_URL}/reset-password/${user._id}/${token.token}`;
     await sendEmail(user.email, "Password reset", link);
-    res.send("Password reset link has been sent to your email address");
+    res.send({
+      message: "Password reset link has been sent to the email address",
+    });
   } else {
     res.status(404);
     throw new Error("Please provide email");
@@ -158,7 +160,7 @@ const getPasswordResetLink = asyncHandler(async (req, res) => {
 const resetPassword = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.userId);
   if (!user) {
-    res.status(400);
+    res.status(404);
     throw new Error("Invalid link or expired");
   }
   const token = await Token.findOne({
@@ -167,16 +169,16 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 
   if (!token) {
-    res.status(400);
+    res.status(404);
     throw new Error("Invalid link or expired");
   }
   if (req.body.password) {
     user.password = req.body.password;
     await user.save();
     await token.delete();
-    res.send("Password reset successfully");
+    res.send({ message: "Password reset successful" });
   } else {
-    res.status(400);
+    res.status(404);
     throw new Error("Please provide new password");
   }
 });
