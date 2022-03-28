@@ -120,11 +120,15 @@ const filterBooks = asyncHandler(async (req, res) => {
         book.from.toString().toLowerCase().includes(text.toLowerCase()) ||
         book.from.toString().includes(text.toLowerCase())
     );
-    res.json(filteredBooks);
-    console.log(filteredBooks);
+    if (filteredBooks.length > 0) {
+      res.json(filteredBooks);
+    } else {
+      res.status(404);
+      throw new Error("No book found");
+    }
   } else {
-    res.status(404);
-    throw new Error("No book found");
+    const books = await Book.find();
+    res.json(books);
   }
 });
 
@@ -138,4 +142,3 @@ export {
   filterBooks,
 };
 
-// first one
