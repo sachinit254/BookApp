@@ -5,6 +5,7 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../toast.css";
 import axios from "axios";
+import { axiosInstance } from "../config";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
@@ -27,7 +28,7 @@ const ResetPasswordPage = () => {
     e.preventDefault();
     try {
       if (password === confirmPassword) {
-        const { data } = await axios.post(
+        const { data } = await axiosInstance.post(
           `/users/reset-password/${id}/${token}`,
           {
             password: password,

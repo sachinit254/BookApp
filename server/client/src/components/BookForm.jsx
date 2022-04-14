@@ -4,6 +4,7 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import { useUserContext } from "../context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
 import "../toast.css";
+import { axiosInstance } from "../config";
 const BookForm = ({ show, setShow, fieldRef }) => {
   const { books, setBooks } = useUserContext();
   const [title, setTitle] = useState("");
@@ -23,7 +24,7 @@ const BookForm = ({ show, setShow, fieldRef }) => {
       body.append("upload_preset", "BookPic");
       body.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           process.env.REACT_APP_CLOUDINARY_URL,
           body
         );
@@ -61,7 +62,7 @@ const BookForm = ({ show, setShow, fieldRef }) => {
       };
 
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           `/books/createBook`,
           { title, author, pic, from, by, phoneNumber },
           config

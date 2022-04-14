@@ -9,6 +9,7 @@ import axios from "axios";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../toast.css";
+import { axiosInstance } from "../config";
 
 const HomePage = () => {
   const { books } = useUserContext();
@@ -25,7 +26,7 @@ const HomePage = () => {
 
   const searchHandler = async () => {
     try {
-      const { data } = await axios.post(
+      const { data } = await axiosInstance.post(
         `/books/filterBooks?search=${searchText}`
       );
       console.log(data);

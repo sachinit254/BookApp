@@ -6,6 +6,7 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import { useUserContext } from "../context/UserContext";
 import "react-toastify/dist/ReactToastify.css";
 import "../toast.css";
+import { axiosInstance } from "../config";
 
 const SingleBook = () => {
   const { books, setBooks } = useUserContext();
@@ -40,7 +41,7 @@ const SingleBook = () => {
     }
     const getBook = async () => {
       try {
-        const res = await axios.get(`/books/${id}`);
+        const res = await axiosInstance.get(`/books/${id}`);
         const { data } = res;
         setBookId(data?._id);
         setTitle(data?.title);
@@ -57,7 +58,7 @@ const SingleBook = () => {
 
   const updateHandler = async () => {
     try {
-      const res = await axios.put(
+      const res = await axiosInstance.put(
         `/books/${id}`,
         { title, author, pic, by, from },
         config
@@ -77,7 +78,7 @@ const SingleBook = () => {
 
   const bookDeleteHandler = async (id) => {
     try {
-      const res = await axios.delete(`/books/${id}`, config);
+      const res = await axiosInstance.delete(`/books/${id}`, config);
       console.log(`res`, res.data);
       console.log(`res.data.message`, res.data.message);
       if (res.data.message === "Book Removed") {
@@ -102,7 +103,7 @@ const SingleBook = () => {
       body.append("upload_preset", "BookPic");
       body.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           process.env.REACT_APP_CLOUDINARY_URL,
           body
         );

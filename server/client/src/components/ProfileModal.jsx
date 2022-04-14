@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { axiosInstance } from "../config";
 import { useUserContext } from "../context/UserContext";
 const ProfileModal = ({ setShowDetails }) => {
   const { userData } = useUserContext();
@@ -25,7 +26,7 @@ const ProfileModal = ({ setShowDetails }) => {
           Authorization: `Bearer ${userInfoFromStorage.token}`,
         },
       };
-      const { data } = await axios.get(`/users/${id}`, config);
+      const { data } = await axiosInstance.get(`/users/${id}`, config);
       setUserInfo(data);
     };
     getUserData();

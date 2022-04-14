@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { axiosInstance } from "../config";
 
 const UserContext = createContext();
 
@@ -29,7 +30,7 @@ const ContextProvider = ({ children }) => {
     };
     const getBooks = async () => {
       try {
-        const res = await axios.get("/books", config);
+        const res = await axiosInstance.get("/books", config);
         const { data } = res;
         setBooks(data);
       } catch (error) {
@@ -55,7 +56,7 @@ const ContextProvider = ({ children }) => {
       try {
         if (userInfoFromStorage) {
           const { _id: id } = userInfoFromStorage;
-          const { data } = await axios.get(`/users/${id}`, config);
+          const { data } = await axiosInstance.get(`/users/${id}`, config);
           setUserData(data);
         }
       } catch (err) {

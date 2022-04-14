@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import userRoutes from "./router/userRoutes.js";
-import bookRoutes from "./router/bookRoutes.js"
+import bookRoutes from "./router/bookRoutes.js";
 dotenv.config();
 connectDB();
 
@@ -19,6 +19,12 @@ app.use("/books", bookRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-const PORT = process.env.PORT;
+// for deployment
+app.use(express.static(path.join(__dirname, "/client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
+
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, console.log(`server running at port ${PORT}`));

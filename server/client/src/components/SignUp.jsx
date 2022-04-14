@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../toast.css";
+import { axiosInstance } from "../config";
 
 const SignUp = () => {
   const [firstname, setFirstname] = useState("");
@@ -46,7 +47,7 @@ const SignUp = () => {
         toast.warn("Incorrect password");
       } else {
         try {
-          const res = await axios.post("/users/register", {
+          const res = await axiosInstance.post("/users/register", {
             firstname,
             lastname,
             city,

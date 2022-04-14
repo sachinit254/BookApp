@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../toast.css";
 import SignIn from "../components/SignIn";
 import { useUserContext } from "../context/UserContext";
+import { axiosInstance } from "../config";
 const SignInPage = () => {
   const { setUserData, setIsLoggedIn } = useUserContext();
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ const SignInPage = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/users/login", { email, password }, config);
+      const res = await axiosInstance.post("/users/login", { email, password }, config);
       const { data } = res;
       localStorage.setItem("userInfo", JSON.stringify(data));
       setUserData(data);

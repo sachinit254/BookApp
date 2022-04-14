@@ -4,6 +4,7 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../toast.css";
 import axios from "axios";
+import { axiosInstance } from "../config";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     try {
       if (email) {
-        const res = await axios.post("/users/forgot-password", {
+        const res = await axiosInstance.post("/users/forgot-password", {
           email: email,
         });
         const { data } = res;

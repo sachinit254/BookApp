@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserDetails from "../components/UserDetails";
+import { axiosInstance } from "../config";
 import { useUserContext } from "../context/UserContext";
 import "../toast.css";
 
@@ -25,7 +26,7 @@ const Profile = () => {
       body.append("upload_preset", "BookPic");
       body.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
       try {
-        const res = await axios.post(
+        const res = await axiosInstance.post(
           process.env.REACT_APP_CLOUDINARY_URL,
           body
         );
@@ -78,7 +79,7 @@ const Profile = () => {
         phone: userData.phone,
       };
       try {
-        const res = await axios.put(`/users/profile`, body, config);
+        const res = await axiosInstance.put(`/users/profile`, body, config);
         const { data } = res;
         setUserData(data);
       } catch (error) {

@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory, useLocation } from "react-router";
+import { useParams, useLocation } from "react-router";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SingleBook from "../components/SingleBook";
+import { axiosInstance } from "../config";
 import "../toast.css";
 
 const DetailsPage = () => {
@@ -23,7 +24,7 @@ const DetailsPage = () => {
   useEffect(() => {
     const getBook = async () => {
       try {
-        const res = await axios.get(`/books/${id}`);
+        const res = await axiosInstance.get(`/books/${id}`);
         const { data } = res;
         setBookId(data?._id);
         setTitle(data?.title);
